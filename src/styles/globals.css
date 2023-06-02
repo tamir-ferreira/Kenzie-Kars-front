@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    /* estilização global do Body */
+  }
+
+  button {
+    @apply py-3 cursor-pointer rounded border-1.5 duration-200;
+  }
+}
+
+@layer components {
+  .btn-big {
+    @apply px-7 text-button-big;
+  }
+
+  .btn-medium {
+    @apply px-5 text-button-medium;
+  }
+
+  .btn-grey-1 {
+    @apply bg-grey-0 border-grey-0 text-white-fixed  hover:bg-grey-1 hover:border-grey-1;
+  }
+
+  .btn-negative {
+    @apply bg-grey-6 border-grey-6 text-grey-2  hover:bg-grey-5 hover:border-grey-5;
+  }
+
+  .btn-disable {
+    @apply bg-grey-5 border-grey-5 text-white-fixed cursor-default;
+  }
+
+  .btn-brand-1 {
+    @apply bg-brand-1 border-brand-1 text-white-fixed hover:bg-brand-2 hover:border-brand-2;
+  }
+
+  .btn-brand-opacity {
+    @apply bg-brand-4 border-brand-4 text-brand-1;
+  }
+
+  .btn-light {
+    @apply bg-grey-10 border-grey-10 text-grey-1;
+  }
+
+  .btn-outline-light {
+    @apply border-grey-10 text-grey-10 hover:bg-grey-10 hover:text-grey-1;
+  }
+
+  .btn-outline-1 {
+    @apply border-grey-0 text-grey-0 hover:border-grey-1 hover:bg-grey-1 hover:text-grey-10;
+  }
+
+  .btn-outline-2 {
+    @apply border-grey-4 text-grey-0 hover:border-grey-1 hover:bg-grey-1 hover:text-grey-10;
+  }
+
+  .btn-outline-brand-1 {
+    @apply border-brand-1 text-brand-1 hover:bg-brand-4;
+  }
+
+  .btn-link {
+    @apply border-transparent text-grey-0 hover:bg-grey-8;
+  }
+
+  .btn-alert {
+    @apply bg-alert-3 border-alert-3 text-alert-1 hover:bg-alert-2 hover:border-alert-2;
+  }
+
+  .btn-success {
+    @apply bg-success-3 border-success-3 text-success-1 hover:bg-success-2 hover:border-success-2;
+  }
+
+  .btn-brand-disable {
+    @apply bg-brand-3 border-brand-3 text-brand-4 cursor-default;
+  }
+}
