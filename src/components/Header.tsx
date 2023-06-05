@@ -7,7 +7,7 @@ export const Header = () => {
   const [menuPreferences, setMenuPreferences] = useState(false);
 
   return (
-    <header className="h-20 px-15 bg-grey-10 border-b border-grey-6 flex items-center justify-center">
+    <header className="h-20 w-screen px-15 bg-grey-10 border-b border-grey-6 flex items-center justify-center fixed z-10">
       <div className="container h-full flex items-center justify-between">
         <img src={logo} alt="logotipo" />
         <nav className="h-full flex items-center gap-11 pl-11 border-l-2 border-grey-6 relative">
