@@ -1,9 +1,14 @@
 import { Button } from "./components/Button";
+import { FilterHome } from "./components/FiltersHome";
 
 export const App = () => {
   return (
     <>
-      <div className="py-10 flex justify-center gap-8 items-center bg-grey-2">
+      <aside>
+        <FilterHome title="Marca" />
+        <FilterHome title="Modelo" />
+      </aside>
+      {/* <div className="py-10 flex justify-center gap-8 items-center bg-grey-2">
         <div className="flex flex-col gap-3.5">
           <Button btnSize="btn-big" btnColor="btn-grey-1">
             Text Button
@@ -92,7 +97,7 @@ export const App = () => {
             Text Button
           </Button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
