@@ -97,18 +97,14 @@
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.29) 0%, #000000 100%);
   }
   .banner-background {
-    background-image: url("../../public/images/banner.svg");
+    background-image: url("../../public/images/banner.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
   }
-}
-
-@layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
