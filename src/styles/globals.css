@@ -1,19 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  font-family: "Inter", sans-serif;
 }
 
 @layer base {
   body {
-    /* estilização global do Body */
+    @apply font-inter;
   }
 
   button {
-    @apply py-3 cursor-pointer rounded border-1.5 duration-200;
+    @apply h-[48px] cursor-pointer rounded border-1.5 duration-200;
   }
 }
 
@@ -80,5 +80,12 @@
 
   .btn-brand-disable {
     @apply bg-brand-3 border-brand-3 text-brand-4 cursor-default;
+  }
+
+  .ellipsis-limiter {
+    @apply h-14 max-h-12 leading-normal overflow-hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 }
