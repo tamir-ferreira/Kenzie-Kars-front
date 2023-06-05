@@ -74,8 +74,39 @@ export default {
         "input-placeholder": ["16px", { fontWeight: "400" }],
         "input-label": ["14px", { fontWeight: "500" }],
       },
+      fontFamily: {
+        inter: "Inter, sans-serif",
+        lexend: "Lexend, sans-serif",
+      },
       borderWidth: {
         1.5: "1.5px",
+      },
+      padding: {
+        15: "3.75rem",
+      },
+      width: {
+        50: "12.5rem",
+      },
+      boxShadow: {
+        "menu-profile": "0px 4px 40px -10px rgba(0, 0, 0, 0.25)",
+      },
+      animation: {
+        menu: "menu 0.5s",
+      },
+      keyframes: {
+        menu: {
+          "0%": {
+            transform: "translateY(-150px)",
+          },
+          "100%": {
+            transform: "translateY(0)",
+          },
+        },
+      },
+      container: {
+        width: "100%",
+        maxWidth: "1600px",
+        margin: "0 auto",
       },
     },
   },
