@@ -1,43 +1,64 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 interface CardProps {
-  children?: ReactNode;
-  img: string;
-  brand: string;
-  model: string;
-  description: string;
-  initialName: string;
-  name: string;
-  kilometer: string;
-  year: string;
-  value: string;
+  car: {
+    children?: ReactNode;
+    img: string;
+    brand: string;
+    model: string;
+    description: string;
+    initialName: string;
+    name: string;
+    kilometer: string;
+    year: string;
+    value: string;
+  };
 }
 
-export const Cards = ({
-  children,
-  img,
-  brand,
-  model,
-  description,
-  initialName,
-  name,
-  kilometer,
-  year,
-  value,
-}: CardProps) => {
+export const Cards = ({ car }: CardProps) => {
+  const [carsProfile, setCarsProfile] = useState(true);
+  const [active, setActive] = useState(true);
+  const [discount, setDiscount] = useState(true);
+  const {
+    children,
+    img,
+    brand,
+    model,
+    description,
+    initialName,
+    name,
+    kilometer,
+    year,
+    value,
+  } = car;
+
   return (
-    <button className="flex flex-col items-start pt-0 h-[350px] w-[312px] border-none">
+    <li className="flex flex-col items-start pt-0 h-[350px] w-[312px] border-none">
       <div className="flex justify-center items-center bg-grey-7 w-full mb-4 relative">
         <img src={img} alt="carro" className="" />
-        <span className="bg-random-7 w-4 h-7 text-white-fixed text-sm font-medium border-none flex items-center justify-center rounde-s absolute top-0 right-0">
-          $
-        </span>
+        {discount && (
+          <span className="bg-random-7 w-4 h-7 text-white-fixed text-sm font-medium border-none flex items-center justify-center rounded-sm absolute top-0 right-0">
+            $
+          </span>
+        )}
+        {carsProfile && (
+          <>
+            {active ? (
+              <span className="flex items-center top-3 left-4 h-6 px-2 bg-brand-1 text-body-2-500 text-white-fixed absolute">
+                Ativo
+              </span>
+            ) : (
+              <span className="flex items-center top-3 left-4 h-6 px-2 bg-grey-4 text-body-2-500 text-white-fixed absolute">
+                Inativo
+              </span>
+            )}
+          </>
+        )}
       </div>
       <div className="flex mb-4">
-        <h2 className="text-base font-semibold text-grey-1">{brand}</h2>
-        <h2 className="text-base font-semibold">{model}</h2>
+        <h2 className="font-lexend text-base font-semibold">{`${brand} - ${model}`}</h2>
       </div>
-      <p className="text-grey-2 text-sm font-normal leading-6 text-start mb-4 truncate max-w-full">
+      <p className="ellipsis-limiter text-grey-2 text-sm text-body-2-400 leading-6 text-start mb-4 max-w-full">
         {description}
       </p>
       <div className="flex items-center mb-4">
@@ -57,9 +78,9 @@ export const Cards = ({
             {year}
           </span>
         </div>
-        <span className="text-grey-1 font-medium text-base">{`R$ ${value}`}</span>
+        <span className="font-lexend text-grey-1 font-medium text-base">{`R$ ${value}`}</span>
       </div>
       {children}
-    </button>
+    </li>
   );
 };
