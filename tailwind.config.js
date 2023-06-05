@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -68,13 +69,21 @@ export default {
         "body-1-600": ["16px", { fontWeight: "600" }],
         "body-2-400": ["14px", { fontWeight: "400" }],
         "body-2-500": ["14px", { fontWeight: "500" }],
-        "button-big-text": ["16px", { fontWeight: "600" }],
-        "button-medium-text": ["14px", { fontWeight: "600" }],
+        "button-big": ["16px", { fontWeight: "600" }],
+        "button-medium": ["14px", { fontWeight: "600" }],
         "input-placeholder": ["16px", { fontWeight: "400" }],
         "input-label": ["14px", { fontWeight: "500" }],
       },
+      borderWidth: {
+        1.5: "1.5px",
+      },
     },
   },
+  /*  variants: {
+    extend: {
+      buttonSizes: ["responsive"],
+    },
+  }, */
 
   plugins: [],
 };
