@@ -33,7 +33,7 @@ export const Cards = ({ car }: CardProps) => {
   } = car;
 
   return (
-    <li className="flex flex-col items-start pt-0 h-[350px] w-[312px] border-none">
+    <li className="flex flex-col items-start pt-0 h-[350px] w-[312px] border-none mb-9">
       <div className="flex justify-center items-center bg-grey-7 w-full mb-4 relative">
         <img src={img} alt="carro" className="" />
         {discount && (
