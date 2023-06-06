@@ -19,21 +19,11 @@ export const Cards = ({ car }: CardProps) => {
   const [carsProfile, setCarsProfile] = useState(true);
   const [active, setActive] = useState(true);
   const [discount, setDiscount] = useState(true);
-  const {
-    children,
-    img,
-    brand,
-    model,
-    description,
-    initialName,
-    name,
-    kilometer,
-    year,
-    value,
-  } = car;
+  const { children, img, brand, model, description, initialName, name, kilometer, year, value } =
+    car;
 
   return (
-    <li className="flex flex-col items-start pt-0 h-[350px] w-[312px] border-none mb-9">
+    <li className="flex flex-col items-start pt-0 h-[350px] w-[312px] border-none mb-9 cursor-pointer">
       <div className="flex justify-center items-center bg-grey-7 w-full mb-4 relative">
         <img src={img} alt="carro" className="" />
         {discount && (
@@ -63,9 +53,7 @@ export const Cards = ({ car }: CardProps) => {
       </p>
       <div className="flex items-center mb-4">
         <div className="bg-brand-1 border rounded-full h-8 w-8 flex items-center justify-center">
-          <span className="font-medium text-sm text-white-fixed">
-            {initialName}
-          </span>
+          <span className="font-medium text-sm text-white-fixed">{initialName}</span>
         </div>
         <span className="ml-2 font-medium text-sm text-grey-2">{name}</span>
       </div>
