@@ -12,6 +12,10 @@
     @apply font-inter;
   }
 
+  #root {
+    @apply flex flex-col;
+  }
+
   button {
     @apply h-[48px] cursor-pointer rounded border-1.5 duration-200;
   }
@@ -81,11 +85,28 @@
   .btn-brand-disable {
     @apply bg-brand-3 border-brand-3 text-brand-4 cursor-default;
   }
-
+}
+@layer utilities {
   .ellipsis-limiter {
-    @apply h-14 max-h-12 leading-normal overflow-hidden;
+    @apply h-11 max-h-12 leading-normal overflow-hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+  }
+  .banner-gradient {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.29) 0%, #000000 100%);
+  }
+  .banner-background {
+    background-image: url("../../public/images/banner.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

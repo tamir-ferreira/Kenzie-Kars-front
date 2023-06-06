@@ -84,8 +84,14 @@ export default {
       padding: {
         15: "3.75rem",
       },
+      gap: {
+        13: "3.25rem",
+      },
       width: {
         50: "12.5rem",
+      },
+      textShadow: {
+        default: "2px 2px 4px 4px rgba(0, 0, 0, 0.5)",
       },
       boxShadow: {
         "menu-profile": "0px 4px 40px -10px rgba(0, 0, 0, 0.25)",

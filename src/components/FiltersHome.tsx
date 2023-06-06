@@ -9,6 +9,14 @@ export const FilterHome = () => {
   const [fuel, setFuel] = useState<null | string>();
   const [km, setKm] = useState<null | string>();
   const models = mockFilter.filter((model) => model.brand === brand);
+  // const justModel = models
+  //   .map((model) => model.model)
+  //   .filter(function (este, i) {
+  //     return justModel.indexOf(este) === i;
+  //   });
+  // const modelTeste = justModel.filter(function (este, i) {
+  //   return justModel.indexOf(este) === i;
+  // });
   const colors = models.filter((models) => models.model === model);
   const years = colors.filter((models) => models.color === color);
   const combs = years.filter((models) => models.year === year);
