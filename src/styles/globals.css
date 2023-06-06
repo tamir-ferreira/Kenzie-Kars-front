@@ -29,6 +29,9 @@
   .btn-medium {
     @apply px-5 text-button-medium;
   }
+  .btn-filter {
+    @apply px-5 text-button-medium h-9;
+  }
 
   .btn-grey-1 {
     @apply bg-grey-0 border-grey-0 text-white-fixed  hover:bg-grey-1 hover:border-grey-1;
