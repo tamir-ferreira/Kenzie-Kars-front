@@ -1,6 +1,7 @@
 import logo from "../../public/images/logo.svg";
 import { Button } from "./Button";
 import { useState } from "react";
+import { UserInitials } from "./UserInitials";
 
 export const Header = () => {
   const [logged, setLogged] = useState(true);
@@ -16,16 +17,12 @@ export const Header = () => {
               className="flex gap-2 items-center cursor-pointer"
               onClick={() => setMenuPreferences(!menuPreferences)}
             >
-              <div className="w-8 h-8 flex items-center justify-center rounded-full bg-brand-2 text-white-fixed">
-                <span>SL</span>
-              </div>
-              <h4 className="text-grey-2">Samuel Leão</h4>
+              <UserInitials name="José da Silva" />
+              <h4 className="text-grey-2">José da Silva</h4>
             </div>
           ) : (
             <>
-              <h3 className="text-body-1-600 text-grey-2 cursor-pointer">
-                Fazer Login
-              </h3>
+              <h3 className="text-body-1-600 text-grey-2 cursor-pointer">Fazer Login</h3>
               <Button btnColor="btn-outline-2" btnSize="btn-big">
                 Cadastrar
               </Button>

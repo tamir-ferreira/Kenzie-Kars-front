@@ -10,7 +10,7 @@ export const FilterHome = () => {
   const [fuel, setFuel] = useState<null | string>();
   // const [km, setKm] = useState<null | string>();
 
-  console.log(model);
+  console.log(brand);
 
   const allBrands = mockFilter.map((model) => model.brand);
   const brands = allBrands.filter(function (este, i) {
@@ -238,15 +238,17 @@ export const FilterHome = () => {
           </Button>
         </div>
       </div>
-      <div className="flex justify-center items-center">
-        <Button
-          btnSize="btn-big"
-          btnColor="btn-brand-1"
-          handleClick={handleClick}
-        >
-          Limpar filtros
-        </Button>
-      </div>
+      {brand && (
+        <div className="flex justify-center items-center">
+          <Button
+            btnSize="btn-big"
+            btnColor="btn-brand-1"
+            handleClick={handleClick}
+          >
+            Limpar filtros
+          </Button>
+        </div>
+      )}
     </aside>
   );
 };

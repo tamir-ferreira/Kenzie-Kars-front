@@ -3,13 +3,14 @@ import { Cards } from "../components/Cards";
 import { FilterHome } from "../components/FiltersHome";
 import { Header } from "../components/Header";
 import { mockCards } from "../mocks/cards";
+import { Footer } from "../components/Footer";
 
 export const Home = () => {
   return (
     <>
       <Header />
       <Banner />
-      <main className="flex container justify-between self-center mt-14">
+      <main className="flex container justify-between self-center mt-14 mb-16">
         <FilterHome />
         <section className="max-w-[1032px] w-full">
           <ul className="flex gap-12 flex-wrap">
@@ -19,6 +20,7 @@ export const Home = () => {
           </ul>
         </section>
       </main>
+      <Footer />
     </>
   );
 };
