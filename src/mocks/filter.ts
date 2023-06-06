@@ -5,8 +5,8 @@ export const mockFilter = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     brand: "Toyota",
-    year: "2021",
-    fuel: "Eletric",
+    year: "2023",
+    fuel: "Eletrico",
     color: "Azul",
     kilometers: 500,
   },
@@ -16,9 +16,9 @@ export const mockFilter = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     brand: "Toyota",
-    year: "2021",
-    fuel: "Eletric",
-    color: "Azul",
+    year: "2022",
+    fuel: "Eletrico",
+    color: "Vermelho",
     kilometers: 50000,
   },
   {
@@ -27,20 +27,42 @@ export const mockFilter = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     brand: "Toyota",
-    year: "2021",
-    fuel: "Eletric",
-    color: "Azul",
+    year: "2020",
+    fuel: "Eletrico",
+    color: "Rosa",
     kilometers: 100000,
   },
   {
     model: "M3",
+    price: "400.000,00",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    brand: "BMW",
+    year: "2026",
+    fuel: "Alcool",
+    color: "Laranja",
+    kilometers: 2000000,
+  },
+  {
+    model: "M4",
+    price: "20.000,00",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    brand: "BMW",
+    year: "2025",
+    fuel: "Alcool",
+    color: "Cinza",
+    kilometers: 2000000,
+  },
+  {
+    model: "M1",
     price: "200.000,00",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     brand: "BMW",
-    year: "2021",
-    fuel: "Alcool",
-    color: "Black",
+    year: "2012",
+    fuel: "Diesel",
+    color: "Rosa",
     kilometers: 2000000,
   },
   {
@@ -49,7 +71,7 @@ export const mockFilter = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     brand: "GM",
-    year: "2021",
+    year: "2012",
     fuel: "Gasolina",
     color: "Branco",
     kilometers: 30000,
@@ -59,7 +81,7 @@ export const mockFilter = [
     price: "500.000,00",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    brand: "Citroe",
+    brand: "Citroen",
     year: "2021",
     fuel: "Eletrico",
     color: "Azul",
