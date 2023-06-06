@@ -2,6 +2,7 @@ import { Banner } from "../components/Banner";
 import { Cards } from "../components/Cards";
 import { Header } from "../components/Header";
 import { mockCards } from "../mocks/cards";
+import { Footer } from "../components/Footer";
 
 export const Home = () => {
   return (
@@ -20,6 +21,7 @@ export const Home = () => {
           </ul>
         </section>
       </main>
+      <Footer />
     </>
   );
 };
