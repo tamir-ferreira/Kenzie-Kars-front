@@ -102,6 +102,9 @@
     background-size: contain;
     background-position: center;
   }
+  .text-shadow {
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.9);
+  }
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
