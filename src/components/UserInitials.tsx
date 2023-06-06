@@ -3,15 +3,22 @@ interface UserProps {
 }
 
 export const UserInitials = ({ name }: UserProps) => {
+  let color = "";
   const splitName = name.split(" ");
   const firstLetterFirstName = splitName[0].charAt(0);
   const firstLetterLastName = splitName[splitName.length - 1].charAt(0);
   const initials = firstLetterFirstName + firstLetterLastName;
 
-  console.log(initials);
-  const minNumber = 800000;
-  const randomNumber = Math.floor(Math.random() * (16777215 - minNumber * 3) + minNumber);
-  const color = "#" + randomNumber.toString(16);
+  const userColor = localStorage.getItem("@user-color");
+
+  if (userColor) {
+    color = userColor;
+  } else {
+    const minNumber = 800000;
+    const randomNumber = Math.floor(Math.random() * (16777215 - minNumber * 3) + minNumber);
+    color = "#" + randomNumber.toString(16);
+    localStorage.setItem("@user-color", color);
+  }
 
   return (
     <div
