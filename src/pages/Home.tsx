@@ -4,21 +4,38 @@ import { FilterHome } from "../components/FiltersHome";
 import { Header } from "../components/Header";
 import { mockCards } from "../mocks/cards";
 import { Footer } from "../components/Footer";
+import useMedia from "use-media";
+import { Button } from "../components/Button";
 
 export const Home = () => {
+  const isMobile = useMedia({ maxWidth: "640px" });
+
   return (
     <>
-      <Header />
+      <Header isMobile={isMobile} />
       <Banner />
-      <main className="flex container justify-between self-center mt-14 mb-16">
-        <FilterHome />
-        <section className="max-w-[1032px] w-full">
-          <ul className="flex gap-12 flex-wrap">
-            {mockCards.map((card, index) => (
-              <Cards key={index} car={card}></Cards>
-            ))}
-          </ul>
-        </section>
+      <main className="flex flex-col items-center container mt-14 mb-16">
+        <div className="w-full flex justify-between self-center ">
+          {!isMobile && <FilterHome />}
+          <section className="flex justify-start max-w-[1032px] w-screen sm:items-start">
+            <ul className="flex gap-4 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
+              {mockCards.map((card, index) => (
+                <Cards key={index} car={card}></Cards>
+              ))}
+            </ul>
+          </section>
+        </div>
+        {isMobile && (
+          <>
+            <Button btnColor="btn-brand-1" btnSize="btn-big" attributes="w-[80%] mt-12">
+              Filtros
+            </Button>
+            <span className="pt-10 font-lexend text-grey-3 text-heading-5-600">
+              1 <span className="opacity-50">de 2</span>
+            </span>
+            <span className="pt-4 font-lexend text-brand-2 text-heading-5-600">Seguinte &gt;</span>
+          </>
+        )}
       </main>
       <Footer />
     </>

@@ -84,9 +84,11 @@ export default {
       },
       padding: {
         15: "3.75rem",
+        19: "4.75rem",
       },
       gap: {
         13: "3.25rem",
+        68: "17rem",
       },
       width: {
         50: "12.5rem",
