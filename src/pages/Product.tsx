@@ -4,7 +4,7 @@ import { NewComment } from "../components/NewComment";
 export const Product = () => {
   return (
     <>
-      <div className="w-7/12 h-[34rem] rounded bg-grey-10 ml-[11rem] p-11">
+      <div className=" w-[95%] sm:w-7/12 h-96 sm:h-[34rem] rounded bg-grey-10 ml-2 sm:ml-[11rem] py-7 px-7 sm:p-11">
         <h3 className="mb-6 text-heading-6-600">Comentários</h3>
         <ul className="w-full h-full flex flex-col gap-11 no-scrollbar overflow-y-auto">
           <CommentCard
