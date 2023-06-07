@@ -14,7 +14,7 @@
   }
 
   #root {
-    @apply flex flex-col;
+    @apply flex flex-col items-center;
   }
 
   button {
@@ -30,6 +30,7 @@
   .btn-medium {
     @apply px-5 text-button-medium;
   }
+
   .btn-filter {
     @apply px-5 text-button-medium h-9;
   }

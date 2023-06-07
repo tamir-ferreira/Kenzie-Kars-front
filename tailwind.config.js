@@ -73,6 +73,7 @@ export default {
         "button-medium": ["14px", { fontWeight: "600" }],
         "input-placeholder": ["16px", { fontWeight: "400" }],
         "input-label": ["14px", { fontWeight: "500" }],
+        "input-error": ["12px", { fontWeight: "400" }],
       },
       fontFamily: {
         inter: "Inter, sans-serif",
@@ -83,9 +84,11 @@ export default {
       },
       padding: {
         15: "3.75rem",
+        19: "4.75rem",
       },
       gap: {
         13: "3.25rem",
+        68: "17rem",
       },
       width: {
         50: "12.5rem",
