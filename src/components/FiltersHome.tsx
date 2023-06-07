@@ -69,11 +69,7 @@ export const FilterHome = () => {
   //   km === "max" && kilomers.sort((a, b) => a.kilometers + b.kilometers);
 
   const handleClick = () => {
-    setBrand(null),
-      setModel(null),
-      setColor(null),
-      setFuel(null),
-      setYear(null);
+    setBrand(null), setModel(null), setColor(null), setFuel(null), setYear(null);
     // setKm(null);
   };
   return (
@@ -240,11 +236,7 @@ export const FilterHome = () => {
       </div>
       {brand && (
         <div className="flex justify-center items-center">
-          <Button
-            btnSize="btn-big"
-            btnColor="btn-brand-1"
-            handleClick={handleClick}
-          >
+          <Button btnSize="btn-big" btnColor="btn-brand-1" handleClick={handleClick}>
             Limpar filtros
           </Button>
         </div>
