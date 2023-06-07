@@ -5,6 +5,7 @@ interface UserProps {
 export const UserInitials = ({ name }: UserProps) => {
   let color = "";
   const splitName = name.split(" ");
+
   const firstLetterFirstName = splitName[0].charAt(0);
   const firstLetterLastName = splitName[splitName.length - 1].charAt(0);
   const initials = firstLetterFirstName + firstLetterLastName;

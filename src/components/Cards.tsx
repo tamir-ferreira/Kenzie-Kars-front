@@ -23,8 +23,8 @@ export const Cards = ({ car }: CardProps) => {
     car;
 
   return (
-    <li className="flex flex-col items-start pt-0 h-[350px] w-[312px] border-none mb-9 cursor-pointer">
-      <div className="flex justify-center items-center bg-grey-7 w-full mb-4 relative">
+    <li className="flex flex-col items-start pt-0 h-[350px] w-[312px] group mb-9 cursor-pointer">
+      <div className="flex justify-center items-center bg-grey-7 w-full mb-4 relative border-2 border-white-fixed group-hover:border-brand-1 group-hover:border-solid ">
         <img src={img} alt="carro" className="" />
         {discount && (
           <span className="bg-random-7 w-4 h-7 text-white-fixed text-sm font-medium border-none flex items-center justify-center rounded-sm absolute top-0 right-0">
