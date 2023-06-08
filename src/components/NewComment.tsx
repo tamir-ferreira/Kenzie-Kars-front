@@ -22,9 +22,9 @@ export const NewComment = ({ userName }: NewCommentProps) => {
             className="resize-none rounded border-grey-7 border-2 focus:outline-0 w-full h-full p-2.5 sm:pr-[8rem] text-grey-2 no-scrollbar"
           ></textarea>
           <Button
-            btnSize="w-28 h-9"
-            btnColor="bg-brand-1 text-[#FFFFFF]"
-            attributes="border-none mt-[10px] sm:absolute sm:bottom-3 sm:right-3"
+            btnSize="btn-medium"
+            btnColor="btn-brand-1"
+            attributes="mt-[10px] sm:absolute sm:bottom-3 sm:right-3"
           >
             Comentar
           </Button>
