@@ -1,8 +1,9 @@
 interface UserProps {
   name: string;
+  bigSize?: boolean;
 }
 
-export const UserInitials = ({ name }: UserProps) => {
+export const UserInitials = ({ name, bigSize = false }: UserProps) => {
   let color = "";
   const splitName = name.split(" ");
 
@@ -24,9 +25,11 @@ export const UserInitials = ({ name }: UserProps) => {
   return (
     <div
       style={{ backgroundColor: color }}
-      className={`w-8 h-8 flex items-center justify-center rounded-full text-white-fixed`}
+      className={`flex items-center justify-center rounded-full text-white-fixed ${
+        bigSize ? "w-20 h-20 sm:w-30 sm:h-30" : "w-8 h-8 "
+      }`}
     >
-      <span>{initials}</span>
+      <span className={`${bigSize && "text-heading-2-500"}`}>{initials}</span>
     </div>
   );
 };
