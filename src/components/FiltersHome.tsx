@@ -2,7 +2,13 @@ import { useState } from "react";
 import { mockFilter } from "../mocks/filter";
 import { Button } from "./Button";
 
-export const FilterHome = () => {
+export interface FilterProps {
+  textButton: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>> | any;
+}
+
+export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
   const [brand, setBrand] = useState<null | string>();
   const [model, setModel] = useState<null | string>();
   const [color, setColor] = useState<null | string>();
@@ -69,7 +75,12 @@ export const FilterHome = () => {
   //   km === "max" && kilomers.sort((a, b) => a.kilometers + b.kilometers);
 
   const handleClick = () => {
-    setBrand(null), setModel(null), setColor(null), setFuel(null), setYear(null);
+    setBrand(null),
+      setModel(null),
+      setColor(null),
+      setFuel(null),
+      setYear(null);
+    setIsOpen(false);
     // setKm(null);
   };
   return (
@@ -236,8 +247,12 @@ export const FilterHome = () => {
       </div>
       {brand && (
         <div className="flex justify-center items-center">
-          <Button btnSize="btn-big" btnColor="btn-brand-1" handleClick={handleClick}>
-            Limpar filtros
+          <Button
+            btnSize="btn-big"
+            btnColor="btn-brand-1"
+            handleClick={handleClick}
+          >
+            {textButton}
           </Button>
         </div>
       )}
