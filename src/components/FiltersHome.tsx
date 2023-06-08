@@ -16,8 +16,6 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
   const [fuel, setFuel] = useState<null | string>();
   // const [km, setKm] = useState<null | string>();
 
-  console.log(brand);
-
   const allBrands = mockFilter.map((model) => model.brand);
   const brands = allBrands.filter(function (este, i) {
     return allBrands.indexOf(este) === i;
