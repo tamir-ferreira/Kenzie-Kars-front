@@ -19,31 +19,35 @@ export const NewComment = ({ userName }: NewCommentProps) => {
             name="comment"
             cols={75}
             rows={5}
-            className="resize-none rounded border-grey-7 border-2 focus:outline-0 w-full h-full p-2.5 text-grey-2"
+            className="resize-none rounded border-grey-7 border-2 focus:outline-0 w-full h-full p-2.5 sm:pr-[8rem] text-grey-2 no-scrollbar"
           ></textarea>
           <Button
-            btnSize="w-28 h-9 border-none mt-[10px] sm:absolute sm:bottom-3 sm:right-3"
+            btnSize="w-28 h-9"
             btnColor="bg-brand-1 text-[#FFFFFF]"
+            attributes="border-none mt-[10px] sm:absolute sm:bottom-3 sm:right-3"
           >
             Comentar
           </Button>
         </div>
         <div className="h-8 py-1 flex flex-wrap gap-y-3 gap-x-2">
           <Button
-            btnSize="h-full w-max px-3 rounded-3xl text-xs"
+            btnSize="h-full w-max"
             btnColor="bg-grey-7 text-grey-3"
+            attributes="px-3 rounded-3xl text-xs"
           >
             Gostei muito!
           </Button>
           <Button
-            btnSize="h-full w-max px-3 rounded-3xl text-xs"
+            btnSize="h-full w-max"
             btnColor="bg-grey-7 text-grey-3"
+            attributes="px-3 rounded-3xl text-xs"
           >
             Incrível!
           </Button>
           <Button
-            btnSize="h-full w-max px-3 rounded-3xl text-xs"
+            btnSize="h-full w-max"
             btnColor="bg-grey-7 text-grey-3"
+            attributes="px-3 rounded-3xl text-xs"
           >
             Recomendarei para meus amigos!
           </Button>
