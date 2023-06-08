@@ -135,4 +135,24 @@
     justify-content: center;
     align-items: center;
   }
+
+  .width-modal {
+    width: min(90%, 520px);
+  }
+
+  .modal-filter {
+    width: 100%;
+    height: 90%;
+    position: absolute;
+    bottom: 0;
+    overflow: auto;
+  }
+
+  .width-input {
+    width: min(100%, 466px);
+  }
+
+  .width-advert-info {
+    width: min(90%, 751px);
+  }
 }
