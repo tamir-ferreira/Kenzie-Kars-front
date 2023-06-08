@@ -54,6 +54,7 @@ export default {
       },
       fontSize: {
         "heading-1-700": ["44px", { fontWeight: "700" }],
+        "heading-2-500": ["36px", { fontWeight: "500" }],
         "heading-2-600": ["36px", { fontWeight: "600" }],
         "heading-3-500": ["32px", { fontWeight: "500" }],
         "heading-3-600": ["32px", { fontWeight: "600" }],
@@ -91,9 +92,13 @@ export default {
         68: "17rem",
       },
       width: {
+        30: "6.5rem",
         50: "12.5rem",
       },
-
+      height: {
+        30: "6.5rem",
+        50: "12.5rem",
+      },
       boxShadow: {
         "menu-profile": "0px 4px 40px -10px rgba(0, 0, 0, 0.25)",
       },
