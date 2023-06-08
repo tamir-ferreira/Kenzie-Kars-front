@@ -42,7 +42,7 @@ export const Modal = ({
     <div className="fixed top-0 bg-black/50 w-screen h-screen flex justify-center items-center z-50">
       <div
         ref={blockClosing ? null : ref}
-        className="bg-white-fixed px-6 py-5 shadow-lg w-11/12 max-w-screen-sm rounded-lg">
+        className="bg-grey-10 px-6 py-5 shadow-lg width-modal rounded-lg">
         <div className="flex-col flex gap-8">
           <div className="flex justify-between items-center">
             <h2 className="font-lexend font-medium text-base text-grey-1">

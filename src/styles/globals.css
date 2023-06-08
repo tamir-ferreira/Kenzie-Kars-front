@@ -135,4 +135,16 @@
     justify-content: center;
     align-items: center;
   }
+
+  .width-modal {
+    width: min(90%, 520px);
+  }
+
+  .width-input {
+    width: min(100%, 466px);
+  }
+
+  .width-advert-info {
+    width: min(90%, 751px);
+  }
 }

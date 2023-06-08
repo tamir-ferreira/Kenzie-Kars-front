@@ -20,8 +20,10 @@ export const Input = ({
   error,
 }: iInputProps) => {
   return (
-    <div className="flex flex-col gap-2 max-w-xs w-full relative">
-      <label className="font-inter font-medium text-sm text-grey-1" htmlFor={label}>
+    <div className="flex flex-col gap-2 input-width w-full relative">
+      <label
+        className="font-inter font-medium text-sm text-grey-1"
+        htmlFor={label}>
         {label}
       </label>
 
@@ -32,13 +34,12 @@ export const Input = ({
         disabled={disabled}
         value={value}
         {...register}
-        className="w-full h-12 px-4 border-grey-8 border-2 rounded bg-white-fixed placeholder:text-grey-3 placeholder:text-base placeholder:font-normal hover:bg-grey-8 focus:outline-none focus:border-brand-2"
+        className="w-full h-12 px-4 border-grey-8 border-1.5 rounded bg-white-fixed mb-6 placeholder:text-grey-3 placeholder:text-base placeholder:font-normal hover:bg-grey-8 focus:outline-none focus:border-brand-2"
       />
       {error && (
         <p
           className="flex self-end text-alert-1 text-input-error absolute bottom-[-20px] "
-          aria-label="erro na validação do campo"
-        >
+          aria-label="erro na validação do campo">
           {error}
         </p>
       )}
