@@ -4,15 +4,16 @@ import { FilterHome } from "../components/FiltersHome";
 import { Header } from "../components/Header";
 import { mockCards } from "../mocks/cards";
 import { Footer } from "../components/Footer";
-import useMedia from "use-media";
 import { Button } from "../components/Button";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 export const Home = () => {
-  const isMobile = useMedia({ maxWidth: "640px" });
+  const { isMobile } = useContext(UserContext);
 
   return (
     <>
-      <Header isMobile={isMobile} />
+      <Header />
       <Banner />
       <main className="flex flex-col items-center container mt-14 mb-16">
         <div className="w-full flex justify-between self-center ">
