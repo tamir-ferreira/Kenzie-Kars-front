@@ -66,7 +66,7 @@ export const Header = () => {
             </>
           )}
           {openMenu && logged && (
-            <div className="p-5 gap-4 flex bg-grey-9 rounded flex-col shadow-menu-profile absolute top-16 animate-menu left-0 sm:left-6 w-screen sm:w-50">
+            <div className="p-5 gap-4 flex bg-grey-9 rounded flex-col shadow-menu-profile absolute top-16 animate-menu -left-[1px] sm:left-6 w-screen sm:w-50">
               <ul className="gap-4 flex flex-col">
                 <li className="text-grey-2 cursor-pointer">Editar Perfil</li>
                 <li className="text-grey-2 cursor-pointer">Editar Endereço</li>

@@ -7,7 +7,7 @@ interface NewCommentProps {
 
 export const NewComment = ({ userName }: NewCommentProps) => {
   return (
-    <div className="w-[98%] sm:w-[65%] h-96 sm:h-[18rem] rounded bg-grey-10 mt-10 sm:mt-8 mb-8 sm:mb-16 py-9 px-6 sm:p-11 flex flex-col gap-3.5">
+    <div className="sm:w-[65%] h-96 sm:h-[18rem] rounded bg-grey-10 mt-10 sm:mt-8 mb-8 sm:mb-16 py-9 px-6 sm:p-11 flex flex-col gap-3.5">
       <div className="flex items-center gap-2 w-max">
         <UserInitials name={userName} />
         <p className="text-body-2-500">{userName}</p>

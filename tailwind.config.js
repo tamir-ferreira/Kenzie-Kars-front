@@ -117,11 +117,6 @@ export default {
           },
         },
       },
-      container: {
-        width: "100%",
-        maxWidth: "1600px",
-        margin: "0 auto",
-      },
     },
   },
   /*  variants: {
