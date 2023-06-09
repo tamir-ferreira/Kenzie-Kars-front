@@ -9,9 +9,11 @@ export const Product = () => {
   return (
     <>
       <Header />
+
+      <div className="bg-brand-1 w-full h-[70vh] absolute top-0 -z[-1]"></div>
       <main className="bg-grey-7 flex justify-center w-full">
         <div className="flex flex-col justify-center container max-sm:w-[95%]">
-          <div className=" flex mt-[7rem] justify-between max-sm:flex-col max-sm:w-[100%] ">
+          <div className=" flex mt-[7rem] justify-between max-sm:flex-col max-sm:w-[100%]  z-0">
             <section className="flex flex-col w-[65%] max-sm:w-[100%]">
               <div className="flex justify-center items-center rounded bg-grey-10 py-7 px-7 sm:p-11 mb-4 max-sm:w-[100%]">
                 <img
