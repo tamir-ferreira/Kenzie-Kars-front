@@ -18,17 +18,17 @@
   }
 
   button {
-    @apply h-[48px] cursor-pointer rounded border-1.5 duration-200;
+    @apply cursor-pointer rounded border-1.5 duration-200;
   }
 }
 
 @layer components {
   .btn-big {
-    @apply px-7 text-button-big;
+    @apply px-7 h-12 text-button-big;
   }
 
   .btn-medium {
-    @apply px-5 text-button-medium;
+    @apply px-5 h-10 text-button-medium;
   }
 
   .btn-filter {
