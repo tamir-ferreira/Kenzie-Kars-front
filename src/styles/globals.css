@@ -155,4 +155,10 @@
   .width-advert-info {
     width: min(100%);
   }
+
+  .container-product {
+    width: 100%;
+    max-width: 64rem;
+    margin: auto;
+  }
 }

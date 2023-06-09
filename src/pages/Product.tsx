@@ -3,7 +3,7 @@ import { CommentCard } from "../components/Comments";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { NewComment } from "../components/NewComment";
-import { UserCard } from "../components/userCard";
+import { UserCard } from "../components/UserCard";
 
 export const Product = () => {
   return (
@@ -11,29 +11,23 @@ export const Product = () => {
       <Header />
 
       <div className="bg-brand-1 w-full h-[70vh] absolute top-0 -z[-1]"></div>
-      <main className="bg-grey-7 flex justify-center w-full">
-        <div className="flex flex-col justify-center container max-sm:w-[95%]">
+      <main className="bg-grey-7 flex justify-center w-full p-3">
+        <div className="flex flex-col justify-center container sm:w-[70%]">
           <div className=" flex mt-[7rem] justify-between max-sm:flex-col max-sm:w-[100%]  z-0">
             <section className="flex flex-col w-[65%] max-sm:w-[100%]">
               <div className="flex justify-center items-center rounded bg-grey-10 py-7 px-7 sm:p-11 mb-4 max-sm:w-[100%]">
-                <img
-                  src="../../images/mock-car.png"
-                  alt="Imagem carro"
-                  className="w-[450px]"
-                />
+                <img src="../../images/mock-car.png" alt="Imagem carro" className="w-[450px]" />
               </div>
               <AdvertInfo />
               <div className="rounded bg-grey-10  py-7 px-7 sm:p-11 mt-5 mb-4 max-sm:w-[100%]">
                 <h3 className="mb-6 text-heading-6-600">Descrição</h3>
                 <p className="text-body-1-400 leading-7 text-grey-2">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Alias, modi! Pariatur eaque sequi blanditiis et commodi optio
-                  earum, ipsum animi excepturi, nihil, praesentium atque vel
-                  iure quaerat qui recusandae velit? Lorem, ipsum dolor sit amet
-                  consectetur adipisicing elit. Esse, magni. Iste magni earum
-                  consectetur aliquam ratione commodi hic quidem rerum?
-                  Perferendis natus soluta necessitatibus pariatur! Deserunt
-                  asperiores itaque dicta hic.
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias, modi! Pariatur
+                  eaque sequi blanditiis et commodi optio earum, ipsum animi excepturi, nihil,
+                  praesentium atque vel iure quaerat qui recusandae velit? Lorem, ipsum dolor sit
+                  amet consectetur adipisicing elit. Esse, magni. Iste magni earum consectetur
+                  aliquam ratione commodi hic quidem rerum? Perferendis natus soluta necessitatibus
+                  pariatur! Deserunt asperiores itaque dicta hic.
                 </p>
               </div>
             </section>

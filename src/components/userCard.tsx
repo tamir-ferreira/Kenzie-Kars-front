@@ -8,7 +8,7 @@ interface userCardProps {
 
 export const UserCard = ({ userName, description }: userCardProps) => {
   return (
-    <div className="bg-grey-10 mt-[1.25rem] rounded w-full sm:w-[29rem] h-96 sm:h-[26.625rem] flex-column-center px-7 sm:px-11 text-center gap-y-7 sm:gap-y-8">
+    <div className="bg-grey-10 mt-[1.25rem] rounded w-full h-96 sm:h-[26.625rem] flex-column-center px-7 sm:px-11 text-center gap-y-7 sm:gap-y-8">
       <UserInitials name={userName} bigSize />
       <h3 className="text-heading-6-600 text-grey-1">{userName}</h3>
       <div className="w-full h-24 overflow-y-auto no-scrollbar">
