@@ -153,6 +153,6 @@
   }
 
   .width-advert-info {
-    width: min(90%, 751px);
+    width: min(100%);
   }
 }
