@@ -11,7 +11,7 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="w-full h:28 sm:h-32 bg-grey-0 pt-7 pb-7 sm:pt-11 sm:pb-11 place-content-around flex-column-center sm:flex-row-center space-y-[1rem] sm:space-x-[18rem]">
+    <footer className="w-full h:28 sm:h-32 bg-grey-0 py-7 sm:py-11 flex-column-center sm:flex-row-center space-y-[1rem] sm:space-x-[25rem]">
       <img src={logo} alt="logo" className="w-36 h-7" />
       <small className="text-white-fixed">
         © 2023 - Todos os direitos reservados.
