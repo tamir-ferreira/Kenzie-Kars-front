@@ -70,7 +70,11 @@ export const Header = () => {
               <ul className="gap-4 flex flex-col">
                 <li className="text-grey-2 cursor-pointer">Editar Perfil</li>
                 <li className="text-grey-2 cursor-pointer">Editar Endereço</li>
-                {isSeller && <li className="text-grey-2 cursor-pointer">Meus Anúncios</li>}
+                {isSeller && (
+                  <Link to={"/profile"}>
+                    <li className="text-grey-2 cursor-pointer">Meus Anúncios</li>
+                  </Link>
+                )}
                 <li className="text-grey-2 cursor-pointer">Sair</li>
               </ul>
             </div>

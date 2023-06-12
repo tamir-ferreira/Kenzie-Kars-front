@@ -89,9 +89,11 @@ export default {
       },
       gap: {
         13: "3.25rem",
+        19: "4.75rem",
         68: "17rem",
       },
       width: {
+        23: "5.75rem",
         30: "6.5rem",
         50: "12.5rem",
       },

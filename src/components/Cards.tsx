@@ -1,48 +1,52 @@
 import { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
+import { Button } from "./Button";
+import { UserInitials } from "./UserInitials";
 
 interface CardProps {
   car: {
-    children?: ReactNode;
     img: string;
     brand: string;
     model: string;
     description: string;
-    initialName: string;
     name: string;
     kilometer: string;
     year: string;
     value: string;
   };
+  isSeller?: boolean;
 }
 
-export const Cards = ({ car }: CardProps) => {
+export const Cards = ({ car, isSeller }: CardProps) => {
   const [carsProfile, setCarsProfile] = useState(true);
   const [active, setActive] = useState(true);
   const [discount, setDiscount] = useState(true);
-  const { children, img, brand, model, description, initialName, name, kilometer, year, value } =
-    car;
+  const { img, brand, model, description, name, kilometer, year, value } = car;
 
   return (
     <Link to="/product">
-      <li className="flex flex-col items-start pt-0 h-[350px] min-w-[312px] w-[312px] group mb-9 cursor-pointer">
-        <div className="flex justify-center items-center bg-grey-7 w-full mb-4 relative border-2 border-white-fixed group-hover:border-brand-1 group-hover:border-solid ">
+      <li className="flex flex-col items-start pt-0 min-h-[350px] min-w-[312px] w-[312px] group mb-9 cursor-pointer">
+        <div className="flex justify-center items-center bg-grey-7 w-full mb-4 relative border-2 border-transparent group-hover:border-brand-1 group-hover:border-solid ">
           <img src={img} alt="carro" className="" />
-          {discount && (
-            <span className="bg-random-7 w-4 h-7 text-white-fixed text-sm font-medium border-none flex items-center justify-center rounded-sm absolute top-0 right-0">
-              $
-            </span>
-          )}
-          {carsProfile && (
+          {!isSeller && (
             <>
-              {active ? (
-                <span className="flex items-center top-3 left-4 h-6 px-2 bg-brand-1 text-body-2-500 text-white-fixed absolute">
-                  Ativo
+              {discount && (
+                <span className="bg-random-7 w-4 h-7 text-white-fixed text-sm font-medium border-none flex items-center justify-center rounded-sm absolute top-0 right-0">
+                  $
                 </span>
-              ) : (
-                <span className="flex items-center top-3 left-4 h-6 px-2 bg-grey-4 text-body-2-500 text-white-fixed absolute">
-                  Inativo
-                </span>
+              )}
+              {carsProfile && (
+                <>
+                  {active ? (
+                    <span className="flex items-center top-3 left-4 h-6 px-2 bg-brand-1 text-body-2-500 text-white-fixed absolute">
+                      Ativo
+                    </span>
+                  ) : (
+                    <span className="flex items-center top-3 left-4 h-6 px-2 bg-grey-4 text-body-2-500 text-white-fixed absolute">
+                      Inativo
+                    </span>
+                  )}
+                </>
               )}
             </>
           )}
@@ -54,10 +58,12 @@ export const Cards = ({ car }: CardProps) => {
           {description}
         </p>
         <div className="flex items-center mb-4">
-          <div className="bg-brand-1 border rounded-full h-8 w-8 flex items-center justify-center">
-            <span className="font-medium text-sm text-white-fixed">{initialName}</span>
-          </div>
-          <span className="ml-2 font-medium text-sm text-grey-2">{name}</span>
+          {!isSeller && (
+            <>
+              <UserInitials name={name} />
+              <span className="ml-2 font-medium text-sm text-grey-2">{name}</span>
+            </>
+          )}
         </div>
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center ">
@@ -70,7 +76,16 @@ export const Cards = ({ car }: CardProps) => {
           </div>
           <span className="font-lexend text-grey-1 font-medium text-base">{`R$ ${value}`}</span>
         </div>
-        {children}
+        {isSeller && (
+          <div className="flex gap-4 mt-4">
+            <Button btnSize="btn-medium" btnColor="btn-outline-1">
+              Editar
+            </Button>
+            <Button btnSize="btn-medium" btnColor="btn-outline-1">
+              Ver detalhes
+            </Button>
+          </div>
+        )}
       </li>
     </Link>
   );
