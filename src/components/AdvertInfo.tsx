@@ -19,7 +19,7 @@ export const AdvertInfo = () => {
           <p className="font-medium text-base text-grey-1">R$ 00.000,00</p>
         </div>
         <div className="mt-6">
-          <Button btnSize={"w-28 h-10"} btnColor={"btn-brand-1"}>
+          <Button btnSize={"btn-medium"} btnColor={"btn-brand-1"}>
             Comprar
           </Button>
         </div>
