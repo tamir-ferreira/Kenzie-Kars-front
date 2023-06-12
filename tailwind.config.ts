@@ -111,11 +111,11 @@ export default {
         menu: {
           "0%": {
             transform: "translateY(-150px)",
-            transform: "height: 0",
+            // transform: "height: 0",
           },
           "100%": {
             transform: "translateY(0)",
-            transform: "height: 100",
+            // transform: "height: 100",
           },
         },
       },
