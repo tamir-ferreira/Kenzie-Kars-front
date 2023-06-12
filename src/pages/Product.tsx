@@ -1,9 +1,10 @@
+import mockCar from "../assets/images/mock-car.png";
 import { AdvertInfo } from "../components/AdvertInfo";
 import { CommentCard } from "../components/Comments";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { NewComment } from "../components/NewComment";
-import { UserCard } from "../components/UserCard";
+import { UserCard } from "../components/userCard";
 
 export const Product = () => {
   return (
@@ -16,7 +17,7 @@ export const Product = () => {
           <div className=" flex mt-[7rem] justify-between max-sm:flex-col max-sm:w-[100%]  z-0">
             <section className="flex flex-col w-[65%] max-sm:w-[100%]">
               <div className="flex justify-center items-center rounded bg-grey-10 py-7 px-7 sm:p-11 mb-4 max-sm:w-[100%]">
-                <img src="../../images/mock-car.png" alt="Imagem carro" className="w-[450px]" />
+                <img src={mockCar} alt="Imagem carro" className="w-[450px]" />
               </div>
               <AdvertInfo />
               <div className="rounded bg-grey-10  py-7 px-7 sm:p-11 mt-5 mb-4 max-sm:w-[100%]">
@@ -36,22 +37,22 @@ export const Product = () => {
                 <h3 className="text-heading-6-600">Fotos</h3>
                 <ul className=" flex flex-wrap justify-between">
                   <li className="w-[30%] max-sm:w-[60px] max-sm:h-[60px] h-[108px] bg-grey-7 rounded flex justify-center items-center mt-8">
-                    <img src="../../images/mock-car.png" alt="Foto carro" />
+                    <img src={mockCar} alt="Foto carro" />
                   </li>
                   <li className="w-[30%] max-sm:w-[60px] max-sm:h-[60px] h-[108px] bg-grey-7 rounded flex justify-center items-center mt-8">
-                    <img src="../../images/mock-car.png" alt="Foto carro" />
+                    <img src={mockCar} alt="Foto carro" />
                   </li>
                   <li className="w-[30%] max-sm:w-[60px] max-sm:h-[60px] h-[108px] bg-grey-7 rounded flex justify-center items-center mt-8">
-                    <img src="../../images/mock-car.png" alt="Foto carro" />
+                    <img src={mockCar} alt="Foto carro" />
                   </li>
                   <li className="w-[30%] max-sm:w-[60px] max-sm:h-[60px] h-[108px] bg-grey-7 rounded flex justify-center items-center mt-8">
-                    <img src="../../images/mock-car.png" alt="Foto carro" />
+                    <img src={mockCar} alt="Foto carro" />
                   </li>
                   <li className="w-[30%] max-sm:w-[60px] max-sm:h-[60px] h-[108px] bg-grey-7 rounded flex justify-center items-center mt-8">
-                    <img src="../../images/mock-car.png" alt="Foto carro" />
+                    <img src={mockCar} alt="Foto carro" />
                   </li>
                   <li className="w-[30%] max-sm:w-[60px] max-sm:h-[60px] h-[108px] bg-grey-7 rounded flex justify-center items-center mt-8">
-                    <img src="../../images/mock-car.png" alt="Foto carro" />
+                    <img src={mockCar} alt="Foto carro" />
                   </li>
                 </ul>
               </div>

@@ -1,4 +1,4 @@
-import logo from "../../public/images/Logo.png";
+import logo from "../assets/images/Logo.png";
 import { Button } from "./Button";
 import { RiArrowUpSLine } from "react-icons/ri";
 
