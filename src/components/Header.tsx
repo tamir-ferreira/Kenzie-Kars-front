@@ -9,7 +9,6 @@ import { UserContext } from "../contexts/UserContext";
 import { useAuth } from "../hooks/userAuth";
 
 export const Header = () => {
-  // const [logged, setLogged] = useState(true);
   const { logged, setLogged } = useAuth();
   const [isSeller, setIsSeller] = useState(true);
   const [openMenu, setOpenMenu] = useState(false);
