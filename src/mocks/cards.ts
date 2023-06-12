@@ -1,6 +1,8 @@
+import mockCar from "../assets/images/mock-car.png";
+
 export const mockCards = [
   {
-    img: "../../images/mock-car.png",
+    img: mockCar,
     brand: "Porsche",
     model: "718",
     description:
@@ -12,7 +14,7 @@ export const mockCards = [
     value: "150.000,00",
   },
   {
-    img: "../../images/mock-car.png",
+    img: mockCar,
     brand: "Porsche",
     model: "718",
     description:
@@ -24,7 +26,7 @@ export const mockCards = [
     value: "150.000,00",
   },
   {
-    img: "../../images/mock-car.png",
+    img: mockCar,
     brand: "Porsche",
     model: "718",
     description:
@@ -36,7 +38,7 @@ export const mockCards = [
     value: "150.000,00",
   },
   {
-    img: "../../images/mock-car.png",
+    img: mockCar,
     brand: "Porsche",
     model: "718",
     description:
@@ -48,7 +50,7 @@ export const mockCards = [
     value: "150.000,00",
   },
   {
-    img: "../../images/mock-car.png",
+    img: mockCar,
     brand: "Porsche",
     model: "718",
     description:

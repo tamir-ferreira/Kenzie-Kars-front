@@ -106,7 +106,7 @@
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.29) 0%, #000000 100%);
   }
   .banner-background {
-    background-image: url("../../public/images/banner.png");
+    background-image: url("../assets/images/banner.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;

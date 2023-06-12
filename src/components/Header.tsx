@@ -1,4 +1,4 @@
-import logo from "../../public/images/logo.svg";
+import logo from "../assets/images/logo.svg";
 import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { Button } from "./Button";
