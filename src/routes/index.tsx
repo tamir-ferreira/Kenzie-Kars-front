@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { Product } from "../pages/Product";
-import { Login } from "../pages/Login/Login";
+import { Login } from "../pages/Login";
 import { Profile } from "../pages/Profile";
 
 export const PageRoutes = () => {

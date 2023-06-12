@@ -42,7 +42,7 @@ export const Product = () => {
                 <ul className=" flex flex-wrap justify-between">
                   {carImages.map((elem) => {
                     return (
-                      <li className="w-[30%] max-sm:w-[60px] max-sm:h-[60px] h-[108px] bg-grey-7 rounded flex justify-center items-center mt-8">
+                      <li className="w-[85px]  h-[85px] sm:w-[108px] -sm:h-[108px] bg-grey-7 rounded flex justify-center items-center mt-8">
                         <img src={elem.src_image} alt="Foto carro" />
                       </li>
                     );
