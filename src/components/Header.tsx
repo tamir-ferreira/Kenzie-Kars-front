@@ -75,7 +75,11 @@ export const Header = () => {
                 <li className="text-grey-2 cursor-pointer">Editar Perfil</li>
                 <li className="text-grey-2 cursor-pointer">Editar Endereço</li>
                 {isSeller && (
-                  <li className="text-grey-2 cursor-pointer">Meus Anúncios</li>
+                  <Link to={"/profile"}>
+                    <li className="text-grey-2 cursor-pointer">
+                      Meus Anúncios
+                    </li>
+                  </Link>
                 )}
                 <li className="text-grey-2 cursor-pointer">Sair</li>
               </ul>
