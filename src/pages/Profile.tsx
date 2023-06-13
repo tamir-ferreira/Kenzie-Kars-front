@@ -5,12 +5,25 @@ import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { UserInitials } from "../components/UserInitials";
 import { mockCards } from "../mocks/cards";
+import { Modal } from "../components/Modal";
+import { NewAdvert } from "../components/Modals/NewAdvert";
 
 export const Profile = () => {
   const [isSeller, setIsSeller] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
+      {isOpen && (
+        <Modal
+          title="Criar Anuncio"
+          toggleModal={() => setIsOpen(!isOpen)}
+          attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
+          widthFull
+        >
+          <NewAdvert />
+        </Modal>
+      )}
       <Header />
       <div className="bg-brand-1 w-full h-[357px] absolute top-0 z-[5]"></div>
       <main className="flex flex-col items-center gap-14 w-full min-h-[90vh] bg-grey-8 ">
@@ -28,7 +41,11 @@ export const Profile = () => {
             odit.
           </p>
           {isSeller && (
-            <Button btnSize="btn-big" btnColor="btn-outline-brand-1">
+            <Button
+              btnSize="btn-big"
+              btnColor="btn-outline-brand-1"
+              handleClick={() => setIsOpen(!isOpen)}
+            >
               Criar anuncio
             </Button>
           )}
