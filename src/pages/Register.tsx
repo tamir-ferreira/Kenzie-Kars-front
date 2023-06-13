@@ -1,11 +1,19 @@
+import { useEffect } from "react";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { useAuth } from "../hooks/userAuth";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import { TextArea } from "../components/TextArea";
 import { RLForm } from "../components/RLForm";
+import { TextArea } from "../components/TextArea";
 
 export const Register = () => {
+  const { setLogged } = useAuth();
+
+  useEffect(() => {
+    setLogged(false);
+  }, [setLogged]);
+
   return (
     <>
       <Header />
