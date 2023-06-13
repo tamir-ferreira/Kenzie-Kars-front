@@ -25,12 +25,14 @@ export const Product = () => {
               <div className="rounded bg-grey-10  py-7 px-7 sm:p-11 mt-5 mb-4 max-sm:w-[100%]">
                 <h3 className="mb-6 text-heading-6-600">Descrição</h3>
                 <p className="text-body-1-400 leading-7 text-grey-2">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias, modi! Pariatur
-                  eaque sequi blanditiis et commodi optio earum, ipsum animi excepturi, nihil,
-                  praesentium atque vel iure quaerat qui recusandae velit? Lorem, ipsum dolor sit
-                  amet consectetur adipisicing elit. Esse, magni. Iste magni earum consectetur
-                  aliquam ratione commodi hic quidem rerum? Perferendis natus soluta necessitatibus
-                  pariatur! Deserunt asperiores itaque dicta hic.
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Alias, modi! Pariatur eaque sequi blanditiis et commodi optio
+                  earum, ipsum animi excepturi, nihil, praesentium atque vel
+                  iure quaerat qui recusandae velit? Lorem, ipsum dolor sit amet
+                  consectetur adipisicing elit. Esse, magni. Iste magni earum
+                  consectetur aliquam ratione commodi hic quidem rerum?
+                  Perferendis natus soluta necessitatibus pariatur! Deserunt
+                  asperiores itaque dicta hic.
                 </p>
               </div>
             </section>

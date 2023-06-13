@@ -6,9 +6,10 @@ import { useContext, useState } from "react";
 import { UserInitials } from "./UserInitials";
 import { Link } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
+import { useAuth } from "../hooks/userAuth";
 
 export const Header = () => {
-  const [logged, setLogged] = useState(true);
+  const { logged, setLogged } = useAuth();
   const [isSeller, setIsSeller] = useState(true);
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -57,7 +58,9 @@ export const Header = () => {
                 </div>
               ) : (
                 <>
-                  <h3 className="text-body-1-600 text-grey-2 cursor-pointer">Fazer Login</h3>
+                  <h3 className="text-body-1-600 text-grey-2 cursor-pointer">
+                    Fazer Login
+                  </h3>
                   <Button btnColor="btn-outline-2" btnSize="btn-big">
                     Cadastrar
                   </Button>
@@ -72,7 +75,9 @@ export const Header = () => {
                 <li className="text-grey-2 cursor-pointer">Editar Endereço</li>
                 {isSeller && (
                   <Link to={"/profile"}>
-                    <li className="text-grey-2 cursor-pointer">Meus Anúncios</li>
+                    <li className="text-grey-2 cursor-pointer">
+                      Meus Anúncios
+                    </li>
                   </Link>
                 )}
                 <li className="text-grey-2 cursor-pointer">Sair</li>
