@@ -16,7 +16,7 @@ export const Header = () => {
   const { isMobile } = useContext(UserContext);
 
   return (
-    <header className="h-[10vh] w-screen px-4 bg-grey-9 border border-b-2 border-grey-6 flex items-center justify-center fixed z-10 sm:h-20 sm:px-15 ">
+    <header className="h-[10vh] w-screen px-4 bg-grey-9 border border-b-2 border-grey-6 flex items-center justify-center fixed z-10 sm:h-[10vh] sm:px-15 ">
       <div className="container h-full flex items-center justify-between">
         <Link to={"/"}>
           <img src={logo} alt="logotipo" />
