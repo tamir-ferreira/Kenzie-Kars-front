@@ -17,7 +17,7 @@ export const Login = () => {
     <>
       <Header />
       <main className="bg-grey-7 mt-14 h-[79.3vh] w-full flex justify-center items-center">
-        <form className="bg-white-fixed sm:w-[412px] sm:h-[542px] h-3/4 w-5/6 py-11 px-12 rounded flex flex-col">
+        <form className="bg-white-fixed sm:w-[412px] h-fit w-[93%] sm:py-11 py-7 sm:px-12 px-7 rounded">
           <h1 className="text-heading-5-500 mb-8">Login</h1>
           <Input label="Email" placeholder="Digitar email" type="email" />
           <Input label="Senha" placeholder="Digitar senha" type="passowrd" />
@@ -26,7 +26,7 @@ export const Login = () => {
               Esqueci minha senha
             </button>
           </div>
-          <Button btnColor="btn-brand-1" btnSize="btn-big">
+          <Button btnColor="btn-brand-1" btnSize="btn-big" attributes="w-full">
             Fazer login
           </Button>
           <div className="mt-6 flex justify-center items-center mb-6">
@@ -34,7 +34,11 @@ export const Login = () => {
               Ainda não tem cadastro
             </Link>
           </div>
-          <Button btnColor="btn-brand-1" btnSize="btn-big" attributes="w-full">
+          <Button
+            btnColor="btn-outline-2"
+            btnSize="btn-big"
+            attributes="w-full"
+          >
             Cadastrar
           </Button>
         </form>
