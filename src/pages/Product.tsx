@@ -55,7 +55,7 @@ export const Product = () => {
               />
             </section>
           </div>
-          <div className="h-96 sm:h-[34rem] rounded bg-grey-10 py-7 px-7 sm:p-11 w-[65%] mt-[1.25rem] max-sm:w-[100%]">
+          <div className="h-96 sm:h-[34rem] rounded bg-grey-10 py-7 px-7 sm:p-11 w-[59%] mt-[1.25rem] max-sm:w-[100%]">
             <h3 className="mb-6 text-heading-6-600">Comentários</h3>
 
             <ul className="w-full h-[90%] flex flex-col gap-11 no-scrollbar overflow-y-auto">
