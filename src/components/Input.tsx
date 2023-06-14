@@ -21,7 +21,9 @@ export const Input = ({
 }: iInputProps) => {
   return (
     <div className="flex flex-col gap-2 input-width w-full relative">
-      <label className="font-inter font-medium text-sm text-grey-1" htmlFor={label}>
+      <label
+        className="font-inter font-medium text-sm text-grey-1"
+        htmlFor={label}>
         {label}
       </label>
 
@@ -36,9 +38,8 @@ export const Input = ({
       />
       {error && (
         <p
-          className="flex self-end text-alert-1 text-input-error absolute bottom-[-20px] "
-          aria-label="erro na validação do campo"
-        >
+          className="flex self-end text-alert-1 text-input-error relative bottom-[20px] "
+          aria-label="erro na validação do campo">
           {error}
         </p>
       )}

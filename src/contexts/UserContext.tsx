@@ -1,4 +1,8 @@
-import { createContext, useState } from "react";
+import { AxiosError } from "axios";
+import { createContext, useEffect, useState } from "react";
+import { api } from "../services/api";
+import { LoginData } from "../schemas/loginSchema";
+import { useNavigate } from "react-router-dom";
 import useMedia from "use-media";
 
 interface UserProviderProps {
@@ -9,6 +13,16 @@ interface UserProviderValue {
   isMobile: boolean;
   setLogged: React.Dispatch<React.SetStateAction<boolean>>;
   logged: boolean;
+  login: (data: LoginData) => void;
+  logout: () => void;
+}
+
+interface iLogin {
+  token: string;
+}
+
+interface iError {
+  message: string;
 }
 
 export const UserContext = createContext({} as UserProviderValue);
@@ -16,9 +30,43 @@ export const UserContext = createContext({} as UserProviderValue);
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [logged, setLogged] = useState(true);
   const isMobile = useMedia({ maxWidth: "640px" });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("@TOKEN");
+
+    if (!token) {
+      localStorage.removeItem("@USER");
+      setLogged(false);
+      navigate("/");
+    }
+
+    api.defaults.headers.common.authorization = `Bearer ${token}`;
+  }, []);
+
+  const login = async (data: LoginData) => {
+    try {
+      const res = await api.post<iLogin>("/login", data);
+      const { token } = res.data;
+      api.defaults.headers.common.authorization = `Bearer ${token}`;
+
+      localStorage.setItem("@TOKEN", token);
+      navigate("/");
+    } catch (error) {
+      const currentError = error as AxiosError<iError>;
+      console.error(currentError.message);
+    }
+  };
+
+  const logout = async () => {
+    localStorage.removeItem("@TOKEN");
+    setLogged(false);
+    navigate("/");
+  };
 
   return (
-    <UserContext.Provider value={{ isMobile, setLogged, logged }}>
+    <UserContext.Provider
+      value={{ isMobile, setLogged, logged, login, logout }}>
       {children}
     </UserContext.Provider>
   );
