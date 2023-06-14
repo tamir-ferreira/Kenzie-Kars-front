@@ -15,10 +15,13 @@ interface UserProviderValue {
   logged: boolean;
   login: (data: LoginData) => void;
   logout: () => void;
+  isSeller: boolean;
+  setIsSeller: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface iLogin {
   token: string;
+  userId: string;
 }
 
 interface iError {
@@ -28,6 +31,7 @@ interface iError {
 export const UserContext = createContext({} as UserProviderValue);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
+  const [isSeller, setIsSeller] = useState(true);
   const [logged, setLogged] = useState(true);
   const isMobile = useMedia({ maxWidth: "640px" });
   const navigate = useNavigate();
@@ -50,6 +54,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       setLogged(true);
       const res = await api.post<iLogin>("/login", data);
       const { token } = res.data;
+
       api.defaults.headers.common.authorization = `Bearer ${token}`;
 
       localStorage.setItem("@TOKEN", token);
@@ -71,7 +76,15 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   return (
     <UserContext.Provider
-      value={{ isMobile, setLogged, logged, login, logout }}
+      value={{
+        isMobile,
+        setLogged,
+        logged,
+        login,
+        logout,
+        isSeller,
+        setIsSeller,
+      }}
     >
       {children}
     </UserContext.Provider>

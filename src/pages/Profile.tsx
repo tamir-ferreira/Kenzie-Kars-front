@@ -7,10 +7,11 @@ import { UserInitials } from "../components/UserInitials";
 import { mockCards } from "../mocks/cards";
 import { Modal } from "../components/Modal";
 import { NewAdvert } from "../components/Modals/NewAdvert";
+import { useAuth } from "../hooks/userAuth";
 
 export const Profile = () => {
-  const [isSeller, setIsSeller] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const { isSeller } = useAuth();
 
   return (
     <>

@@ -14,9 +14,9 @@ export const PageRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
-      <Route path="/profile" element={<Profile />} />
       {/* <Route element={<ProtectedRoutes />}>
       </Route> */}
+      <Route path="/profile" element={<Profile />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
