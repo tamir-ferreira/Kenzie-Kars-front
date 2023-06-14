@@ -38,10 +38,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     if (!token) {
       localStorage.removeItem("@USER");
       setLogged(false);
-      navigate("/");
+      //navigate("/");
     }
-
     api.defaults.headers.common.authorization = `Bearer ${token}`;
+    setLogged(false);
   }, []);
 
   const login = async (data: LoginData) => {
@@ -51,7 +51,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       api.defaults.headers.common.authorization = `Bearer ${token}`;
 
       localStorage.setItem("@TOKEN", token);
-      navigate("/");
+      navigate("/profile");
     } catch (error) {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
@@ -66,7 +66,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   return (
     <UserContext.Provider
-      value={{ isMobile, setLogged, logged, login, logout }}>
+      value={{ isMobile, setLogged, logged, login, logout }}
+    >
       {children}
     </UserContext.Provider>
   );
