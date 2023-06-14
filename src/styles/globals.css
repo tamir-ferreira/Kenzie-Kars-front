@@ -139,6 +139,18 @@
     width: min(90%, 520px);
   }
 
+  .animation-loading {
+    animation: bounce 300ms infinite ease-in-out alternate;
+  }
+
+  .animation-delay-1 {
+    animation-delay: 100ms;
+  }
+
+  .animation-delay-2 {
+    animation-delay: 200ms;
+  }
+
   .modal-filter {
     width: 100%;
     height: 90%;
