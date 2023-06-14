@@ -107,7 +107,9 @@ export default {
       },
       animation: {
         menu: "menu 0.5s",
+        bounce: "bounce 0.6s infinite",
       },
+
       keyframes: {
         menu: {
           "0%": {
@@ -117,6 +119,11 @@ export default {
           "100%": {
             transform: "translateY(0)",
             // transform: "height: 100",
+          },
+        },
+        bounce: {
+          to: {
+            transform: " translateY(20px)",
           },
         },
       },

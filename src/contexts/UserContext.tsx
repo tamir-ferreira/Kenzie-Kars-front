@@ -53,6 +53,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       api.defaults.headers.common.authorization = `Bearer ${token}`;
 
       localStorage.setItem("@TOKEN", token);
+
       navigate("/profile");
     } catch (error) {
       const currentError = error as AxiosError<iError>;

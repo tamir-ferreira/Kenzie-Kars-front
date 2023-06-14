@@ -139,10 +139,6 @@
     width: min(90%, 520px);
   }
 
-  .animation-loading {
-    animation: bounce 300ms infinite ease-in-out alternate;
-  }
-
   .animation-delay-1 {
     animation-delay: 100ms;
   }
