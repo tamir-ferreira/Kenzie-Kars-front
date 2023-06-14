@@ -15,7 +15,10 @@ export const TextArea = ({
 }: iTextAreaProps) => {
   return (
     <div className="flex flex-col gap-2 input-width">
-      <label className="font-inter font-medium text-sm text-grey-1" htmlFor={label}>
+      <label
+        className="font-inter font-medium text-sm text-grey-1"
+        htmlFor={label}
+      >
         {label}
       </label>
       <textarea
