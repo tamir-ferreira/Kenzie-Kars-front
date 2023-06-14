@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../components/Button";
 import { Cards } from "../components/Cards";
 import { Footer } from "../components/Footer";
@@ -7,22 +7,10 @@ import { UserInitials } from "../components/UserInitials";
 import { mockCards } from "../mocks/cards";
 import { Modal } from "../components/Modal";
 import { NewAdvert } from "../components/Modals/NewAdvert";
-import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
   const [isSeller, setIsSeller] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("@TOKEN");
-    if (!token) {
-      localStorage.removeItem("@USER");
-
-      navigate("/");
-      return;
-    }
-  }, []);
 
   return (
     <>

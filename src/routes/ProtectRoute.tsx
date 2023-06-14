@@ -1,12 +1,11 @@
-import { Loading } from "../components/Loading";
 import { useAuth } from "../hooks/userAuth";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 
 export const ProtectedRoutes = () => {
   const { logged } = useAuth();
-
+  const token = localStorage.getItem("@TOKEN");
   if (logged) {
-    return <Loading />;
+    return null;
   }
-  return <Outlet />;
+  return token ? <Outlet /> : <Navigate to={"/"} />;
 };
