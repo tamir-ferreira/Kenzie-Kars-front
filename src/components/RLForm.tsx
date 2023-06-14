@@ -2,7 +2,7 @@ import { ReactNode, FormEventHandler } from "react";
 
 interface RLFormComponent {
   children: ReactNode;
-  onSubmit: FormEventHandler<HTMLFormElement>;
+  onSubmit?: FormEventHandler<HTMLFormElement>;
 }
 
 export const RLForm = ({ onSubmit, children }: RLFormComponent) => {
