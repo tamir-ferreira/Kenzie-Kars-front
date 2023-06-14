@@ -31,6 +31,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [logged, setLogged] = useState(true);
   const isMobile = useMedia({ maxWidth: "640px" });
   const navigate = useNavigate();
+  window.scrollTo(0, 0);
 
   useEffect(() => {
     const token = localStorage.getItem("@TOKEN");
