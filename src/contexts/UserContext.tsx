@@ -39,6 +39,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       localStorage.removeItem("@USER");
       setLogged(false);
       //navigate("/");
+      return;
     }
     api.defaults.headers.common.authorization = `Bearer ${token}`;
     setLogged(false);
@@ -46,6 +47,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const login = async (data: LoginData) => {
     try {
+      setLogged(true);
       const res = await api.post<iLogin>("/login", data);
       const { token } = res.data;
       api.defaults.headers.common.authorization = `Bearer ${token}`;
@@ -55,6 +57,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     } catch (error) {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
+    } finally {
+      setLogged(false);
     }
   };
 
