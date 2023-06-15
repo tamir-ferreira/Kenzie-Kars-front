@@ -4,7 +4,7 @@ import { Header } from "../components/Header";
 import { useAuth } from "../hooks/userAuth";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RLForm } from "../components/RLForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,6 +20,7 @@ export const Login = () => {
   } = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLogged(false);
@@ -50,15 +51,24 @@ export const Login = () => {
             Esqueci minha senha
           </button>
         </div>
-        <Button btnColor="btn-brand-1" btnSize="btn-big" attributes="w-full">
+        <Button
+          type="submit"
+          btnColor="btn-brand-1"
+          btnSize="btn-big"
+          attributes="w-full">
           Fazer login
         </Button>
         <div className="mt-6 flex justify-center items-center mb-6">
-          <Link to="/register" className="text-grey-2 text-body-2-400 ">
-            Ainda não tem cadastro
-          </Link>
+          <p className="text-grey-2 text-body-2-400 ">
+            Ainda não tem cadastro?
+          </p>
         </div>
-        <Button btnColor="btn-outline-2" btnSize="btn-big" attributes="w-full">
+        <Button
+          type="button"
+          handleClick={() => navigate("/register")}
+          btnColor="btn-outline-2"
+          btnSize="btn-big"
+          attributes="w-full">
           Cadastrar
         </Button>
       </RLForm>

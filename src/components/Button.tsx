@@ -6,11 +6,22 @@ interface BtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   btnColor: string;
   attributes?: string;
   handleClick?: () => void;
+  type?: "button" | "submit";
 }
 
-export const Button = ({ children, btnSize, btnColor, attributes, handleClick }: BtnProps) => {
+export const Button = ({
+  children,
+  btnSize,
+  btnColor,
+  attributes,
+  type,
+  handleClick,
+}: BtnProps) => {
   return (
-    <button className={`${btnSize} ${btnColor} ${attributes}`} onClick={handleClick}>
+    <button
+      type={type}
+      className={`${btnSize} ${btnColor} ${attributes}`}
+      onClick={handleClick}>
       {children}
     </button>
   );
