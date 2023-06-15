@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../components/Button";
 import { Cards } from "../components/Cards";
 import { Footer } from "../components/Footer";
@@ -8,10 +8,18 @@ import { mockCards } from "../mocks/cards";
 import { Modal } from "../components/Modal";
 import { NewAdvert } from "../components/Modals/NewAdvert";
 import { useAuth } from "../hooks/userAuth";
+import { useParams } from "react-router-dom";
 
 export const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isSeller } = useAuth();
+
+  // const param = useParams()
+
+  // useEffect(()=>{
+  //   const x = getAnuncios(param)
+
+  // }, [])
 
   return (
     <>

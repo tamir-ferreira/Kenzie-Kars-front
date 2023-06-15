@@ -2,6 +2,8 @@ import { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./Button";
 import { UserInitials } from "./UserInitials";
+import { useAuth } from "../hooks/userAuth";
+import img from "../assets/images/mock-car.png";
 
 interface CardProps {
   car: {
@@ -16,16 +18,40 @@ interface CardProps {
   };
   isSeller?: boolean;
 }
+interface iAdeverts {
+  car: {
+    id: number;
+    brand: string;
+    model: string;
+    year: number;
+    fuel: string;
+    mileage: string;
+    color: string;
+    fipe_price: string | number;
+    price: number | string;
+    description?: string;
+    cover_image: string;
+    createdAt: string;
+    updatedAt: string;
+    is_active?: boolean;
+    userId: {
+      id: string;
+    };
+  };
+}
 
-export const Cards = ({ car, isSeller }: CardProps) => {
+export const Cards = ({ car }: iAdeverts) => {
   const [carsProfile, setCarsProfile] = useState(true);
   const [active, setActive] = useState(true);
   const [discount, setDiscount] = useState(true);
-  const { img, brand, model, description, name, kilometer, year, value } = car;
+  const { isSeller, setAdvert } = useAuth();
 
   return (
-    <Link to="/product">
-      <li className="flex flex-col items-start pt-0 min-h-[350px] min-w-[312px] w-[312px] group mb-9 cursor-pointer">
+    <Link to={`/product/${car.id}`}>
+      <li
+        className="flex flex-col items-start pt-0 min-h-[350px] min-w-[312px] w-[312px] group mb-9 cursor-pointer"
+        onClick={() => setAdvert(car)}
+      >
         <div className="flex justify-center items-center bg-grey-7 w-full mb-4 relative border-2 border-transparent group-hover:border-brand-1 group-hover:border-solid ">
           <img src={img} alt="carro" className="" />
           {!isSeller && (
@@ -52,29 +78,31 @@ export const Cards = ({ car, isSeller }: CardProps) => {
           )}
         </div>
         <div className="flex mb-4">
-          <h2 className="font-lexend text-base font-semibold">{`${brand} - ${model}`}</h2>
+          <h2 className="font-lexend text-base font-semibold">{`${car.brand} - ${car.model}`}</h2>
         </div>
         <p className="ellipsis-limiter text-grey-2 text-sm text-body-2-400 leading-6 text-start mb-4 max-w-full">
-          {description}
+          {car.description}
         </p>
         <div className="flex items-center mb-4">
           {!isSeller && (
             <>
-              <UserInitials name={name} />
-              <span className="ml-2 font-medium text-sm text-grey-2">{name}</span>
+              <UserInitials name={"Antonio Rezende"} />
+              <span className="ml-2 font-medium text-sm text-grey-2">
+                {"Antonio Rezende"}
+              </span>
             </>
           )}
         </div>
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center ">
             <span className="bg-brand-4 text-brand-1 font-medium text-sm px-2 py-1 rounded">
-              {`${kilometer} KM`}
+              {`${"3000000"} KM`}
             </span>
             <span className="bg-brand-4 text-brand-1 font-medium text-sm px-2 py-1 rounded ml-3">
-              {year}
+              {car.year}
             </span>
           </div>
-          <span className="font-lexend text-grey-1 font-medium text-base">{`R$ ${value}`}</span>
+          <span className="font-lexend text-grey-1 font-medium text-base">{`R$ ${car.price}`}</span>
         </div>
         {isSeller && (
           <div className="flex gap-4 mt-4">

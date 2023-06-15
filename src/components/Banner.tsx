@@ -1,6 +1,6 @@
 export const Banner = () => {
   return (
-    <div className="mt-[10vh] h-[90vh] text-white-fixed banner-background w-screen sm:w-full sm:mt-20 sm:h-[33.5rem]">
+    <div className="mt-[10vh] h-[90vh] text-white-fixed banner-background w-screen sm:w-full sm:mt-[10vh] sm:h-[33.5rem]">
       <div
         className={`h-full w-full flex flex-col items-center banner-gradient justify-around sm:justify-center sm:pt-0 sm:gap-0`}
       >

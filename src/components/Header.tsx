@@ -4,16 +4,17 @@ import { IoClose } from "react-icons/io5";
 import { Button } from "./Button";
 import { useContext, useState } from "react";
 import { UserInitials } from "./UserInitials";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import { useAuth } from "../hooks/userAuth";
 
 export const Header = () => {
-  const { logged, setLogged } = useAuth();
+  const { logged, setLogged, logout } = useAuth();
   const [isSeller, setIsSeller] = useState(true);
   const [openMenu, setOpenMenu] = useState(false);
 
   const { isMobile } = useContext(UserContext);
+  const navigate = useNavigate();
 
   return (
     <header className="h-[10vh] w-screen px-4 bg-grey-9 border border-b-2 border-grey-6 flex items-center justify-center fixed z-10 sm:h-[10vh] sm:px-15 ">
@@ -35,10 +36,17 @@ export const Header = () => {
                 <>
                   {!logged && (
                     <div className="flex flex-col gap-11 w-screen h-[184px] p-4 bg-white-fixed absolute left-0 top-16 shadow-menu-profile">
-                      <h3 className="text-body-1-600 text-grey-2 cursor-pointer pt-4">
+                      <Link
+                        to={"/login"}
+                        className="text-body-1-600 text-grey-2 cursor-pointer pt-4"
+                      >
                         Fazer Login
-                      </h3>
-                      <Button btnSize="btn-big" btnColor="btn-Outline-2">
+                      </Link>
+                      <Button
+                        handleClick={() => navigate("/register")}
+                        btnSize="btn-big"
+                        btnColor="btn-Outline-2"
+                      >
                         Cadastrar
                       </Button>
                     </div>
@@ -53,15 +61,22 @@ export const Header = () => {
                   className="flex gap-2 items-center cursor-pointer"
                   onClick={() => setOpenMenu(!openMenu)}
                 >
-                  <UserInitials name="José da Silva" />
+                  <UserInitials name={"José da Silva"} />
                   <h4 className="text-grey-2">José da Silva</h4>
                 </div>
               ) : (
                 <>
-                  <h3 className="text-body-1-600 text-grey-2 cursor-pointer">
+                  <Link
+                    to={"/login"}
+                    className="text-body-1-600 text-grey-2 cursor-pointer"
+                  >
                     Fazer Login
-                  </h3>
-                  <Button btnColor="btn-outline-2" btnSize="btn-big">
+                  </Link>
+                  <Button
+                    handleClick={() => navigate("/register")}
+                    btnColor="btn-outline-2"
+                    btnSize="btn-big"
+                  >
                     Cadastrar
                   </Button>
                 </>
@@ -80,7 +95,9 @@ export const Header = () => {
                     </li>
                   </Link>
                 )}
-                <li className="text-grey-2 cursor-pointer">Sair</li>
+                <button onClick={logout} className="text-grey-2 cursor-pointer">
+                  Sair
+                </button>
               </ul>
             </div>
           )}
