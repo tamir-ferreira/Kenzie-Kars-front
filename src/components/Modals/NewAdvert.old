@@ -3,11 +3,7 @@ import { Button } from "../Button";
 import { Input } from "../Input";
 import { TextArea } from "../TextArea";
 import { Select } from "../Select";
-import { useForm } from "react-hook-form";
 import { getBrands, getModelsByBrand } from "../../services/requests";
-import { NewAdvertData, newAdvertSchema } from "../../schemas/newAdvertSchema";
-import { useAuth } from "../../hooks/userAuth";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 interface Model {
   id: string;
@@ -22,11 +18,8 @@ export const NewAdvert = () => {
   const [inputs, setInputs] = useState<string[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
   const [models, setModels] = useState<Model[]>([]);
-  const [isLocked, setIsLocked] = useState(true);
   const [selectedModel, setSelectedModel] = useState<Model | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string>("");
-
-  const { newAdvertSubmit, advertIsOpen, setAdvertIsOpen } = useAuth();
 
   useEffect(() => {
     const loadCars = async () => {
@@ -44,19 +37,6 @@ export const NewAdvert = () => {
     setInputs([]);
   }, [selectedBrand]);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<NewAdvertData>({
-    resolver: zodResolver(newAdvertSchema),
-  });
-
-  const addInput = (): void => {
-    if (inputs.length <= 5) setInputs([...inputs, ""]);
-  };
-
   const updateSelectedBrand = async (brand: string) => {
     setSelectedBrand(brand);
     const findModels = await getModelsByBrand(brand);
@@ -66,24 +46,16 @@ export const NewAdvert = () => {
   const updateSelectedModel = async (model: string) => {
     const findModel = models.find((car) => car.name == model);
     setSelectedModel(findModel || null);
-    setValue("fipe_price", findModel!.value);
-    setValue("year", findModel!.year);
-    setValue(
-      "fuel",
-      findModel!.fuel === 1 ? "flex" : findModel!.fuel === 2 ? "híbrido" : "elétrico"
-    );
-    setIsLocked(false);
+  };
+
+  const addInput = (): void => {
+    if (inputs.length <= 5) setInputs([...inputs, ""]);
   };
 
   return (
-    <form onSubmit={handleSubmit(newAdvertSubmit)}>
+    <>
       <h3 className="text-body-2-500 mb-6">Informações do veículo</h3>
-      <Select
-        label="Marca"
-        handleSelect={updateSelectedBrand}
-        register={register("brand")}
-        error={errors.brand?.message}
-      >
+      <Select label="Marca" handleSelect={updateSelectedBrand}>
         {brands.map((brand, index) => {
           return (
             <option key={index} value={brand}>
@@ -92,13 +64,7 @@ export const NewAdvert = () => {
           );
         })}
       </Select>
-      <Select
-        label="Modelo"
-        handleSelect={updateSelectedModel}
-        disabled={!models.length}
-        register={register("model")}
-        error={errors.model?.message}
-      >
+      <Select label="Modelo" handleSelect={updateSelectedModel} disabled={!models.length}>
         {models &&
           models.map((model, index) => {
             return (
@@ -109,14 +75,7 @@ export const NewAdvert = () => {
           })}
       </Select>
       <div className="flex gap-3.5">
-        <Input
-          label="Ano"
-          type="text"
-          value={selectedModel ? selectedModel.year : ""}
-          disabled
-          register={register("year")}
-          error={errors.year?.message}
-        />
+        <Input label="Ano" type="text" value={selectedModel ? selectedModel.year : ""} disabled />
         <Input
           label="Combustível"
           type="text"
@@ -125,30 +84,16 @@ export const NewAdvert = () => {
               ? selectedModel.fuel === 1
                 ? "Flex"
                 : selectedModel.fuel === 2
-                ? "Híbrido"
+                ? "Hibrido"
                 : "Elétrico"
               : ""
           }
           disabled
-          register={register("fuel")}
-          error={errors.fuel?.message}
         />
       </div>
       <div className="flex gap-3.5">
-        <Input
-          label="Quilometragem"
-          placeholder="digite a quilometragem"
-          type="text"
-          register={register("mileage")}
-          error={errors.mileage?.message}
-        />
-        <Input
-          label="Cor"
-          placeholder="digite a cor"
-          type="text"
-          register={register("color")}
-          error={errors.color?.message}
-        />
+        <Input label="Quilometragem" placeholder="digite a quilometragem" type="text" />
+        <Input label="Cor" placeholder="digite a cor" type="text" />
       </div>
       <div className="flex gap-3.5">
         <Input
@@ -160,32 +105,11 @@ export const NewAdvert = () => {
               : ""
           }
           disabled
-          register={register("fipe_price")}
-          error={errors.fipe_price?.message}
         />
-        <Input
-          label="Preço"
-          placeholder="digite o preço"
-          type="text"
-          register={register("price")}
-          error={errors.price?.message}
-        />
+        <Input label="Preço" placeholder="digite o preço" type="text" />
       </div>
-      <TextArea
-        label="Descrição"
-        placeholder="digite a descrição"
-        cols={10}
-        rows={3}
-        register={register("description")}
-        error={errors.description?.message}
-      />
-      <Input
-        label="Imagem da capa"
-        placeholder="digite o caminho para a imagem"
-        type="text"
-        register={register("cover_image")}
-        error={errors.cover_image?.message}
-      />
+      <TextArea label="Descrição" placeholder="digite a descrição" cols={10} rows={3} />
+      <Input label="Imagem da capa" placeholder="digite o caminho para a imagem" type="text" />
       {inputs.map((_, index) => (
         <Input
           key={index}
@@ -199,28 +123,17 @@ export const NewAdvert = () => {
         btnColor="btn-brand-opacity"
         attributes="tex"
         handleClick={addInput}
-        type="button"
       >
         Adicionar campo para imagem da galeria
       </Button>
       <div className="flex justify-end gap-3 mt-10">
-        <Button
-          type="button"
-          btnSize="btn-big"
-          btnColor="btn-negative"
-          handleClick={() => setAdvertIsOpen(false)}
-        >
+        <Button btnSize="btn-big" btnColor="btn-negative">
           Cancelar
         </Button>
-        <>{console.log(errors)}</>
-        <Button
-          btnSize="btn-big"
-          btnColor={isLocked ? "btn-brand-disable" : "btn-brand-1"}
-          attributes="px-10"
-        >
+        <Button btnSize="btn-big" btnColor="btn-brand-disable" attributes="px-10">
           Criar anúncio
         </Button>
       </div>
-    </form>
+    </>
   );
 };

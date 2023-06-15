@@ -5,6 +5,7 @@ import { LoginData } from "../schemas/loginSchema";
 import { useNavigate } from "react-router-dom";
 import useMedia from "use-media";
 import { RegisterData } from "../schemas/registerSchema";
+import { NewAdvertData } from "../schemas/newAdvertSchema";
 
 interface UserProviderProps {
   children: React.ReactNode;
@@ -20,6 +21,9 @@ interface UserProviderValue {
   createUser: (data: RegisterData) => void;
   userStatus: boolean;
   user: iUser;
+  newAdvertSubmit: (data: NewAdvertData) => void;
+  advertIsOpen: boolean;
+  setAdvertIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface iAddress {
@@ -61,6 +65,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [logged, setLogged] = useState(true);
   const [user, setUser] = useState<iUser>({} as iUser);
   const [userStatus, setUserStatus] = useState(false);
+  const [advertIsOpen, setAdvertIsOpen] = useState(false);
   const isMobile = useMedia({ maxWidth: "640px" });
   const navigate = useNavigate();
   window.scrollTo(0, 0);
@@ -135,9 +140,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
       const dbUsers = await api.get<iUser[]>("/users");
 
-      const loggedUser = dbUsers.data.filter(
-        (user: iUser) => user.email === data.email
-      )[0];
+      const loggedUser = dbUsers.data.filter((user: iUser) => user.email === data.email)[0];
 
       setUser(loggedUser);
       localStorage.setItem("@USER", JSON.stringify(loggedUser));
@@ -147,6 +150,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     } catch (error) {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
+    } finally {
+      setLogged(false);
     }
   };
 
@@ -155,6 +160,23 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     localStorage.removeItem("@USER");
     setLogged(false);
     navigate("/");
+  };
+
+  const newAdvertSubmit = async (data: NewAdvertData) => {
+    const advertObj = {
+      ...data,
+      year: Number(data.year),
+      mileage: Number(data.mileage),
+      price: Number(data.price),
+    };
+    try {
+      const res = await api.post<NewAdvertData>("/adverts", advertObj);
+      console.log(res.data);
+      setAdvertIsOpen(!advertIsOpen);
+    } catch (error) {
+      const currentError = error as AxiosError<iError>;
+      console.error(currentError.message);
+    }
   };
 
   return (
@@ -169,6 +191,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         createUser,
         setUserStatus,
         userStatus,
+        newAdvertSubmit,
+        advertIsOpen,
+        setAdvertIsOpen,
       }}
     >
       {children}

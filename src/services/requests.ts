@@ -1,9 +1,9 @@
 import { AxiosError } from "axios";
 import { api } from "./api";
 
-const KenzieKarsBase = "https://kenzie-kars.herokuapp.com/cars";
+export const KenzieKarsBase = "https://kenzie-kars.herokuapp.com/cars";
 
-interface iError {
+export interface iError {
   message: string;
 }
 
@@ -20,6 +20,7 @@ export const getBrands = async () => {
 export const getModelsByBrand = async (brand: string) => {
   try {
     const res = await api.get(`${KenzieKarsBase}/?brand=${brand}`);
+
     return res.data;
   } catch (error) {
     const currentError = error as AxiosError<iError>;
