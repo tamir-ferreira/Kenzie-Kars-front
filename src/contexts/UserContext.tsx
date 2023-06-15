@@ -170,7 +170,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         createUser,
         setUserStatus,
         userStatus,
-      }}>
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
