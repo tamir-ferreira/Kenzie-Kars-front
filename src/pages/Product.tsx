@@ -25,14 +25,12 @@ export const Product = () => {
               <div className="rounded bg-grey-10  py-7 px-7 sm:p-11 mt-5 mb-4 max-sm:w-[100%]">
                 <h3 className="mb-6 text-heading-6-600">Descrição</h3>
                 <p className="text-body-1-400 leading-7 text-grey-2">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Alias, modi! Pariatur eaque sequi blanditiis et commodi optio
-                  earum, ipsum animi excepturi, nihil, praesentium atque vel
-                  iure quaerat qui recusandae velit? Lorem, ipsum dolor sit amet
-                  consectetur adipisicing elit. Esse, magni. Iste magni earum
-                  consectetur aliquam ratione commodi hic quidem rerum?
-                  Perferendis natus soluta necessitatibus pariatur! Deserunt
-                  asperiores itaque dicta hic.
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias, modi! Pariatur
+                  eaque sequi blanditiis et commodi optio earum, ipsum animi excepturi, nihil,
+                  praesentium atque vel iure quaerat qui recusandae velit? Lorem, ipsum dolor sit
+                  amet consectetur adipisicing elit. Esse, magni. Iste magni earum consectetur
+                  aliquam ratione commodi hic quidem rerum? Perferendis natus soluta necessitatibus
+                  pariatur! Deserunt asperiores itaque dicta hic.
                 </p>
               </div>
             </section>
@@ -40,9 +38,12 @@ export const Product = () => {
               <div className="w-full rounded bg-grey-10 py-9 px-11 max-sm:w-[100%]">
                 <h3 className="text-heading-6-600">Fotos</h3>
                 <ul className=" flex flex-wrap justify-between">
-                  {carImages.map((elem) => {
+                  {carImages.map((elem, index) => {
                     return (
-                      <li className="w-[85px]  h-[85px] sm:w-[108px] -sm:h-[108px] bg-grey-7 rounded flex justify-center items-center mt-8">
+                      <li
+                        key={index}
+                        className="w-[85px]  h-[85px] sm:w-[108px] -sm:h-[108px] bg-grey-7 rounded flex justify-center items-center mt-8"
+                      >
                         <img src={elem.src_image} alt="Foto carro" />
                       </li>
                     );
@@ -59,8 +60,9 @@ export const Product = () => {
             <h3 className="mb-6 text-heading-6-600">Comentários</h3>
 
             <ul className="w-full h-[90%] flex flex-col gap-11 no-scrollbar overflow-y-auto">
-              {comments.map((elem) => (
+              {comments.map((elem, index) => (
                 <CommentCard
+                  key={index}
                   userName={elem.userName}
                   countMark={elem.countMark}
                   comment={elem.comment}
