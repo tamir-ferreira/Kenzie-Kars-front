@@ -87,7 +87,7 @@
   }
 
   .btn-brand-disable {
-    @apply bg-brand-3 border-brand-3 text-brand-4 cursor-default pointer-events-none;
+    @apply bg-brand-3 border-brand-3 text-brand-4 cursor-not-allowed pointer-events-none;
   }
 
   .btn-close-modal {
