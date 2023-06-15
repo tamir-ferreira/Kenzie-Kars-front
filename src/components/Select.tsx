@@ -1,20 +1,22 @@
 import { ReactNode } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 interface iSelectProps {
   label: string;
-  name: string;
+  // name: string;
   disabled?: boolean;
   children: ReactNode;
   handleSelect?: (name: string) => void | Promise<void>;
+  register?: UseFormRegisterReturn;
   error?: string;
 }
 
 export const Select = ({
   label,
-  name,
   disabled = false,
   children,
   handleSelect,
+  register,
   error,
 }: iSelectProps) => {
   return (
@@ -25,7 +27,7 @@ export const Select = ({
 
       <select
         id={label}
-        name={name}
+        {...register}
         className="w-full h-12 text-grey-3 px-4 border-grey-8 border-1.5 rounded bg-white-fixed hover:bg-grey-8 mb-6"
         onChange={(event) => handleSelect && handleSelect(event.target.value)}
         disabled={disabled}
