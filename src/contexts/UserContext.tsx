@@ -146,8 +146,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     } catch (error) {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
-    } finally {
-      setLogged(false);
     }
   };
 
