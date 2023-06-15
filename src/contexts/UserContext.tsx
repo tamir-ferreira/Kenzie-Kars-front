@@ -146,8 +146,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     } catch (error) {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
-    } finally {
-      setLogged(false);
     }
   };
 
@@ -170,7 +168,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         createUser,
         setUserStatus,
         userStatus,
-      }}>
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
