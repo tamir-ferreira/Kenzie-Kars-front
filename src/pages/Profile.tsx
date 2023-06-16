@@ -21,6 +21,7 @@ export const Profile = () => {
     currentUserAdverts,
     isCreateAdvertSuccessModalOpen,
     toggleCreateAdvertSuccessModal,
+    reload,
   } = useAuth();
 
   const { id } = useParams();
@@ -29,7 +30,7 @@ export const Profile = () => {
     getParamInfo(id!);
     setIsSeller(true);
     setLogged(true);
-  }, []);
+  }, [reload]);
 
   return (
     <>

@@ -41,6 +41,8 @@ interface UserProviderValue {
   toggleRegisterModal: () => void;
   isCreateAdvertSuccessModalOpen: boolean;
   toggleCreateAdvertSuccessModal: () => void;
+  reload: boolean;
+  setReload: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface iAddress {
@@ -128,6 +130,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const isMobile = useMedia({ maxWidth: "640px" });
   const navigate = useNavigate();
   //window.scrollTo(0, 0);
+
+  const [reload, setReload] = useState(false);
 
   const toggleRegisterModal = () =>
     setIsRegisterModalOpen(!isRegisterModalOpen);
@@ -318,6 +322,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         toggleRegisterModal,
         isCreateAdvertSuccessModalOpen,
         toggleCreateAdvertSuccessModal,
+        reload,
+        setReload,
       }}>
       {children}
     </UserContext.Provider>
