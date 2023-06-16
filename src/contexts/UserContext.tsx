@@ -5,6 +5,7 @@ import { LoginData } from "../schemas/loginSchema";
 import { useNavigate } from "react-router-dom";
 import useMedia from "use-media";
 import { RegisterData } from "../schemas/registerSchema";
+import { NewAdvertData } from "../schemas/newAdvertSchema";
 
 interface UserProviderProps {
   children: React.ReactNode;
@@ -26,6 +27,11 @@ interface UserProviderValue {
   adverts: iAdeverts[];
   setAdvert: React.Dispatch<React.SetStateAction<iAdeverts>>;
   advert: iAdeverts;
+  newAdvertSubmit: (data: NewAdvertData) => void;
+  advertIsOpen: boolean;
+  setAdvertIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setCarsProfile: React.Dispatch<React.SetStateAction<boolean>>;
+  carsProfile: boolean;
 }
 
 interface iAddress {
@@ -68,8 +74,19 @@ interface iAdeverts {
   createdAt: string;
   updatedAt: string;
   is_active?: boolean;
-  userId: {
-    id: string;
+  user: {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    cpf: string;
+    birthdate: Date | string;
+    description: string | null;
+    admin: boolean;
+    seller: boolean;
+    color: string;
+    createdAt: Date;
+    updatedAt: Date;
   };
 }
 
@@ -85,12 +102,14 @@ interface iError {
 export const UserContext = createContext({} as UserProviderValue);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
+  const [carsProfile, setCarsProfile] = useState(true);
   const [isSeller, setIsSeller] = useState(true);
   const [logged, setLogged] = useState(true);
   const [user, setUser] = useState<iUser>({} as iUser);
   const [adverts, setAdverts] = useState<iAdeverts[]>([] as iAdeverts[]);
   const [advert, setAdvert] = useState<iAdeverts>({} as iAdeverts);
   const [userStatus, setUserStatus] = useState(false);
+  const [advertIsOpen, setAdvertIsOpen] = useState(false);
   const isMobile = useMedia({ maxWidth: "640px" });
   const navigate = useNavigate();
   //window.scrollTo(0, 0);
@@ -189,6 +208,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     } catch (error) {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
+    } finally {
+      setLogged(false);
     }
   };
 
@@ -197,6 +218,24 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     localStorage.removeItem("@USER");
     setLogged(false);
     navigate("/");
+  };
+
+  const newAdvertSubmit = async (data: NewAdvertData) => {
+    const advertObj = {
+      ...data,
+      year: Number(data.year),
+      mileage: Number(data.mileage),
+      price: Number(data.price),
+    };
+
+    try {
+      const res = await api.post<NewAdvertData>("/adverts", advertObj);
+      console.log(res.data);
+      setAdvertIsOpen(!advertIsOpen);
+    } catch (error) {
+      const currentError = error as AxiosError<iError>;
+      console.error(currentError.message);
+    }
   };
 
   return (
@@ -217,6 +256,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         adverts,
         setAdvert,
         advert,
+        newAdvertSubmit,
+        advertIsOpen,
+        setAdvertIsOpen,
+        setCarsProfile,
+        carsProfile,
       }}
     >
       {children}

@@ -9,11 +9,12 @@ import { UserContext } from "../contexts/UserContext";
 import { useAuth } from "../hooks/userAuth";
 
 export const Header = () => {
-  const { logged, setLogged, logout } = useAuth();
+  const { logged, setLogged, logout, user } = useAuth();
   const [isSeller, setIsSeller] = useState(true);
   const [openMenu, setOpenMenu] = useState(false);
 
   const { isMobile } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   return (
@@ -61,8 +62,8 @@ export const Header = () => {
                   className="flex gap-2 items-center cursor-pointer"
                   onClick={() => setOpenMenu(!openMenu)}
                 >
-                  <UserInitials name={"José da Silva"} />
-                  <h4 className="text-grey-2">José da Silva</h4>
+                  <UserInitials name={"Antonio Rezende"} />
+                  <h4 className="text-grey-2">{"Antonio Rezende"}</h4>
                 </div>
               ) : (
                 <>

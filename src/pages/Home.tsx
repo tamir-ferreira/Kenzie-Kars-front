@@ -2,7 +2,6 @@ import { Banner } from "../components/Banner";
 import { Cards } from "../components/Cards";
 import { FilterHome } from "../components/FiltersHome";
 import { Header } from "../components/Header";
-import { mockCards } from "../mocks/cards";
 import { Footer } from "../components/Footer";
 import { Button } from "../components/Button";
 import { useState, useContext, useEffect } from "react";
@@ -10,14 +9,15 @@ import { UserContext } from "../contexts/UserContext";
 import { Modal } from "../components/Modal";
 
 export const Home = () => {
-  const { isMobile, getAllAdverts, adverts, setIsSeller } =
+  const { isMobile, getAllAdverts, adverts, setIsSeller, setCarsProfile } =
     useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     getAllAdverts();
     setIsSeller(false);
-  }, [adverts]);
+    setCarsProfile(false);
+  }, [adverts, getAllAdverts, setIsSeller, setCarsProfile]);
 
   return (
     <>

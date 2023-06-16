@@ -1,4 +1,3 @@
-import mockCar from "../assets/images/mock-car.png";
 import { AdvertInfo } from "../components/AdvertInfo";
 import { CommentCard } from "../components/Comments";
 import { Footer } from "../components/Footer";
@@ -11,7 +10,6 @@ import { comments } from "../mocks/comments";
 
 export const Product = () => {
   const { advert } = useAuth();
-  console.log(advert);
 
   return (
     <>
@@ -53,11 +51,7 @@ export const Product = () => {
                   })}
                 </ul>
               </div>
-              <UserCard
-                idAdvertiser={2}
-                userName="Samuel Leão"
-                description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis eum, vitae autem rerum deserunt, explicabo sed laborum officia voluptatum consectetur blanditiis commodi illo et! Soluta eum a nesciunt nobis itaque!"
-              />
+              <UserCard />
             </section>
           </div>
           <div className="h-96 sm:h-[34rem] rounded bg-grey-10 py-7 px-7 sm:p-11 w-[59%] mt-[1.25rem] max-sm:w-[100%]">

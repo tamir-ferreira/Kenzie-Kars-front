@@ -1,23 +1,9 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./Button";
 import { UserInitials } from "./UserInitials";
 import { useAuth } from "../hooks/userAuth";
-import img from "../assets/images/mock-car.png";
 
-interface CardProps {
-  car: {
-    img: string;
-    brand: string;
-    model: string;
-    description: string;
-    name: string;
-    kilometer: string;
-    year: string;
-    value: string;
-  };
-  isSeller?: boolean;
-}
 interface iAdeverts {
   car: {
     id: number;
@@ -34,17 +20,27 @@ interface iAdeverts {
     createdAt: string;
     updatedAt: string;
     is_active?: boolean;
-    userId: {
-      id: string;
+    user: {
+      id: number;
+      name: string;
+      email: string;
+      phone: string;
+      cpf: string;
+      birthdate: Date | string;
+      description: string | null;
+      admin: boolean;
+      seller: boolean;
+      color: string;
+      createdAt: Date;
+      updatedAt: Date;
     };
   };
 }
 
 export const Cards = ({ car }: iAdeverts) => {
-  const [carsProfile, setCarsProfile] = useState(true);
-  const [active, setActive] = useState(true);
+  // const [active, setActive] = useState(true);
   const [discount, setDiscount] = useState(true);
-  const { isSeller, setAdvert } = useAuth();
+  const { isSeller, setAdvert, carsProfile } = useAuth();
 
   return (
     <Link to={`/product/${car.id}`}>
@@ -53,7 +49,7 @@ export const Cards = ({ car }: iAdeverts) => {
         onClick={() => setAdvert(car)}
       >
         <div className="flex justify-center items-center bg-grey-7 w-full mb-4 relative border-2 border-transparent group-hover:border-brand-1 group-hover:border-solid ">
-          <img src={img} alt="carro" className="" />
+          <img src={car.cover_image} alt="carro" className="" />
           {!isSeller && (
             <>
               {discount && (
@@ -63,7 +59,7 @@ export const Cards = ({ car }: iAdeverts) => {
               )}
               {carsProfile && (
                 <>
-                  {active ? (
+                  {car.is_active ? (
                     <span className="flex items-center top-3 left-4 h-6 px-2 bg-brand-1 text-body-2-500 text-white-fixed absolute">
                       Ativo
                     </span>
@@ -86,9 +82,9 @@ export const Cards = ({ car }: iAdeverts) => {
         <div className="flex items-center mb-4">
           {!isSeller && (
             <>
-              <UserInitials name={"Antonio Rezende"} />
+              <UserInitials name={car.user.name} />
               <span className="ml-2 font-medium text-sm text-grey-2">
-                {"Antonio Rezende"}
+                {car.user.name}
               </span>
             </>
           )}
