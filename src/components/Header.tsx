@@ -29,8 +29,7 @@ export const Header = () => {
               <button
                 className="flex items-center justify-center bg-white-fixed rounded-lg h-11 w-11 border-none"
                 onClick={() => setOpenMenu(!openMenu)}
-                aria-label={!openMenu ? "Abrir Menu" : "Fechar Menu"}
-              >
+                aria-label={!openMenu ? "Abrir Menu" : "Fechar Menu"}>
                 {!openMenu ? <FaBars size={20} /> : <IoClose size={25} />}
               </button>
               {openMenu && (
@@ -39,15 +38,13 @@ export const Header = () => {
                     <div className="flex flex-col gap-11 w-screen h-[184px] p-4 bg-white-fixed absolute left-0 top-16 shadow-menu-profile">
                       <Link
                         to={"/login"}
-                        className="text-body-1-600 text-grey-2 cursor-pointer pt-4"
-                      >
+                        className="text-body-1-600 text-grey-2 cursor-pointer pt-4">
                         Fazer Login
                       </Link>
                       <Button
                         handleClick={() => navigate("/register")}
                         btnSize="btn-big"
-                        btnColor="btn-Outline-2"
-                      >
+                        btnColor="btn-Outline-2">
                         Cadastrar
                       </Button>
                     </div>
@@ -60,24 +57,21 @@ export const Header = () => {
               {logged ? (
                 <div
                   className="flex gap-2 items-center cursor-pointer"
-                  onClick={() => setOpenMenu(!openMenu)}
-                >
-                  <UserInitials name={"Antonio Rezende"} />
-                  <h4 className="text-grey-2">{"Antonio Rezende"}</h4>
+                  onClick={() => setOpenMenu(!openMenu)}>
+                  <UserInitials name={user.name} />
+                  <h4 className="text-grey-2">{user.name}</h4>
                 </div>
               ) : (
                 <>
                   <Link
                     to={"/login"}
-                    className="text-body-1-600 text-grey-2 cursor-pointer"
-                  >
+                    className="text-body-1-600 text-grey-2 cursor-pointer">
                     Fazer Login
                   </Link>
                   <Button
                     handleClick={() => navigate("/register")}
                     btnColor="btn-outline-2"
-                    btnSize="btn-big"
-                  >
+                    btnSize="btn-big">
                     Cadastrar
                   </Button>
                 </>
@@ -90,7 +84,7 @@ export const Header = () => {
                 <li className="text-grey-2 cursor-pointer">Editar Perfil</li>
                 <li className="text-grey-2 cursor-pointer">Editar Endereço</li>
                 {isSeller && (
-                  <Link to={"/profile"}>
+                  <Link to={`/profile/${user.id}`}>
                     <li className="text-grey-2 cursor-pointer">
                       Meus Anúncios
                     </li>

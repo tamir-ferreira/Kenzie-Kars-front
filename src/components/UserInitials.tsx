@@ -3,7 +3,10 @@ interface UserProps {
   bigSize?: boolean;
 }
 
-export const UserInitials = ({ name, bigSize = false }: UserProps) => {
+export const UserInitials = ({
+  name = "placeholder",
+  bigSize = false,
+}: UserProps) => {
   let color = "";
 
   const splitName = name.split(" ");
@@ -30,8 +33,7 @@ export const UserInitials = ({ name, bigSize = false }: UserProps) => {
       style={{ backgroundColor: color }}
       className={`flex items-center justify-center rounded-full text-white-fixed ${
         bigSize ? "w-20 h-20 sm:w-30 sm:h-30" : "w-8 h-8 "
-      }`}
-    >
+      }`}>
       <span className={`${bigSize && "text-heading-2-500"}`}>{initials}</span>
     </div>
   );

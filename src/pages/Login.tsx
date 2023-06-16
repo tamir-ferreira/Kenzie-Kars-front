@@ -12,7 +12,7 @@ import { LoginData, loginSchema } from "../schemas/loginSchema";
 import { Loading } from "../components/Loading";
 
 export const Login = () => {
-  const { setLogged, login, logged } = useAuth();
+  const { setLogged, login, globalLoading } = useAuth();
   const {
     register,
     handleSubmit,
@@ -28,7 +28,7 @@ export const Login = () => {
 
   return (
     <>
-      {logged && <Loading />}
+      {globalLoading && <Loading />}
       <Header />
       <RLForm onSubmit={handleSubmit(login)}>
         <h1 className="text-heading-5-500 mb-8">Login</h1>

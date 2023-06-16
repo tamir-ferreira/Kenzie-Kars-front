@@ -1,21 +1,25 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { useAuth } from "../hooks/userAuth";
+import { iUser } from "../contexts/UserContext";
 
 export const ProtectedRoutes = () => {
-  const { setIsSeller, advert, setCarsProfile } = useAuth();
+  const { setIsSeller, setCarsProfile, setLogged } = useAuth();
 
   const token = localStorage.getItem("@TOKEN");
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   if (!token) {
     setIsSeller(false);
     setCarsProfile(false);
+    setLogged(false);
   }
 
-  const id = JSON.parse(localStorage.getItem("@USER")!);
+  const { id } = useParams();
 
-  if (id !== undefined && id !== null) {
-    if (id.id !== advert.user.id) {
-      console.log("Passando aqio");
+  const userString = localStorage.getItem("@USER");
+  const user: iUser = userString ? JSON.parse(userString) : null;
+
+  if (user !== undefined && user !== null) {
+    if (user.id !== Number(id)) {
       setCarsProfile(true);
       setIsSeller(false);
     }

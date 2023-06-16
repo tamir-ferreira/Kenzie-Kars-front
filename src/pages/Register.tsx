@@ -10,9 +10,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { RegisterData, registerSchema } from "../schemas/registerSchema";
 import axios from "axios";
+import { Modal } from "../components/Modal";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
-  const { setLogged, createUser, setUserStatus, userStatus } = useAuth();
+  const {
+    setLogged,
+    createUser,
+    setUserStatus,
+    userStatus,
+    isRegisterModalOpen,
+    toggleRegisterModal,
+  } = useAuth();
 
   const {
     register,
@@ -22,10 +31,6 @@ export const Register = () => {
   } = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
   });
-
-  useEffect(() => {
-    setLogged(false);
-  }, [setLogged]);
 
   const ViaCepBase = axios.create({
     baseURL: "https://viacep.com.br/ws",
@@ -48,9 +53,34 @@ export const Register = () => {
     }
   };
 
+  useEffect(() => {
+    setLogged(false);
+  }, [setLogged]);
+
+  const navigate = useNavigate();
+
   return (
     <>
       <Header />
+      {isRegisterModalOpen && (
+        <Modal title="Sucesso!" toggleModal={toggleRegisterModal}>
+          <div className="flex flex-col gap-5">
+            <h2 className="heading-7-500 text-grey-1">
+              Sua conta foi criada com sucesso
+            </h2>
+            <p className="body-1-400 text-grey-2">
+              Agora você poderá ver seu negócios crescendo em grande escala
+            </p>
+            <Button
+              handleClick={() => navigate("/login")}
+              type="button"
+              btnSize="btn-medium sm:btn-big"
+              btnColor="btn-brand-1">
+              Ir para o login
+            </Button>
+          </div>
+        </Modal>
+      )}
       <RLForm onSubmit={handleSubmit(createUser)}>
         <h1 className="text-heading-5-500 mb-8">Cadastro</h1>
         <p className="body-2-500 mb-6">Informações pessoais</p>
