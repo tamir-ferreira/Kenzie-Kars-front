@@ -70,7 +70,11 @@ export const NewAdvert = () => {
     setValue("year", findModel!.year);
     setValue(
       "fuel",
-      findModel!.fuel === 1 ? "flex" : findModel!.fuel === 2 ? "híbrido" : "elétrico"
+      findModel!.fuel === 1
+        ? "flex"
+        : findModel!.fuel === 2
+        ? "híbrido"
+        : "elétrico"
     );
     setIsLocked(false);
   };
@@ -82,8 +86,7 @@ export const NewAdvert = () => {
         label="Marca"
         handleSelect={updateSelectedBrand}
         register={register("brand")}
-        error={errors.brand?.message}
-      >
+        error={errors.brand?.message}>
         {brands.map((brand, index) => {
           return (
             <option key={index} value={brand}>
@@ -97,8 +100,7 @@ export const NewAdvert = () => {
         handleSelect={updateSelectedModel}
         disabled={!models.length}
         register={register("model")}
-        error={errors.model?.message}
-      >
+        error={errors.model?.message}>
         {models &&
           models.map((model, index) => {
             return (
@@ -156,7 +158,10 @@ export const NewAdvert = () => {
           type="text"
           value={
             selectedModel
-              ? selectedModel.value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
+              ? selectedModel.value.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })
               : ""
           }
           disabled
@@ -199,8 +204,7 @@ export const NewAdvert = () => {
         btnColor="btn-brand-opacity"
         attributes="tex"
         handleClick={addInput}
-        type="button"
-      >
+        type="button">
         Adicionar campo para imagem da galeria
       </Button>
       <div className="flex justify-end gap-3 mt-10">
@@ -208,16 +212,14 @@ export const NewAdvert = () => {
           type="button"
           btnSize="btn-big"
           btnColor="btn-negative"
-          handleClick={() => setAdvertIsOpen(false)}
-        >
+          handleClick={() => setAdvertIsOpen(false)}>
           Cancelar
         </Button>
-        <>{console.log(errors)}</>
+
         <Button
           btnSize="btn-big"
           btnColor={isLocked ? "btn-brand-disable" : "btn-brand-1"}
-          attributes="px-10"
-        >
+          attributes="px-10">
           Criar anúncio
         </Button>
       </div>

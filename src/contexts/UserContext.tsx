@@ -23,15 +23,18 @@ interface UserProviderValue {
   user: iUser;
   isSeller: boolean;
   setIsSeller: React.Dispatch<React.SetStateAction<boolean>>;
-  getAllAdverts: () => Promise<iAdeverts[] | undefined>;
-  adverts: iAdeverts[];
-  setAdvert: React.Dispatch<React.SetStateAction<iAdeverts>>;
-  advert: iAdeverts;
+  getAllAdverts: () => Promise<iAdverts[] | undefined>;
+  adverts: iAdverts[];
+  setAdvert: React.Dispatch<React.SetStateAction<iAdverts>>;
+  advert: iAdverts;
   newAdvertSubmit: (data: NewAdvertData) => void;
   advertIsOpen: boolean;
   setAdvertIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setCarsProfile: React.Dispatch<React.SetStateAction<boolean>>;
   carsProfile: boolean;
+  currentUser: iUser;
+  currentUserAdverts: iAdverts[];
+  getParamInfo: (id: string) => Promise<void>;
 }
 
 interface iAddress {
@@ -43,7 +46,7 @@ interface iAddress {
   state: string;
 }
 
-interface iUser {
+export interface iUser {
   id: number;
   name: string;
   email: string;
@@ -59,7 +62,7 @@ interface iUser {
   address: iAddress;
 }
 
-interface iAdeverts {
+export interface iAdverts {
   id: number;
   brand: string;
   model: string;
@@ -106,16 +109,20 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [isSeller, setIsSeller] = useState(true);
   const [logged, setLogged] = useState(true);
   const [user, setUser] = useState<iUser>({} as iUser);
-  const [adverts, setAdverts] = useState<iAdeverts[]>([] as iAdeverts[]);
-  const [advert, setAdvert] = useState<iAdeverts>({} as iAdeverts);
+  const [adverts, setAdverts] = useState<iAdverts[]>([] as iAdverts[]);
+  const [advert, setAdvert] = useState<iAdverts>({} as iAdverts);
   const [userStatus, setUserStatus] = useState(false);
   const [advertIsOpen, setAdvertIsOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState({} as iUser);
+  const [currentUserAdverts, setCurrentUserAdverts] = useState<iAdverts[]>([]);
   const isMobile = useMedia({ maxWidth: "640px" });
   const navigate = useNavigate();
   //window.scrollTo(0, 0);
 
   useEffect(() => {
     const token = localStorage.getItem("@TOKEN");
+    const userString = localStorage.getItem("@USER");
+    const user: iUser = userString ? JSON.parse(userString) : null;
 
     if (!token) {
       localStorage.removeItem("@USER");
@@ -125,8 +132,28 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
 
     api.defaults.headers.common.authorization = `Bearer ${token}`;
+    setUser(user);
     setLogged(true);
   }, []);
+
+  const getParamInfo = async (id: string) => {
+    try {
+      const dbUsers = await api.get<iUser[]>("/users");
+      const dbAdverts = await api.get<iAdverts[]>("/adverts");
+
+      const user = dbUsers.data.filter(
+        (elt: iUser) => elt.id === Number(id)
+      )[0];
+      const userAdverts = dbAdverts.data.filter(
+        (elt: iAdverts) => elt.user.id === Number(id)
+      );
+
+      setCurrentUser(user);
+      setCurrentUserAdverts(userAdverts);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const createUser = async (data: RegisterData) => {
     try {
@@ -164,7 +191,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       };
 
       const reqBody = { ...userObj, address: addressObj };
-      console.log(reqBody);
 
       await api.post<iUser>("/users", reqBody);
 
@@ -177,7 +203,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const getAllAdverts = async () => {
     try {
-      const { data } = await api.get<iAdeverts[]>(`/adverts`);
+      const { data } = await api.get<iAdverts[]>(`/adverts`);
       setAdverts(data);
       return data;
     } catch (error) {
@@ -208,8 +234,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     } catch (error) {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
-    } finally {
-      setLogged(false);
     }
   };
 
@@ -221,16 +245,18 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const newAdvertSubmit = async (data: NewAdvertData) => {
-    const advertObj = {
-      ...data,
-      year: Number(data.year),
-      mileage: Number(data.mileage),
-      price: Number(data.price),
-    };
-
     try {
-      const res = await api.post<NewAdvertData>("/adverts", advertObj);
-      console.log(res.data);
+      const userString = localStorage.getItem("@USER");
+      const user: iUser = userString ? JSON.parse(userString) : null;
+      const advertObj = {
+        ...data,
+        year: Number(data.year),
+        mileage: Number(data.mileage),
+        price: Number(data.price),
+      };
+
+      await api.post<NewAdvertData>("/adverts", advertObj);
+      getParamInfo(String(user.id));
       setAdvertIsOpen(!advertIsOpen);
     } catch (error) {
       const currentError = error as AxiosError<iError>;
@@ -261,8 +287,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         setAdvertIsOpen,
         setCarsProfile,
         carsProfile,
-      }}
-    >
+        currentUser,
+        currentUserAdverts,
+        getParamInfo,
+      }}>
       {children}
     </UserContext.Provider>
   );

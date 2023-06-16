@@ -13,7 +13,6 @@ export const PageRoutes = () => {
       <Route path="/product/:id" element={<Product />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
       <Route element={<ProtectedRoutes />}>
         <Route path="/profile/:id" element={<Profile />} />
       </Route>

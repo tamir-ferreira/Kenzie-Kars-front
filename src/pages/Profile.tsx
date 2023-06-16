@@ -7,19 +7,24 @@ import { UserInitials } from "../components/UserInitials";
 import { Modal } from "../components/Modal";
 import { NewAdvert } from "../components/Modals/NewAdvert";
 import { useAuth } from "../hooks/userAuth";
+import { useParams } from "react-router-dom";
 
 export const Profile = () => {
   const {
     advertIsOpen,
     setAdvertIsOpen,
     setLogged,
-    advert,
     isSeller,
     setIsSeller,
-    adverts,
+    getParamInfo,
+    currentUser,
+    currentUserAdverts,
   } = useAuth();
 
+  const { id } = useParams();
+
   useEffect(() => {
+    getParamInfo(id!);
     setIsSeller(true);
     setLogged(true);
   }, []);
@@ -31,8 +36,7 @@ export const Profile = () => {
           title="Criar Anuncio"
           toggleModal={() => setAdvertIsOpen(!advertIsOpen)}
           attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
-          widthFull
-        >
+          widthFull>
           <NewAdvert />
         </Modal>
       )}
@@ -40,9 +44,9 @@ export const Profile = () => {
       <div className="bg-brand-1 w-full h-[357px] absolute top-0 z-[5]"></div>
       <main className="flex flex-col items-center gap-14 w-full min-h-[90vh] bg-grey-8 ">
         <section className="flex h-fit flex-col container w-[93%] gap-6 z-[7] relative bg-white-fixed mt-40 px-7 py-10 sm:p-11 rounded sm:w-[1240px] ">
-          <UserInitials name={advert.user.name} bigSize />
+          <UserInitials name={currentUser.name} bigSize />
           <div className="flex items-center gap-2">
-            <h2 className="text-heading-6-600">{advert.user.name}</h2>
+            <h2 className="text-heading-6-600">{currentUser.name}</h2>
             <span className="flex items-center justify-center bg-brand-4 rounded text-brand-1 text-body-2-500 w-23 h-8">
               Anunciante
             </span>
@@ -56,8 +60,7 @@ export const Profile = () => {
             <Button
               btnSize="btn-big"
               btnColor="btn-outline-brand-1"
-              handleClick={() => setAdvertIsOpen(!advertIsOpen)}
-            >
+              handleClick={() => setAdvertIsOpen(!advertIsOpen)}>
               Criar anuncio
             </Button>
           )}
@@ -69,7 +72,7 @@ export const Profile = () => {
             </h3>
           )}
           <ul className="flex gap-4 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
-            {adverts.map((car) => (
+            {currentUserAdverts.map((car) => (
               <Cards key={car.id} car={car} />
             ))}
           </ul>
