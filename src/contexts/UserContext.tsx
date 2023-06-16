@@ -21,9 +21,17 @@ interface UserProviderValue {
   createUser: (data: RegisterData) => void;
   userStatus: boolean;
   user: iUser;
+  isSeller: boolean;
+  setIsSeller: React.Dispatch<React.SetStateAction<boolean>>;
+  getAllAdverts: () => Promise<iAdeverts[] | undefined>;
+  adverts: iAdeverts[];
+  setAdvert: React.Dispatch<React.SetStateAction<iAdeverts>>;
+  advert: iAdeverts;
   newAdvertSubmit: (data: NewAdvertData) => void;
   advertIsOpen: boolean;
   setAdvertIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setCarsProfile: React.Dispatch<React.SetStateAction<boolean>>;
+  carsProfile: boolean;
 }
 
 interface iAddress {
@@ -51,8 +59,40 @@ interface iUser {
   address: iAddress;
 }
 
+interface iAdeverts {
+  id: number;
+  brand: string;
+  model: string;
+  year: number;
+  fuel: string;
+  mileage: string;
+  color: string;
+  fipe_price: string | number;
+  price: number | string;
+  description?: string;
+  cover_image: string;
+  createdAt: string;
+  updatedAt: string;
+  is_active?: boolean;
+  user: {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    cpf: string;
+    birthdate: Date | string;
+    description: string | null;
+    admin: boolean;
+    seller: boolean;
+    color: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+}
+
 interface iLogin {
   token: string;
+  userId: string;
 }
 
 interface iError {
@@ -62,13 +102,17 @@ interface iError {
 export const UserContext = createContext({} as UserProviderValue);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
+  const [carsProfile, setCarsProfile] = useState(true);
+  const [isSeller, setIsSeller] = useState(true);
   const [logged, setLogged] = useState(true);
   const [user, setUser] = useState<iUser>({} as iUser);
+  const [adverts, setAdverts] = useState<iAdeverts[]>([] as iAdeverts[]);
+  const [advert, setAdvert] = useState<iAdeverts>({} as iAdeverts);
   const [userStatus, setUserStatus] = useState(false);
   const [advertIsOpen, setAdvertIsOpen] = useState(false);
   const isMobile = useMedia({ maxWidth: "640px" });
   const navigate = useNavigate();
-  window.scrollTo(0, 0);
+  //window.scrollTo(0, 0);
 
   useEffect(() => {
     const token = localStorage.getItem("@TOKEN");
@@ -131,22 +175,36 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
+  const getAllAdverts = async () => {
+    try {
+      const { data } = await api.get<iAdeverts[]>(`/adverts`);
+      setAdverts(data);
+      return data;
+    } catch (error) {
+      const currentError = error as AxiosError<iError>;
+      console.error(currentError.message);
+    }
+  };
+
   const login = async (data: LoginData) => {
     try {
       setLogged(true);
       const res = await api.post<iLogin>("/login", data);
       const { token } = res.data;
+
       api.defaults.headers.common.authorization = `Bearer ${token}`;
 
       const dbUsers = await api.get<iUser[]>("/users");
 
-      const loggedUser = dbUsers.data.filter((user: iUser) => user.email === data.email)[0];
+      const loggedUser = dbUsers.data.filter(
+        (user: iUser) => user.email === data.email
+      )[0];
 
       setUser(loggedUser);
       localStorage.setItem("@USER", JSON.stringify(loggedUser));
       localStorage.setItem("@TOKEN", token);
 
-      navigate("/profile");
+      navigate(`/profile/${loggedUser.id}`);
     } catch (error) {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
@@ -169,6 +227,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       mileage: Number(data.mileage),
       price: Number(data.price),
     };
+
     try {
       const res = await api.post<NewAdvertData>("/adverts", advertObj);
       console.log(res.data);
@@ -191,9 +250,17 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         createUser,
         setUserStatus,
         userStatus,
+        isSeller,
+        setIsSeller,
+        getAllAdverts,
+        adverts,
+        setAdvert,
+        advert,
         newAdvertSubmit,
         advertIsOpen,
         setAdvertIsOpen,
+        setCarsProfile,
+        carsProfile,
       }}
     >
       {children}

@@ -1,11 +1,25 @@
+import { Outlet } from "react-router-dom";
 import { useAuth } from "../hooks/userAuth";
-import { Outlet, Navigate } from "react-router-dom";
 
 export const ProtectedRoutes = () => {
-  const { logged } = useAuth();
+  const { setIsSeller, advert, setCarsProfile } = useAuth();
+
   const token = localStorage.getItem("@TOKEN");
-  if (logged) {
-    return null;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  if (!token) {
+    setIsSeller(false);
+    setCarsProfile(false);
   }
-  return token ? <Outlet /> : <Navigate to={"/"} />;
+
+  const id = JSON.parse(localStorage.getItem("@USER")!);
+
+  if (id !== undefined && id !== null) {
+    if (id.id !== advert.user.id) {
+      console.log("Passando aqio");
+      setCarsProfile(true);
+      setIsSeller(false);
+    }
+  }
+
+  return <Outlet />;
 };

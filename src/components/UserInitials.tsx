@@ -5,6 +5,7 @@ interface UserProps {
 
 export const UserInitials = ({ name, bigSize = false }: UserProps) => {
   let color = "";
+
   const splitName = name.split(" ");
 
   const firstLetterFirstName = splitName[0].charAt(0);
@@ -17,7 +18,9 @@ export const UserInitials = ({ name, bigSize = false }: UserProps) => {
     color = userColor;
   } else {
     const minNumber = 800000;
-    const randomNumber = Math.floor(Math.random() * (16777215 - minNumber * 3) + minNumber);
+    const randomNumber = Math.floor(
+      Math.random() * (16777215 - minNumber * 3) + minNumber
+    );
     color = "#" + randomNumber.toString(16);
     localStorage.setItem("@user-color", color);
   }
