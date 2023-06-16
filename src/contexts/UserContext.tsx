@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useMedia from "use-media";
 import { RegisterData } from "../schemas/registerSchema";
 import { NewAdvertData } from "../schemas/newAdvertSchema";
+import { toast } from "react-toastify";
 
 interface UserProviderProps {
   children: React.ReactNode;
@@ -35,6 +36,11 @@ interface UserProviderValue {
   currentUser: iUser;
   currentUserAdverts: iAdverts[];
   getParamInfo: (id: string) => Promise<void>;
+  globalLoading: boolean;
+  isRegisterModalOpen: boolean;
+  toggleRegisterModal: () => void;
+  isCreateAdvertSuccessModalOpen: boolean;
+  toggleCreateAdvertSuccessModal: () => void;
 }
 
 interface iAddress {
@@ -105,6 +111,10 @@ interface iError {
 export const UserContext = createContext({} as UserProviderValue);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [isCreateAdvertSuccessModalOpen, setIsCreateAdvertSuccessModalOpen] =
+    useState(false);
+  const [globalLoading, setGlobalLoading] = useState(false);
   const [carsProfile, setCarsProfile] = useState(true);
   const [isSeller, setIsSeller] = useState(true);
   const [logged, setLogged] = useState(true);
@@ -118,6 +128,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const isMobile = useMedia({ maxWidth: "640px" });
   const navigate = useNavigate();
   //window.scrollTo(0, 0);
+
+  const toggleRegisterModal = () =>
+    setIsRegisterModalOpen(!isRegisterModalOpen);
+
+  const toggleCreateAdvertSuccessModal = () =>
+    setIsCreateAdvertSuccessModalOpen(!isCreateAdvertSuccessModalOpen);
 
   useEffect(() => {
     const token = localStorage.getItem("@TOKEN");
@@ -193,11 +209,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const reqBody = { ...userObj, address: addressObj };
 
       await api.post<iUser>("/users", reqBody);
-
-      navigate("/login");
+      toggleRegisterModal();
     } catch (error) {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
+      toast.error(currentError.response?.data.message);
     }
   };
 
@@ -214,7 +230,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const login = async (data: LoginData) => {
     try {
-      setLogged(true);
+      setGlobalLoading(true);
       const res = await api.post<iLogin>("/login", data);
       const { token } = res.data;
 
@@ -230,10 +246,15 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       localStorage.setItem("@USER", JSON.stringify(loggedUser));
       localStorage.setItem("@TOKEN", token);
 
+      setLogged(true);
       navigate(`/profile/${loggedUser.id}`);
     } catch (error) {
+      setGlobalLoading(false);
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
+      toast.error(currentError.response?.data.message);
+    } finally {
+      setGlobalLoading(false);
     }
   };
 
@@ -258,9 +279,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       await api.post<NewAdvertData>("/adverts", advertObj);
       getParamInfo(String(user.id));
       setAdvertIsOpen(!advertIsOpen);
+      toggleCreateAdvertSuccessModal();
     } catch (error) {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
+      toast.error(currentError.response?.data.message);
     }
   };
 
@@ -290,6 +313,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         currentUser,
         currentUserAdverts,
         getParamInfo,
+        globalLoading,
+        isRegisterModalOpen,
+        toggleRegisterModal,
+        isCreateAdvertSuccessModalOpen,
+        toggleCreateAdvertSuccessModal,
       }}>
       {children}
     </UserContext.Provider>

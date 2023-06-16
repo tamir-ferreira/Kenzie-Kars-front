@@ -19,6 +19,8 @@ export const Profile = () => {
     getParamInfo,
     currentUser,
     currentUserAdverts,
+    isCreateAdvertSuccessModalOpen,
+    toggleCreateAdvertSuccessModal,
   } = useAuth();
 
   const { id } = useParams();
@@ -38,6 +40,18 @@ export const Profile = () => {
           attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
           widthFull>
           <NewAdvert />
+        </Modal>
+      )}
+      {isCreateAdvertSuccessModalOpen && (
+        <Modal title="Sucesso!" toggleModal={toggleCreateAdvertSuccessModal}>
+          <div className="flex flex-col gap-5">
+            <h2 className="heading-7-500 text-grey-1">
+              Seu anúncio foi criado com sucesso
+            </h2>
+            <p className="body-1-400 text-grey-2">
+              Agora você poderá ver seu negócios crescendo em grande escala
+            </p>
+          </div>
         </Modal>
       )}
       <Header />
