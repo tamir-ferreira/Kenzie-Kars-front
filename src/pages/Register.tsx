@@ -59,6 +59,11 @@ export const Register = () => {
 
   const navigate = useNavigate();
 
+  const toggleAndNavigate = () => {
+    toggleRegisterModal();
+    navigate("/login");
+  };
+
   return (
     <>
       <Header />
@@ -72,7 +77,7 @@ export const Register = () => {
               Agora você poderá ver seu negócios crescendo em grande escala
             </p>
             <Button
-              handleClick={() => navigate("/login")}
+              handleClick={() => toggleAndNavigate()}
               type="button"
               btnSize="btn-medium sm:btn-big"
               btnColor="btn-brand-1">

@@ -9,11 +9,11 @@ import { UserContext } from "../contexts/UserContext";
 import { useAuth } from "../hooks/userAuth";
 
 export const Header = () => {
-  const { logged, setLogged, logout, user } = useAuth();
+  const { logged, logout, user } = useAuth();
   const [isSeller, setIsSeller] = useState(true);
   const [openMenu, setOpenMenu] = useState(false);
 
-  const { isMobile } = useContext(UserContext);
+  const { isMobile, setReload, reload } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -85,7 +85,9 @@ export const Header = () => {
                 <li className="text-grey-2 cursor-pointer">Editar Endereço</li>
                 {isSeller && (
                   <Link to={`/profile/${user.id}`}>
-                    <li className="text-grey-2 cursor-pointer">
+                    <li
+                      onClick={() => setReload(!reload)}
+                      className="text-grey-2 cursor-pointer">
                       Meus Anúncios
                     </li>
                   </Link>
