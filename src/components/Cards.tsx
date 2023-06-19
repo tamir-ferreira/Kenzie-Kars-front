@@ -46,7 +46,8 @@ export const Cards = ({ car }: iAdverts) => {
     <Link to={`/product/${car.id}`}>
       <li
         className="flex flex-col items-start pt-0 min-h-[350px] min-w-[312px] w-[312px] group mb-9 cursor-pointer"
-        onClick={() => setAdvert(car)}>
+        onClick={() => setAdvert(car)}
+      >
         <div className="flex justify-center items-center bg-grey-7 w-full mb-4 relative border-2 border-transparent group-hover:border-brand-1 group-hover:border-solid ">
           <img src={car.cover_image} alt="carro" className="" />
           {!isSeller && (
