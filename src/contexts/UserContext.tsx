@@ -39,6 +39,8 @@ interface UserProviderValue {
   globalLoading: boolean;
   isRegisterModalOpen: boolean;
   toggleRegisterModal: () => void;
+  showPass: boolean;
+  setShowPass: React.Dispatch<React.SetStateAction<boolean>>;
   isCreateAdvertSuccessModalOpen: boolean;
   toggleCreateAdvertSuccessModal: () => void;
   reload: boolean;
@@ -114,8 +116,7 @@ export const UserContext = createContext({} as UserProviderValue);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const [isCreateAdvertSuccessModalOpen, setIsCreateAdvertSuccessModalOpen] =
-    useState(false);
+  const [isCreateAdvertSuccessModalOpen, setIsCreateAdvertSuccessModalOpen] = useState(false);
   const [globalLoading, setGlobalLoading] = useState(false);
   const [carsProfile, setCarsProfile] = useState(true);
   const [isSeller, setIsSeller] = useState(true);
@@ -125,6 +126,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [advert, setAdvert] = useState<iAdverts>({} as iAdverts);
   const [userStatus, setUserStatus] = useState(false);
   const [advertIsOpen, setAdvertIsOpen] = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const [currentUser, setCurrentUser] = useState({} as iUser);
   const [currentUserAdverts, setCurrentUserAdverts] = useState<iAdverts[]>([]);
   const isMobile = useMedia({ maxWidth: "640px" });
@@ -133,8 +135,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const [reload, setReload] = useState(false);
 
-  const toggleRegisterModal = () =>
-    setIsRegisterModalOpen(!isRegisterModalOpen);
+  const toggleRegisterModal = () => setIsRegisterModalOpen(!isRegisterModalOpen);
 
   const toggleCreateAdvertSuccessModal = () =>
     setIsCreateAdvertSuccessModalOpen(!isCreateAdvertSuccessModalOpen);
@@ -161,12 +162,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const dbUsers = await api.get<iUser[]>("/users");
       const dbAdverts = await api.get<iAdverts[]>("/adverts");
 
-      const user = dbUsers.data.filter(
-        (elt: iUser) => elt.id === Number(id)
-      )[0];
-      const userAdverts = dbAdverts.data.filter(
-        (elt: iAdverts) => elt.user.id === Number(id)
-      );
+      const user = dbUsers.data.filter((elt: iUser) => elt.id === Number(id))[0];
+      const userAdverts = dbAdverts.data.filter((elt: iAdverts) => elt.user.id === Number(id));
 
       setCurrentUser(user);
       setCurrentUserAdverts(userAdverts);
@@ -242,9 +239,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
       const dbUsers = await api.get<iUser[]>("/users");
 
-      const loggedUser = dbUsers.data.filter(
-        (user: iUser) => user.email === data.email
-      )[0];
+      const loggedUser = dbUsers.data.filter((user: iUser) => user.email === data.email)[0];
 
       setUser(loggedUser);
       localStorage.setItem("@USER", JSON.stringify(loggedUser));
@@ -313,6 +308,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         advertIsOpen,
         setAdvertIsOpen,
         setCarsProfile,
+        showPass,
+        setShowPass,
         carsProfile,
         currentUser,
         currentUserAdverts,
@@ -324,7 +321,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         toggleCreateAdvertSuccessModal,
         reload,
         setReload,
-      }}>
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -70,9 +70,7 @@ export const Register = () => {
       {isRegisterModalOpen && (
         <Modal title="Sucesso!" toggleModal={toggleRegisterModal}>
           <div className="flex flex-col gap-5">
-            <h2 className="heading-7-500 text-grey-1">
-              Sua conta foi criada com sucesso
-            </h2>
+            <h2 className="heading-7-500 text-grey-1">Sua conta foi criada com sucesso</h2>
             <p className="body-1-400 text-grey-2">
               Agora você poderá ver seu negócios crescendo em grande escala
             </p>
@@ -80,7 +78,8 @@ export const Register = () => {
               handleClick={() => toggleAndNavigate()}
               type="button"
               btnSize="btn-medium sm:btn-big"
-              btnColor="btn-brand-1">
+              btnColor="btn-brand-1"
+            >
               Ir para o login
             </Button>
           </div>
@@ -130,7 +129,8 @@ export const Register = () => {
           rows={2}
           placeholder="Digitar descrição"
           register={register("description")}
-          error={errors.description?.message}></TextArea>
+          error={errors.description?.message}
+        ></TextArea>
         <p className="body-2-500 mb-6">Informações de endereço</p>
         <Input
           label="CEP"
@@ -188,7 +188,8 @@ export const Register = () => {
                 type="button"
                 btnColor="btn-outline-2"
                 btnSize="btn-medium sm:btn-big"
-                attributes="w-[50%] focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1">
+                attributes="w-[50%] focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1"
+              >
                 Comprador
               </Button>
               <Button
@@ -196,7 +197,8 @@ export const Register = () => {
                 type="button"
                 btnColor="btn-brand-1"
                 btnSize="btn-medium sm:btn-big focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1"
-                attributes="w-[50%]">
+                attributes="w-[50%]"
+              >
                 Anunciante
               </Button>
             </>
@@ -207,7 +209,8 @@ export const Register = () => {
                 type="button"
                 btnColor="btn-brand-1"
                 btnSize="btn-medium sm:btn-big"
-                attributes="w-[50%] focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1">
+                attributes="w-[50%] focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1"
+              >
                 Comprador
               </Button>
               <Button
@@ -215,7 +218,8 @@ export const Register = () => {
                 type="button"
                 btnColor="btn-outline-2"
                 btnSize="btn-medium sm:btn-big focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1"
-                attributes="w-[50%]">
+                attributes="w-[50%]"
+              >
                 Anunciante
               </Button>
             </>
@@ -234,12 +238,9 @@ export const Register = () => {
           type="password"
           register={register("confirmPassword")}
           error={errors.confirmPassword?.message}
+          hideIcon
         />
-        <Button
-          type="submit"
-          btnColor="btn-brand-1"
-          btnSize="btn-big"
-          attributes="w-full">
+        <Button type="submit" btnColor="btn-brand-1" btnSize="btn-big" attributes="w-full">
           Finalizar cadastro
         </Button>
       </RLForm>
