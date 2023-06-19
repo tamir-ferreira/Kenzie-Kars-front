@@ -12,7 +12,7 @@ import { LoginData, loginSchema } from "../schemas/loginSchema";
 import { Loading } from "../components/Loading";
 
 export const Login = () => {
-  const { setLogged, login, globalLoading } = useAuth();
+  const { setLogged, login, globalLoading, showPass } = useAuth();
   const {
     register,
     handleSubmit,
@@ -42,33 +42,29 @@ export const Login = () => {
         <Input
           label="Senha"
           placeholder="Digitar senha"
-          type="password"
+          type={"password"}
           register={register("password")}
           error={errors.password?.message}
         />
+
         <div className="flex justify-end items-center mb-5">
           <button className="border-none bg-transparent text-grey-2 text-body-2-500">
             Esqueci minha senha
           </button>
         </div>
-        <Button
-          type="submit"
-          btnColor="btn-brand-1"
-          btnSize="btn-big"
-          attributes="w-full">
+        <Button type="submit" btnColor="btn-brand-1" btnSize="btn-big" attributes="w-full">
           Fazer login
         </Button>
         <div className="mt-6 flex justify-center items-center mb-6">
-          <p className="text-grey-2 text-body-2-400 ">
-            Ainda não tem cadastro?
-          </p>
+          <p className="text-grey-2 text-body-2-400 ">Ainda não tem cadastro?</p>
         </div>
         <Button
           type="button"
           handleClick={() => navigate("/register")}
           btnColor="btn-outline-2"
           btnSize="btn-big"
-          attributes="w-full">
+          attributes="w-full"
+        >
           Cadastrar
         </Button>
       </RLForm>
