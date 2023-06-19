@@ -25,7 +25,8 @@ export const Home = () => {
         <Modal
           title="Filtros"
           toggleModal={() => setIsOpen(!true)}
-          attributes="modal-filter">
+          attributes="modal-filter"
+        >
           <FilterHome textButton="Ver anúncios" setIsOpen={setIsOpen} />
         </Modal>
       )}
@@ -48,7 +49,8 @@ export const Home = () => {
               btnColor="btn-brand-1"
               btnSize="btn-big"
               attributes="w-[80%] mt-12"
-              handleClick={() => setIsOpen(true)}>
+              handleClick={() => setIsOpen(true)}
+            >
               Filtros
             </Button>
             <span className="pt-10 font-lexend text-grey-3 text-heading-5-600">
