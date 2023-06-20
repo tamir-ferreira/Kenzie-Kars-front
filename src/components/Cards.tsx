@@ -38,18 +38,18 @@ interface iAdverts {
 }
 
 export const Cards = ({ car }: iAdverts) => {
-  // const [active, setActive] = useState(true);
-  const [discount, setDiscount] = useState(true);
-  const { isSeller, setAdvert, carsProfile } = useAuth();
-
+  const [discount, setDiscount] = useState(false);
+  const { user, setAdvert, carsProfile } = useAuth();
+  console.log(car);
   return (
     <Link to={`/product/${car.id}`}>
       <li
         className="flex flex-col items-start pt-0 min-h-[350px] min-w-[312px] w-[312px] group mb-9 cursor-pointer"
-        onClick={() => setAdvert(car)}>
+        onClick={() => setAdvert(car)}
+      >
         <div className="flex justify-center items-center bg-grey-7 w-full mb-4 relative border-2 border-transparent group-hover:border-brand-1 group-hover:border-solid ">
           <img src={car.cover_image} alt="carro" className="" />
-          {!isSeller && (
+          {user && (
             <>
               {discount && (
                 <span className="bg-random-7 w-4 h-7 text-white-fixed text-sm font-medium border-none flex items-center justify-center rounded-sm absolute top-0 right-0">
@@ -79,12 +79,10 @@ export const Cards = ({ car }: iAdverts) => {
           {car.description}
         </p>
         <div className="flex items-center mb-4">
-          {!isSeller && (
+          {!user.seller && (
             <>
-              <UserInitials name={car.user.name} />
-              <span className="ml-2 font-medium text-sm text-grey-2">
-                {car.user.name}
-              </span>
+              <UserInitials name={car.user.name} color={car.user.color} />
+              <span className="ml-2 font-medium text-sm text-grey-2">{car.user.name}</span>
             </>
           )}
         </div>
@@ -99,7 +97,7 @@ export const Cards = ({ car }: iAdverts) => {
           </div>
           <span className="font-lexend text-grey-1 font-medium text-base">{`R$ ${car.price}`}</span>
         </div>
-        {isSeller && (
+        {user.seller && (
           <div className="flex gap-4 mt-4">
             <Button btnSize="btn-medium" btnColor="btn-outline-1">
               Editar
