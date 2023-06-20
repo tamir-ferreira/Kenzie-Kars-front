@@ -22,8 +22,8 @@ interface UserProviderValue {
   createUser: (data: RegisterData) => void;
   userStatus: boolean;
   user: iUser;
-  isSeller: boolean;
-  setIsSeller: React.Dispatch<React.SetStateAction<boolean>>;
+  // isSeller: boolean;
+  // setIsSeller: React.Dispatch<React.SetStateAction<boolean>>;
   getAllAdverts: () => Promise<iAdverts[] | undefined>;
   adverts: iAdverts[];
   setAdvert: React.Dispatch<React.SetStateAction<iAdverts>>;
@@ -119,7 +119,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [isCreateAdvertSuccessModalOpen, setIsCreateAdvertSuccessModalOpen] = useState(false);
   const [globalLoading, setGlobalLoading] = useState(false);
   const [carsProfile, setCarsProfile] = useState(true);
-  const [isSeller, setIsSeller] = useState(true);
+  // const [isSeller, setIsSeller] = useState(false);
   const [logged, setLogged] = useState(true);
   const [user, setUser] = useState<iUser>({} as iUser);
   const [adverts, setAdverts] = useState<iAdverts[]>([] as iAdverts[]);
@@ -129,11 +129,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [showPass, setShowPass] = useState(false);
   const [currentUser, setCurrentUser] = useState({} as iUser);
   const [currentUserAdverts, setCurrentUserAdverts] = useState<iAdverts[]>([]);
+  const [reload, setReload] = useState(false);
   const isMobile = useMedia({ maxWidth: "640px" });
   const navigate = useNavigate();
   //window.scrollTo(0, 0);
-
-  const [reload, setReload] = useState(false);
 
   const toggleRegisterModal = () => setIsRegisterModalOpen(!isRegisterModalOpen);
 
@@ -246,7 +245,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       localStorage.setItem("@TOKEN", token);
 
       setLogged(true);
-      navigate(`/profile/${loggedUser.id}`);
+
+      if (loggedUser.seller) {
+        // setIsSeller(true);
+        navigate(`/profile/${loggedUser.id}`);
+      } else navigate(`/`);
     } catch (error) {
       setGlobalLoading(false);
       const currentError = error as AxiosError<iError>;
@@ -260,6 +263,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const logout = async () => {
     localStorage.removeItem("@TOKEN");
     localStorage.removeItem("@USER");
+    // localStorage.removeItem("@user-color");
     setLogged(false);
     navigate("/");
   };
@@ -298,8 +302,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         createUser,
         setUserStatus,
         userStatus,
-        isSeller,
-        setIsSeller,
+        // isSeller,
+        // setIsSeller,
         getAllAdverts,
         adverts,
         setAdvert,

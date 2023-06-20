@@ -9,13 +9,13 @@ import { UserContext } from "../contexts/UserContext";
 import { Modal } from "../components/Modal";
 
 export const Home = () => {
-  const { isMobile, getAllAdverts, adverts, setIsSeller, setCarsProfile } =
+  const { isMobile, getAllAdverts, adverts, setCarsProfile } =
     useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     getAllAdverts();
-    setIsSeller(false);
+    // setIsSeller(false);
     setCarsProfile(false);
   }, []);
 
@@ -37,9 +37,10 @@ export const Home = () => {
           {!isMobile && <FilterHome textButton="Limpar filtros" />}
           <section className="flex justify-start max-w-[1032px] w-screen sm:items-start">
             <ul className="flex gap-4 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
-              {adverts.map((card) => (
-                <Cards key={card.id} car={card}></Cards>
-              ))}
+              {adverts.map(
+                (card) =>
+                  card.is_active && <Cards key={card.id} car={card}></Cards>
+              )}
             </ul>
           </section>
         </div>

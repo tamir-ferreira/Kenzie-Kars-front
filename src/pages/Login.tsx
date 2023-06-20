@@ -12,7 +12,7 @@ import { LoginData, loginSchema } from "../schemas/loginSchema";
 import { Loading } from "../components/Loading";
 
 export const Login = () => {
-  const { setLogged, login, globalLoading, showPass } = useAuth();
+  const { setLogged, login, globalLoading } = useAuth();
   const {
     register,
     handleSubmit,
