@@ -39,17 +39,21 @@ export const Product = () => {
                 </p>
               </div>
             </section>
-            <section className="w-[36%] max-sm:w-[100%]">
-              <div className="w-full rounded bg-grey-10 py-9 px-11 max-sm:w-[100%]">
+            <section className="w-[38%] max-sm:w-[100%]">
+              <div className="w-full rounded bg-grey-10 py-[5%] px-[8%] max-sm:w-[100%]">
                 <h3 className="text-heading-6-600">Fotos</h3>
-                <ul className=" flex flex-wrap justify-between">
+                <ul className="flex flex-wrap justify-center gap-x-[5.5px] gap-y-[50px] w-full my-8 sm:gap-x-0 sm:justify-between sm:w-full">
                   {carImages.map((elem, index) => {
                     return (
                       <li
                         key={index}
-                        className="w-[85px]  h-[85px] sm:w-[108px] -sm:h-[108px] bg-grey-7 rounded flex justify-center items-center mt-8"
+                        className="w-[85px]  h-[85px] sm:w-[103px] sm:h-[103px] bg-grey-7 rounded flex justify-center items-center"
                       >
-                        <img src={elem.src_image} alt="Foto carro" />
+                        <img
+                          src={elem.src_image}
+                          alt="Foto carro"
+                          className="object-contain"
+                        />
                       </li>
                     );
                   })}
