@@ -3,7 +3,10 @@ import { z } from "zod";
 export const registerSchema = z
   .object({
     name: z.string().nonempty("O nome é obrigatório"),
-    email: z.string().nonempty("O email é obrigatório").email("E-mail inválido"),
+    email: z
+      .string()
+      .nonempty("O email é obrigatório")
+      .email("E-mail inválido"),
     cpf: z
       .string()
       .nonempty("O CPF é obrigatório")

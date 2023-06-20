@@ -14,6 +14,10 @@ export const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     getAllAdverts();
     // setIsSeller(false);
     setCarsProfile(false);
