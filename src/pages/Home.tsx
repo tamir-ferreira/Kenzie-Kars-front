@@ -43,7 +43,13 @@ export const Home = () => {
             <ul className="flex gap-4 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
               {adverts.map(
                 (card) =>
-                  card.is_active && <Cards key={card.id} car={card}></Cards>
+                  card.is_active && (
+                    <Cards
+                      key={card.id}
+                      car={card}
+                      seller={(card.user.seller = false)}
+                    ></Cards>
+                  )
               )}
             </ul>
           </section>
