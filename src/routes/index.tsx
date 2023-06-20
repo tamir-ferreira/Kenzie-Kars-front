@@ -13,9 +13,9 @@ export const PageRoutes = () => {
       <Route path="/product/:id" element={<Product />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route element={<ProtectedRoutes />}>
-        <Route path="/profile/:id" element={<Profile />} />
-      </Route>
+      {/* <Route element={<ProtectedRoutes />}> */}
+      <Route path="/profile/:id" element={<Profile />} />
+      {/* </Route> */}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

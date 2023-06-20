@@ -9,11 +9,9 @@ import { UserContext } from "../contexts/UserContext";
 import { useAuth } from "../hooks/userAuth";
 
 export const Header = () => {
-  const { logged, logout, user } = useAuth();
-  const [isSeller, setIsSeller] = useState(true);
   const [openMenu, setOpenMenu] = useState(false);
 
-  const { isMobile, setReload, reload } = useContext(UserContext);
+  const { logged, logout, user, isMobile, setReload, reload } = useAuth();
 
   const navigate = useNavigate();
 
@@ -62,7 +60,7 @@ export const Header = () => {
                   className="flex gap-2 items-center cursor-pointer"
                   onClick={() => setOpenMenu(!openMenu)}
                 >
-                  <UserInitials name={user.name} />
+                  <UserInitials name={user.name} color={user.color} />
                   <h4 className="text-grey-2">{user.name}</h4>
                 </div>
               ) : (
@@ -86,7 +84,7 @@ export const Header = () => {
               <ul className="gap-4 flex flex-col">
                 <li className="text-grey-2 cursor-pointer">Editar Perfil</li>
                 <li className="text-grey-2 cursor-pointer">Editar Endereço</li>
-                {isSeller && (
+                {user.seller && (
                   <Link to={`/profile/${user.id}`}>
                     <li onClick={() => setReload(!reload)} className="text-grey-2 cursor-pointer">
                       Meus Anúncios
