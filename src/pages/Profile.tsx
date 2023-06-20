@@ -94,7 +94,7 @@ export const Profile = () => {
               Anúncios
             </h3>
           )}
-          <ul className="flex gap-4 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
+          <ul className="flex gap-6 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
             {currentUserAdverts.map((car) => (
               <Cards key={car.id} car={car} />
             ))}
