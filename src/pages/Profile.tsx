@@ -47,7 +47,9 @@ export const Profile = () => {
       {isCreateAdvertSuccessModalOpen && (
         <Modal title="Sucesso!" toggleModal={toggleCreateAdvertSuccessModal}>
           <div className="flex flex-col gap-5">
-            <h2 className="heading-7-500 text-grey-1">Seu anúncio foi criado com sucesso</h2>
+            <h2 className="heading-7-500 text-grey-1">
+              Seu anúncio foi criado com sucesso
+            </h2>
             <p className="body-1-400 text-grey-2">
               Agora você poderá ver seus negócios crescendo em grande escala!
             </p>
@@ -66,9 +68,9 @@ export const Profile = () => {
             </span>
           </div>
           <p className="text-body-1-400 text-grey-2 mb-4">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed ipsum est praesentium
-            dolorem quidem aspernatur nemo aut eius eum delectus. Omnis nisi explicabo adipisci
-            odit.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed ipsum
+            est praesentium dolorem quidem aspernatur nemo aut eius eum
+            delectus. Omnis nisi explicabo adipisci odit.
           </p>
           {isSeller && (
             <Button
@@ -82,9 +84,11 @@ export const Profile = () => {
         </section>
         <section className="flex flex-col justify-start max-w-[1392px] mt-4 w-screen sm:items-start">
           {!isSeller && (
-            <h3 className="text-heading-5-600 mb-16 ml-5 sm:ml-0 sm:-translate-x-16 ">Anúncios</h3>
+            <h3 className="text-heading-5-600 mb-16 ml-5 sm:ml-0 sm:-translate-x-16 ">
+              Anúncios
+            </h3>
           )}
-          <ul className="flex gap-4 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
+          <ul className="flex gap-6 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
             {currentUserAdverts.map((car) => (
               <Cards key={car.id} car={car} />
             ))}
