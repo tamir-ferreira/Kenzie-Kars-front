@@ -40,7 +40,8 @@ interface iAdverts {
 export const Cards = ({ car }: iAdverts) => {
   const [discount, setDiscount] = useState(false);
   const { user, setAdvert, carsProfile } = useAuth();
-  console.log(car);
+  const price = +car.price;
+
   return (
     <Link to={`/product/${car.id}`}>
       <li
@@ -96,13 +97,19 @@ export const Cards = ({ car }: iAdverts) => {
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center ">
               <span className="bg-brand-4 text-brand-1 font-medium text-sm px-2 py-1 rounded">
-                {`${"3000000"} KM`}
+                {`${car.mileage} KM`}
               </span>
               <span className="bg-brand-4 text-brand-1 font-medium text-sm px-2 py-1 rounded ml-3">
                 {car.year}
               </span>
             </div>
-            <span className="font-lexend text-grey-1 font-medium text-base">{`R$ ${car.price}`}</span>
+            <span className="font-lexend text-grey-1 font-medium text-base">{`${price.toLocaleString(
+              "pt-br",
+              {
+                style: "currency",
+                currency: "BRL",
+              }
+            )}`}</span>
           </div>
           {user.seller && (
             <div className="flex gap-4 mt-4">

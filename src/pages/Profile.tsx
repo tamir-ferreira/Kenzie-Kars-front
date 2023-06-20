@@ -23,6 +23,10 @@ export const Profile = () => {
     reload,
   } = useAuth();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { id } = useParams();
 
   useEffect(() => {

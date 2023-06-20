@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { AdvertInfo } from "../components/AdvertInfo";
 import { CommentCard } from "../components/Comments";
 import { Footer } from "../components/Footer";
@@ -10,6 +11,9 @@ import { comments } from "../mocks/comments";
 
 export const Product = () => {
   const { advert } = useAuth();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
