@@ -35,9 +35,10 @@ interface iAdverts {
       updatedAt: Date;
     };
   };
+  seller?: boolean;
 }
 
-export const Cards = ({ car }: iAdverts) => {
+export const Cards = ({ car, seller }: iAdverts) => {
   const [discount, setDiscount] = useState(false);
   const { user, setAdvert, carsProfile } = useAuth();
   const price = +car.price;
@@ -85,7 +86,7 @@ export const Cards = ({ car }: iAdverts) => {
             {car.description}
           </p>
           <div className="flex items-center mb-4">
-            {!user.seller && (
+            {!seller && (
               <>
                 <UserInitials name={car.user.name} color={car.user.color} />
                 <span className="ml-2 font-medium text-sm text-grey-2">
@@ -111,7 +112,7 @@ export const Cards = ({ car }: iAdverts) => {
               }
             )}`}</span>
           </div>
-          {user.seller && (
+          {seller && (
             <div className="flex gap-4 mt-4">
               <Button btnSize="btn-medium" btnColor="btn-outline-1">
                 Editar
