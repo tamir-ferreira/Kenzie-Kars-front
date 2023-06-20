@@ -22,8 +22,8 @@ interface UserProviderValue {
   createUser: (data: RegisterData) => void;
   userStatus: boolean;
   user: iUser;
-  isSeller: boolean;
-  setIsSeller: React.Dispatch<React.SetStateAction<boolean>>;
+  // isSeller: boolean;
+  // setIsSeller: React.Dispatch<React.SetStateAction<boolean>>;
   getAllAdverts: () => Promise<iAdverts[] | undefined>;
   adverts: iAdverts[];
   setAdvert: React.Dispatch<React.SetStateAction<iAdverts>>;
@@ -39,6 +39,8 @@ interface UserProviderValue {
   globalLoading: boolean;
   isRegisterModalOpen: boolean;
   toggleRegisterModal: () => void;
+  showPass: boolean;
+  setShowPass: React.Dispatch<React.SetStateAction<boolean>>;
   isCreateAdvertSuccessModalOpen: boolean;
   toggleCreateAdvertSuccessModal: () => void;
   reload: boolean;
@@ -114,27 +116,25 @@ export const UserContext = createContext({} as UserProviderValue);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const [isCreateAdvertSuccessModalOpen, setIsCreateAdvertSuccessModalOpen] =
-    useState(false);
+  const [isCreateAdvertSuccessModalOpen, setIsCreateAdvertSuccessModalOpen] = useState(false);
   const [globalLoading, setGlobalLoading] = useState(false);
   const [carsProfile, setCarsProfile] = useState(true);
-  const [isSeller, setIsSeller] = useState(true);
+  // const [isSeller, setIsSeller] = useState(false);
   const [logged, setLogged] = useState(true);
   const [user, setUser] = useState<iUser>({} as iUser);
   const [adverts, setAdverts] = useState<iAdverts[]>([] as iAdverts[]);
   const [advert, setAdvert] = useState<iAdverts>({} as iAdverts);
   const [userStatus, setUserStatus] = useState(false);
   const [advertIsOpen, setAdvertIsOpen] = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const [currentUser, setCurrentUser] = useState({} as iUser);
   const [currentUserAdverts, setCurrentUserAdverts] = useState<iAdverts[]>([]);
+  const [reload, setReload] = useState(false);
   const isMobile = useMedia({ maxWidth: "640px" });
   const navigate = useNavigate();
   //window.scrollTo(0, 0);
 
-  const [reload, setReload] = useState(false);
-
-  const toggleRegisterModal = () =>
-    setIsRegisterModalOpen(!isRegisterModalOpen);
+  const toggleRegisterModal = () => setIsRegisterModalOpen(!isRegisterModalOpen);
 
   const toggleCreateAdvertSuccessModal = () =>
     setIsCreateAdvertSuccessModalOpen(!isCreateAdvertSuccessModalOpen);
@@ -161,12 +161,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const dbUsers = await api.get<iUser[]>("/users");
       const dbAdverts = await api.get<iAdverts[]>("/adverts");
 
-      const user = dbUsers.data.filter(
-        (elt: iUser) => elt.id === Number(id)
-      )[0];
-      const userAdverts = dbAdverts.data.filter(
-        (elt: iAdverts) => elt.user.id === Number(id)
-      );
+      const user = dbUsers.data.filter((elt: iUser) => elt.id === Number(id))[0];
+      const userAdverts = dbAdverts.data.filter((elt: iAdverts) => elt.user.id === Number(id));
 
       setCurrentUser(user);
       setCurrentUserAdverts(userAdverts);
@@ -242,16 +238,18 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
       const dbUsers = await api.get<iUser[]>("/users");
 
-      const loggedUser = dbUsers.data.filter(
-        (user: iUser) => user.email === data.email
-      )[0];
+      const loggedUser = dbUsers.data.filter((user: iUser) => user.email === data.email)[0];
 
       setUser(loggedUser);
       localStorage.setItem("@USER", JSON.stringify(loggedUser));
       localStorage.setItem("@TOKEN", token);
 
       setLogged(true);
-      navigate(`/profile/${loggedUser.id}`);
+
+      if (loggedUser.seller) {
+        // setIsSeller(true);
+        navigate(`/profile/${loggedUser.id}`);
+      } else navigate(`/`);
     } catch (error) {
       setGlobalLoading(false);
       const currentError = error as AxiosError<iError>;
@@ -265,6 +263,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const logout = async () => {
     localStorage.removeItem("@TOKEN");
     localStorage.removeItem("@USER");
+    // localStorage.removeItem("@user-color");
     setLogged(false);
     navigate("/");
   };
@@ -303,8 +302,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         createUser,
         setUserStatus,
         userStatus,
-        isSeller,
-        setIsSeller,
+        // isSeller,
+        // setIsSeller,
         getAllAdverts,
         adverts,
         setAdvert,
@@ -313,6 +312,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         advertIsOpen,
         setAdvertIsOpen,
         setCarsProfile,
+        showPass,
+        setShowPass,
         carsProfile,
         currentUser,
         currentUserAdverts,
@@ -324,7 +325,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         toggleCreateAdvertSuccessModal,
         reload,
         setReload,
-      }}>
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -11,11 +11,10 @@ import { useParams } from "react-router-dom";
 
 export const Profile = () => {
   const {
+    user,
     advertIsOpen,
     setAdvertIsOpen,
     setLogged,
-    isSeller,
-    setIsSeller,
     getParamInfo,
     currentUser,
     currentUserAdverts,
@@ -28,7 +27,6 @@ export const Profile = () => {
 
   useEffect(() => {
     getParamInfo(id!);
-    setIsSeller(true);
     setLogged(true);
   }, [reload]);
 
@@ -58,7 +56,7 @@ export const Profile = () => {
       <div className="bg-brand-1 w-full h-[357px] absolute top-0 z-[5]"></div>
       <main className="flex flex-col items-center gap-14 w-full min-h-[90vh] bg-grey-8 ">
         <section className="flex h-fit flex-col container w-[93%] gap-6 z-[7] relative bg-white-fixed mt-40 px-7 py-10 sm:p-11 rounded sm:w-[1240px] ">
-          <UserInitials name={currentUser.name} bigSize />
+          <UserInitials name={currentUser.name} color={currentUser.color} bigSize />
           <div className="flex items-center gap-2">
             <h2 className="text-heading-6-600">{currentUser.name}</h2>
             <span className="flex items-center justify-center bg-brand-4 rounded text-brand-1 text-body-2-500 w-23 h-8">
@@ -70,7 +68,7 @@ export const Profile = () => {
             dolorem quidem aspernatur nemo aut eius eum delectus. Omnis nisi explicabo adipisci
             odit.
           </p>
-          {isSeller && (
+          {user.seller && (
             <Button
               btnSize="btn-big"
               btnColor="btn-outline-brand-1"
@@ -81,7 +79,7 @@ export const Profile = () => {
           )}
         </section>
         <section className="flex flex-col justify-start max-w-[1392px] mt-4 w-screen sm:items-start">
-          {!isSeller && (
+          {!user.seller && (
             <h3 className="text-heading-5-600 mb-16 ml-5 sm:ml-0 sm:-translate-x-16 ">Anúncios</h3>
           )}
           <ul className="flex gap-4 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
