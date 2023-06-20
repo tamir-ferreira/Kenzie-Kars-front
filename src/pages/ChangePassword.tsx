@@ -52,7 +52,7 @@ export const ChangePassword = () => {
       {globalLoading && <Loading />}
       <Header />
       <RLForm onSubmit={handleSubmit(changePassword)}>
-        <h1 className="text-heading-5-500 mb-8">Trocar senha</h1>
+        <h1 className="text-heading-5-500 mb-8">Esqueci minha senha</h1>
         <Input
           label="Nova senha"
           placeholder="Digitar nova senha"

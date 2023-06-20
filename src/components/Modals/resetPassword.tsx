@@ -3,7 +3,7 @@ import { Input } from "../Input";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/userAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { sendEmailData, sendEmailSchema } from "../../schemas/sendEmailSchema";
+import { SendEmailData, sendEmailSchema } from "../../schemas/sendEmailSchema";
 
 export const ResetPassword = () => {
   const { toggleResetPasswordModal, sendEmail } = useAuth();
@@ -12,14 +12,14 @@ export const ResetPassword = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<sendEmailData>({
+  } = useForm<SendEmailData>({
     resolver: zodResolver(sendEmailSchema),
   });
 
   return (
     <form onSubmit={handleSubmit(sendEmail)}>
       <h3 className="text-body-2-500 mb-6">
-        Digite seu email no campo abaixo.
+        Insira o endereço de e-mail associado à sua conta.
       </h3>
 
       <Input
@@ -29,7 +29,6 @@ export const ResetPassword = () => {
         placeholder="exemplo@email.com"
         error={errors.email?.message}
       />
-
       <div className="flex justify-end gap-3 mt-3">
         <Button
           type="button"

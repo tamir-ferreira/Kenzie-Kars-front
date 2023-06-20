@@ -39,7 +39,7 @@ export const Login = () => {
       {globalLoading && <Loading />}
       {isResetPasswordModalOpen && (
         <Modal
-          title="Esqueci minha senha"
+          title="Auxílio de senha"
           toggleModal={() => toggleResetPasswordModal()}
           attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
           widthFull>
