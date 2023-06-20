@@ -7,6 +7,7 @@ import useMedia from "use-media";
 import { RegisterData } from "../schemas/registerSchema";
 import { NewAdvertData } from "../schemas/newAdvertSchema";
 import { toast } from "react-toastify";
+import { SendEmailData } from "../schemas/sendEmailSchema";
 
 interface UserProviderProps {
   children: React.ReactNode;
@@ -37,14 +38,17 @@ interface UserProviderValue {
   currentUserAdverts: iAdverts[];
   getParamInfo: (id: string) => Promise<void>;
   globalLoading: boolean;
-  isRegisterModalOpen: boolean;
-  toggleRegisterModal: () => void;
   showPass: boolean;
   setShowPass: React.Dispatch<React.SetStateAction<boolean>>;
+  isRegisterModalOpen: boolean;
+  toggleRegisterModal: () => void;
   isCreateAdvertSuccessModalOpen: boolean;
   toggleCreateAdvertSuccessModal: () => void;
+  isResetPasswordModalOpen: boolean;
+  toggleResetPasswordModal: () => void;
   reload: boolean;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  sendEmail: (email: SendEmailData) => void;
 }
 
 interface iAddress {
@@ -116,7 +120,10 @@ export const UserContext = createContext({} as UserProviderValue);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const [isCreateAdvertSuccessModalOpen, setIsCreateAdvertSuccessModalOpen] = useState(false);
+  const [isCreateAdvertSuccessModalOpen, setIsCreateAdvertSuccessModalOpen] =
+    useState(false);
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] =
+    useState(false);
   const [globalLoading, setGlobalLoading] = useState(false);
   const [carsProfile, setCarsProfile] = useState(true);
   // const [isSeller, setIsSeller] = useState(false);
@@ -134,10 +141,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const navigate = useNavigate();
   //window.scrollTo(0, 0);
 
-  const toggleRegisterModal = () => setIsRegisterModalOpen(!isRegisterModalOpen);
+  const toggleRegisterModal = () =>
+    setIsRegisterModalOpen(!isRegisterModalOpen);
 
   const toggleCreateAdvertSuccessModal = () =>
     setIsCreateAdvertSuccessModalOpen(!isCreateAdvertSuccessModalOpen);
+
+  const toggleResetPasswordModal = () =>
+    setIsResetPasswordModalOpen(!isResetPasswordModalOpen);
 
   useEffect(() => {
     const token = localStorage.getItem("@TOKEN");
@@ -161,8 +172,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const dbUsers = await api.get<iUser[]>("/users");
       const dbAdverts = await api.get<iAdverts[]>("/adverts");
 
-      const user = dbUsers.data.filter((elt: iUser) => elt.id === Number(id))[0];
-      const userAdverts = dbAdverts.data.filter((elt: iAdverts) => elt.user.id === Number(id));
+      const user = dbUsers.data.filter(
+        (elt: iUser) => elt.id === Number(id)
+      )[0];
+      const userAdverts = dbAdverts.data.filter(
+        (elt: iAdverts) => elt.user.id === Number(id)
+      );
 
       setCurrentUser(user);
       setCurrentUserAdverts(userAdverts);
@@ -238,7 +253,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
       const dbUsers = await api.get<iUser[]>("/users");
 
-      const loggedUser = dbUsers.data.filter((user: iUser) => user.email === data.email)[0];
+      const loggedUser = dbUsers.data.filter(
+        (user: iUser) => user.email === data.email
+      )[0];
 
       setUser(loggedUser);
       localStorage.setItem("@USER", JSON.stringify(loggedUser));
@@ -254,7 +271,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       setGlobalLoading(false);
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
-      toast.error(currentError.response?.data.message);
+      toast.error("Credenciais incorretas");
     } finally {
       setGlobalLoading(false);
     }
@@ -266,6 +283,22 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     // localStorage.removeItem("@user-color");
     setLogged(false);
     navigate("/");
+  };
+
+  const sendEmail = async (email: SendEmailData) => {
+    try {
+      setGlobalLoading(true);
+      await api.post(`/users/resetPassword`, email);
+      toast.success("Email enviado com sucesso");
+      toggleResetPasswordModal();
+    } catch (error) {
+      setGlobalLoading(false);
+      const currentError = error as AxiosError<iError>;
+      console.error(currentError.message);
+      toast.error("Email não encontrado");
+    } finally {
+      setGlobalLoading(false);
+    }
   };
 
   const newAdvertSubmit = async (data: NewAdvertData) => {
@@ -323,10 +356,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         toggleRegisterModal,
         isCreateAdvertSuccessModalOpen,
         toggleCreateAdvertSuccessModal,
+        isResetPasswordModalOpen,
+        toggleResetPasswordModal,
         reload,
         setReload,
-      }}
-    >
+        sendEmail,
+      }}>
       {children}
     </UserContext.Provider>
   );

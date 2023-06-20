@@ -41,8 +41,7 @@ export const Profile = () => {
           title="Criar Anuncio"
           toggleModal={() => setAdvertIsOpen(!advertIsOpen)}
           attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
-          widthFull
-        >
+          widthFull>
           <NewAdvert />
         </Modal>
       )}
@@ -59,9 +58,9 @@ export const Profile = () => {
         </Modal>
       )}
       <Header />
-      <div className="bg-brand-1 w-full h-[357px] absolute top-0 z-[5]"></div>
+      <div className="bg-brand-1 w-full h-[357px] absolute top-0 z-[1]"></div>
       <main className="flex flex-col items-center gap-14 w-full min-h-[90vh] bg-grey-8 ">
-        <section className="flex h-fit flex-col container w-[93%] gap-6 z-[7] relative bg-white-fixed mt-40 px-7 py-10 sm:p-11 rounded sm:w-[1240px] ">
+        <section className="flex h-fit flex-col container w-[93%] gap-6 z-[2] relative bg-white-fixed mt-40 px-7 py-10 sm:p-11 rounded sm:w-[1240px] ">
           <UserInitials
             name={currentUser.name}
             color={currentUser.color}
@@ -82,8 +81,7 @@ export const Profile = () => {
             <Button
               btnSize="btn-big"
               btnColor="btn-outline-brand-1"
-              handleClick={() => setAdvertIsOpen(!advertIsOpen)}
-            >
+              handleClick={() => setAdvertIsOpen(!advertIsOpen)}>
               Criar anuncio
             </Button>
           )}

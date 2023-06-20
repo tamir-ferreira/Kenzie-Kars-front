@@ -43,16 +43,17 @@ export const Modal = ({
   }, [toggleModal]);
 
   return createPortal(
-    <div className="fixed top-0 bg-black/50 w-screen h-screen flex justify-center items-center z-50">
+    <div className="fixed top-0 bg-black/50 w-screen h-screen flex justify-center items-center z-[4]">
       <div
         ref={blockClosing ? null : ref}
         className={`${attributes} ${
           !widthFull && "width-modal"
-        } bg-grey-10 px-6 py-5 shadow-lg rounded-lg`}
-      >
+        } bg-grey-10 px-6 py-5 shadow-lg rounded-lg`}>
         <div className="flex-col flex gap-8">
           <div className="flex justify-between items-center">
-            <h2 className="font-lexend font-medium text-base text-grey-1">{title}</h2>
+            <h2 className="font-lexend font-medium text-base text-grey-1">
+              {title}
+            </h2>
             <button onClick={toggleModal} className="btn-close-modal">
               X
             </button>
