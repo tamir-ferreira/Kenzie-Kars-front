@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/userAuth";
 
 export const UserCard = () => {
-  const { advert } = useAuth();
+  const { user, advert } = useAuth();
+
   return (
     <div className="bg-grey-10 mt-[1.25rem] rounded w-full h-96 sm:h-[26.625rem] flex-column-center px-7 sm:px-11 text-center gap-y-7 sm:gap-y-8">
       <UserInitials name={advert.user.name} color={advert.user.color} bigSize />

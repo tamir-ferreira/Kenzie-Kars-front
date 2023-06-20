@@ -8,7 +8,6 @@ export const ProtectedRoutes = () => {
   const token = localStorage.getItem("@TOKEN");
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   if (!token) {
-    // user.seller(false);
     setCarsProfile(false);
     setLogged(false);
   }
@@ -17,11 +16,10 @@ export const ProtectedRoutes = () => {
 
   const userString = localStorage.getItem("@USER");
   const user: iUser = userString ? JSON.parse(userString) : null;
-  console.log(user);
+
   if (user !== undefined && user !== null) {
     if (user.id !== Number(id)) {
       setCarsProfile(false);
-      // setIsSeller(false);
     }
   }
 

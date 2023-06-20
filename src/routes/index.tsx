@@ -4,7 +4,7 @@ import { Product } from "../pages/Product";
 import { Login } from "../pages/Login";
 import { Profile } from "../pages/Profile";
 import { Register } from "../pages/Register";
-import { ChangePassword } from "../pages/changePassword";
+import { ChangePassword } from "../pages/ChangePassword";
 import { ProtectedRoutes } from "./ProtectRoute";
 
 export const PageRoutes = () => {
