@@ -8,6 +8,7 @@ import { Modal } from "../components/Modal";
 import { NewAdvert } from "../components/Modals/NewAdvert";
 import { useAuth } from "../hooks/userAuth";
 import { useParams } from "react-router-dom";
+import { iUser } from "../contexts/UserContext";
 
 export const Profile = () => {
   const {
@@ -34,6 +35,25 @@ export const Profile = () => {
     setLogged(true);
   }, [reload]);
 
+  useEffect(() => {
+    const token = localStorage.getItem("@TOKEN");
+    const userString = localStorage.getItem("@USER");
+    const userLocal: iUser = userString ? JSON.parse(userString) : null;
+
+    if (!token) {
+      user.seller = false;
+      setLogged(false);
+    }
+    if (userLocal !== undefined && userLocal !== null) {
+      if (userLocal.id !== Number(id)) {
+        console.log("passando aqui");
+        user.seller = false;
+      } else {
+        user.seller = true;
+      }
+    }
+  }, [id, setLogged, user]);
+
   return (
     <>
       {advertIsOpen && (
@@ -41,7 +61,8 @@ export const Profile = () => {
           title="Criar Anuncio"
           toggleModal={() => setAdvertIsOpen(!advertIsOpen)}
           attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
-          widthFull>
+          widthFull
+        >
           <NewAdvert />
         </Modal>
       )}
@@ -81,7 +102,8 @@ export const Profile = () => {
             <Button
               btnSize="btn-big"
               btnColor="btn-outline-brand-1"
-              handleClick={() => setAdvertIsOpen(!advertIsOpen)}>
+              handleClick={() => setAdvertIsOpen(!advertIsOpen)}
+            >
               Criar anuncio
             </Button>
           )}
@@ -94,7 +116,7 @@ export const Profile = () => {
           )}
           <ul className="flex gap-6 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
             {currentUserAdverts.map((car) => (
-              <Cards key={car.id} car={car} />
+              <Cards key={car.id} car={car} seller={user.seller} />
             ))}
           </ul>
         </section>

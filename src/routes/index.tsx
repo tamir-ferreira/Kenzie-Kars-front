@@ -4,8 +4,8 @@ import { Product } from "../pages/Product";
 import { Login } from "../pages/Login";
 import { Profile } from "../pages/Profile";
 import { Register } from "../pages/Register";
-import { ChangePassword } from "../pages/changePassword";
-import { ProtectedRoutes } from "./ProtectRoute";
+import { ChangePassword } from "../pages/ChangePassword";
+// import { ProtectedRoutes } from "./ProtectRoute";
 
 export const PageRoutes = () => {
   return (
