@@ -14,7 +14,6 @@
 //   }
 
 //   const { id } = useParams();
-
 //   const userString = localStorage.getItem("@USER");
 //   const userLocal: iUser = userString ? JSON.parse(userString) : null;
 //   //console.log(userLocal, id);
