@@ -235,12 +235,16 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const getAllAdverts = async () => {
     try {
+      setGlobalLoading(true);
       const { data } = await api.get<iAdverts[]>(`/adverts`);
       setAdverts(data);
       return data;
     } catch (error) {
+      setGlobalLoading(false);
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
+    } finally {
+      setGlobalLoading(false);
     }
   };
 
@@ -363,8 +367,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         setReload,
         sendEmail,
         setCurrentUserAdverts,
-      }}
-    >
+      }}>
       {children}
     </UserContext.Provider>
   );
