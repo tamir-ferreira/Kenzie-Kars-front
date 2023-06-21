@@ -1,32 +1,34 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AdvertInfo } from "../components/AdvertInfo";
 import { CommentCard } from "../components/Comments";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { NewComment } from "../components/NewComment";
 import { UserCard } from "../components/UserCard";
-import { useAuth } from "../hooks/userAuth";
 import { carImages } from "../mocks/car-images";
 import { comments } from "../mocks/comments";
+import { CardObj } from "../components/Cards";
 
 export const Product = () => {
-  const { advert } = useAuth();
+  const [carInfo, setCarInfo] = useState({} as CardObj);
+
   useEffect(() => {
+    const userString = localStorage.getItem("@carInfo");
+    setCarInfo(userString ? JSON.parse(userString) : null);
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <>
       <Header />
-
       <div className="bg-brand-1 w-full h-[70vh] absolute top-0 -z[-1]"></div>
       <main className="bg-grey-8 flex justify-center w-full p-3">
         <div className="flex flex-col justify-center container sm:px-32">
           <div className=" flex mt-[7rem] justify-between max-sm:flex-col max-sm:w-[100%] z-0">
             <section className="flex flex-col w-[59%] max-sm:w-[100%]">
-              <div className="flex justify-center items-center rounded bg-grey-10 py-7 px-7 sm:p-11 mb-4 max-sm:w-[100%]">
+              <div className="flex justify-center items-center rounded bg-grey-10 py-7 px-7 xm:p-11  mb-4 max-sm:w-[100%]">
                 <img
-                  src={advert.cover_image}
+                  src={carInfo.cover_image}
                   alt="Imagem carro"
                   className="w-[450px]"
                 />
@@ -35,7 +37,7 @@ export const Product = () => {
               <div className="rounded bg-grey-10  py-7 px-7 sm:p-11 mt-5 mb-4 max-sm:w-[100%]">
                 <h3 className="mb-6 text-heading-6-600">Descrição</h3>
                 <p className="text-body-1-400 leading-7 text-grey-2">
-                  {advert.description}
+                  {carInfo.description}
                 </p>
               </div>
             </section>
@@ -47,8 +49,7 @@ export const Product = () => {
                     return (
                       <li
                         key={index}
-                        className="w-[85px]  h-[85px] sm:w-[103px] sm:h-[103px] bg-grey-7 rounded flex justify-center items-center"
-                      >
+                        className="w-[85px]  h-[85px] sm:w-[103px] sm:h-[103px] bg-grey-7 rounded flex justify-center items-center">
                         <img
                           src={elem.src_image}
                           alt="Foto carro"

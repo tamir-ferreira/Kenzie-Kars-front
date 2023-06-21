@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./Button";
 import { UserInitials } from "./UserInitials";
@@ -35,17 +34,61 @@ interface iAdverts {
       updatedAt: Date;
     };
   };
+}
 
+interface CardProps extends iAdverts {
   initialPage?: boolean;
   isOwner?: boolean;
 }
 
-export const Cards = ({ car, initialPage = false, isOwner }: iAdverts) => {
+export interface CardObj {
+  id: number;
+  brand: string;
+  model: string;
+  year: number;
+  mileage: string;
+  price: number | string;
+  description?: string;
+  cover_image: string;
+}
+
+export interface UserObj {
+  name: string;
+  color: string;
+  description: string;
+  id: number;
+}
+
+export const Cards = ({ car, initialPage = false, isOwner }: CardProps) => {
   let discount = false;
-  const { user, setAdvert } = useAuth();
+  const { user, setAdvert, logged } = useAuth();
   const price = +car.price;
   const fipe_price = +car.fipe_price;
   if (price <= fipe_price - fipe_price * 0.05) discount = true;
+
+  const newObj = () => {
+    const carObj = {
+      id: car.id,
+      model: car.model,
+      brand: car.brand,
+      mileage: car.mileage,
+      year: car.year,
+      cover_image: car.cover_image,
+      price: car.price,
+      description: car.description,
+    };
+
+    const userObj = {
+      name: car.user.name,
+      color: car.user.color,
+      description: car.user.description,
+      id: car.user.id,
+    };
+
+    localStorage.setItem("@userInfo", JSON.stringify(userObj));
+    localStorage.setItem("@carInfo", JSON.stringify(carObj));
+    setAdvert(car);
+  };
 
   return (
     <>
@@ -53,13 +96,16 @@ export const Cards = ({ car, initialPage = false, isOwner }: iAdverts) => {
         <Link to={`/product/${car.id}`}>
           <li
             className="flex gap-4 flex-col justify-between items-start pt-0 w-[312px] group mb-9 cursor-pointer"
-            onClick={() => setAdvert(car)}
-          >
+            onClick={() => newObj()}>
             <div className="flex justify-center items-center bg-grey-7 w-full h-[150px] relative border-2 border-transparent group-hover:border-brand-1 group-hover:border-solid ">
-              <img src={car.cover_image} alt="carro" className="object-cover w-full h-full" />
+              <img
+                src={car.cover_image}
+                alt="carro"
+                className="object-cover w-full h-full"
+              />
               {user && (
                 <>
-                  {discount && (
+                  {discount && initialPage && (
                     <span className="bg-random-7 w-4 h-7 text-white-fixed text-sm font-medium border-none flex items-center justify-center rounded-sm absolute top-0 right-0">
                       $
                     </span>
@@ -84,12 +130,16 @@ export const Cards = ({ car, initialPage = false, isOwner }: iAdverts) => {
               <div className="flex mb-4">
                 <h2 className="h-6 overflow-hidden font-lexend text-base font-semibold">{`${car.brand} - ${car.model}`}</h2>
               </div>
-              <p className="ellipsis-limiter text-grey-2 text-body-2-400">{car.description}</p>
+              <p className="ellipsis-limiter text-grey-2 text-body-2-400">
+                {car.description}
+              </p>
               <div className="flex items-center my-4">
-                {initialPage && (
+                {(initialPage || !logged || !isOwner) && (
                   <>
                     <UserInitials name={car.user.name} color={car.user.color} />
-                    <span className="ml-2 font-medium text-sm text-grey-2">{car.user.name}</span>
+                    <span className="ml-2 font-medium text-sm text-grey-2">
+                      {car.user.name}
+                    </span>
                   </>
                 )}
               </div>
@@ -110,7 +160,7 @@ export const Cards = ({ car, initialPage = false, isOwner }: iAdverts) => {
                   }
                 )}`}</span>
               </div>
-              {user.seller && !initialPage && (
+              {isOwner && !initialPage && (
                 <div className="flex gap-4 mt-4">
                   <Button btnSize="btn-medium" btnColor="btn-outline-1">
                     Editar
