@@ -8,6 +8,8 @@ import { Modal } from "../components/Modal";
 import { NewAdvert } from "../components/Modals/NewAdvert";
 import { useAuth } from "../hooks/userAuth";
 import { useParams } from "react-router-dom";
+import { EditProfile } from "../components/Modals/EditProfile";
+import { EditAddress } from "../components/Modals/EditAddress";
 
 export const Profile = () => {
   const {
@@ -21,6 +23,10 @@ export const Profile = () => {
     isCreateAdvertSuccessModalOpen,
     toggleCreateAdvertSuccessModal,
     reload,
+    isEditProfileModalOpen,
+    toggleEditProfileModal,
+    isEditAddressModalOpen,
+    toggleEditAddressModal,
   } = useAuth();
 
   const [isOwner, setIsOwner] = useState(false);
@@ -79,17 +85,37 @@ export const Profile = () => {
           </div>
         </Modal>
       )}
+      {isEditProfileModalOpen && (
+        <Modal
+          title="Editar Perfil"
+          toggleModal={() => toggleEditProfileModal()}
+          attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
+          widthFull>
+          <EditProfile />
+        </Modal>
+      )}
+      {isEditAddressModalOpen && (
+        <Modal
+          title="Editar Endereço"
+          toggleModal={() => toggleEditAddressModal()}
+          attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
+          widthFull>
+          <EditAddress />
+        </Modal>
+      )}
       <Header />
       <div className="bg-brand-1 w-full h-[357px] absolute top-0 z-[1]"></div>
       <main className="flex flex-col items-center gap-14 w-full min-h-[90vh] bg-grey-8 ">
         <section className="flex h-fit flex-col container w-[93%] gap-6 z-[2] relative bg-white-fixed mt-40 px-7 py-10 sm:p-11 rounded sm:w-[1240px] ">
           <UserInitials
-            name={currentUser.name}
-            color={currentUser.color}
+            name={isOwner ? user.name : currentUser.name}
+            color={isOwner ? user.color : currentUser.color}
             bigSize
           />
           <div className="flex items-center gap-2">
-            <h2 className="text-heading-6-600">{currentUser.name}</h2>
+            <h2 className="text-heading-6-600">
+              {isOwner ? user.name : currentUser.name}
+            </h2>
             <span className="flex items-center justify-center bg-brand-4 rounded text-brand-1 text-body-2-500 w-23 h-8">
               Anunciante
             </span>

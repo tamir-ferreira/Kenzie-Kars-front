@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { LoginData, loginSchema } from "../schemas/loginSchema";
 import { Loading } from "../components/Loading";
-import { ResetPassword } from "../components/Modals/resetPassword";
+import { ResetPassword } from "../components/Modals/ResetPassword";
 import { Modal } from "../components/Modal";
 
 export const Login = () => {
