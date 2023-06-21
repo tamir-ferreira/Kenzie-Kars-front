@@ -10,9 +10,28 @@ import { useAuth } from "../hooks/userAuth";
 export const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
-  const { logged, logout, user, isMobile, setReload, reload } = useAuth();
+  const {
+    logged,
+    logout,
+    user,
+    isMobile,
+    setReload,
+    reload,
+    toggleEditProfileModal,
+    toggleEditAddressModal,
+  } = useAuth();
 
   const navigate = useNavigate();
+
+  const goToProfileUser = () => {
+    navigate(`/profile/${user.id}`);
+    toggleEditProfileModal();
+  };
+
+  const goToProfileAddress = () => {
+    navigate(`/profile/${user.id}`);
+    toggleEditAddressModal();
+  };
 
   return (
     <header className="h-[10vh] w-screen px-4 bg-grey-9 border border-b-2 border-grey-6 flex items-center justify-center fixed z-[3] sm:h-[10vh] sm:px-15 ">
@@ -78,8 +97,16 @@ export const Header = () => {
           {openMenu && logged && (
             <div className="p-5 gap-4 flex bg-grey-9 rounded flex-col shadow-menu-profile absolute top-16 animate-menu -left-[1px] sm:left-6 w-screen sm:w-50">
               <ul className="gap-4 flex flex-col">
-                <li className="text-grey-2 cursor-pointer">Editar Perfil</li>
-                <li className="text-grey-2 cursor-pointer">Editar Endereço</li>
+                <li
+                  onClick={() => goToProfileUser()}
+                  className="text-grey-2 cursor-pointer">
+                  Editar Perfil
+                </li>
+                <li
+                  onClick={() => goToProfileAddress()}
+                  className="text-grey-2 cursor-pointer">
+                  Editar Endereço
+                </li>
                 {user.seller && (
                   <Link to={`/profile/${user.id}`}>
                     <li

@@ -8,6 +8,8 @@ import { RegisterData } from "../schemas/registerSchema";
 import { NewAdvertData } from "../schemas/newAdvertSchema";
 import { toast } from "react-toastify";
 import { SendEmailData } from "../schemas/sendEmailSchema";
+import { EditProfileData } from "../schemas/editProfileSchema";
+import { EditAddressData } from "../schemas/editAddressSchema";
 
 interface UserProviderProps {
   children: React.ReactNode;
@@ -47,14 +49,22 @@ interface UserProviderValue {
   toggleCreateAdvertSuccessModal: () => void;
   isResetPasswordModalOpen: boolean;
   toggleResetPasswordModal: () => void;
+  isEditProfileModalOpen: boolean;
+  toggleEditProfileModal: () => void;
+  isEditAddressModalOpen: boolean;
+  toggleEditAddressModal: () => void;
+  updateUser: (data: EditProfileData, id: number) => void;
+  deleteUser: (id: number) => void;
+  updateAddress: (data: EditAddressData, id: number) => void;
   reload: boolean;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
   sendEmail: (email: SendEmailData) => void;
 }
 
 interface iAddress {
+  id: number;
   street: string;
-  complement: string | null | undefined;
+  complement?: string | null | undefined;
   zipCode: string;
   number: number | null | undefined;
   city: string;
@@ -125,6 +135,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     useState(false);
   const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] =
     useState(false);
+  const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
+  const [isEditAddressModalOpen, setIsEditAddressModalOpen] = useState(false);
   const [globalLoading, setGlobalLoading] = useState(false);
   const [carsProfile, setCarsProfile] = useState(true);
   // const [isSeller, setIsSeller] = useState(false);
@@ -150,6 +162,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const toggleResetPasswordModal = () =>
     setIsResetPasswordModalOpen(!isResetPasswordModalOpen);
+
+  const toggleEditProfileModal = () =>
+    setIsEditProfileModalOpen(!isEditProfileModalOpen);
+
+  const toggleEditAddressModal = () =>
+    setIsEditAddressModalOpen(!isEditAddressModalOpen);
 
   useEffect(() => {
     const token = localStorage.getItem("@TOKEN");
@@ -262,6 +280,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         (user: iUser) => user.email === data.email
       )[0];
 
+      console.log(loggedUser);
+
       setUser(loggedUser);
       localStorage.setItem("@USER", JSON.stringify(loggedUser));
       localStorage.setItem("@TOKEN", token);
@@ -301,6 +321,69 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
       toast.error("Email não encontrado");
+    } finally {
+      setGlobalLoading(false);
+    }
+  };
+
+  const updateUser = async (data: EditProfileData, id: number) => {
+    try {
+      setGlobalLoading(true);
+      await api.patch(`/users/${id}`, data);
+      const userData = { ...user, ...data };
+      setUser(userData);
+      setCurrentUser(userData);
+      localStorage.setItem("@USER", JSON.stringify(userData));
+      toast.success("Usuário atualizado com sucesso");
+      toggleEditProfileModal();
+    } catch (error) {
+      setGlobalLoading(false);
+      const currentError = error as AxiosError<iError>;
+      console.error(currentError.message);
+      toast.error(currentError.response?.data.message);
+    } finally {
+      setGlobalLoading(false);
+    }
+  };
+
+  const deleteUser = async (id: number) => {
+    try {
+      setGlobalLoading(true);
+      await api.delete(`/users/${id}`);
+      toast.success("Usuário deletado com sucesso");
+      toggleEditProfileModal();
+      logout();
+    } catch (error) {
+      setGlobalLoading(false);
+      const currentError = error as AxiosError<iError>;
+      console.error(currentError.message);
+      toast.error(currentError.response?.data.message);
+    } finally {
+      setGlobalLoading(false);
+    }
+  };
+
+  const updateAddress = async (data: EditAddressData, id: number) => {
+    try {
+      const addressObj = {
+        ...data,
+        id: Number(user.address.id),
+        number: Number(data.number),
+      };
+      setGlobalLoading(true);
+
+      await api.patch(`/addresses/${id}`, addressObj);
+      const userData = { ...user, address: addressObj };
+      setUser(userData);
+      setCurrentUser(userData);
+      localStorage.setItem("@USER", JSON.stringify(userData));
+      toast.success("Endereço atualizado com sucesso");
+      toggleEditAddressModal();
+    } catch (error) {
+      setGlobalLoading(false);
+      const currentError = error as AxiosError<iError>;
+      console.error(currentError.message);
+      toast.error(currentError.response?.data.message);
     } finally {
       setGlobalLoading(false);
     }
@@ -367,6 +450,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         setReload,
         sendEmail,
         setCurrentUserAdverts,
+        updateUser,
+        deleteUser,
+        updateAddress,
+        isEditProfileModalOpen,
+        toggleEditProfileModal,
+        isEditAddressModalOpen,
+        toggleEditAddressModal,
       }}>
       {children}
     </UserContext.Provider>
