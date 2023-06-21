@@ -36,6 +36,7 @@ interface UserProviderValue {
   carsProfile: boolean;
   currentUser: iUser;
   currentUserAdverts: iAdverts[];
+  setCurrentUserAdverts: React.Dispatch<React.SetStateAction<iAdverts[]>>;
   getParamInfo: (id: string) => Promise<void>;
   globalLoading: boolean;
   showPass: boolean;
@@ -361,7 +362,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         reload,
         setReload,
         sendEmail,
-      }}>
+        setCurrentUserAdverts,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

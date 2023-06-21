@@ -8,6 +8,7 @@ import { Modal } from "../components/Modal";
 import { NewAdvert } from "../components/Modals/NewAdvert";
 import { useAuth } from "../hooks/userAuth";
 import { useParams } from "react-router-dom";
+import { iUser } from "../contexts/UserContext";
 
 export const Profile = () => {
   const {
@@ -38,6 +39,25 @@ export const Profile = () => {
       setIsOwner(true);
     }
   }, [reload]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("@TOKEN");
+    const userString = localStorage.getItem("@USER");
+    const userLocal: iUser = userString ? JSON.parse(userString) : null;
+
+    if (!token) {
+      user.seller = false;
+      setLogged(false);
+    }
+    if (userLocal !== undefined && userLocal !== null) {
+      if (userLocal.id !== Number(id)) {
+        console.log("passando aqui");
+        user.seller = false;
+      } else {
+        user.seller = true;
+      }
+    }
+  }, [id, setLogged, user]);
 
   return (
     <>

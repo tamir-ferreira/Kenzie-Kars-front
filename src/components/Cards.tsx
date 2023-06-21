@@ -35,6 +35,7 @@ interface iAdverts {
       updatedAt: Date;
     };
   };
+
   initialPage?: boolean;
   isOwner?: boolean;
 }
@@ -44,7 +45,6 @@ export const Cards = ({ car, initialPage = false, isOwner }: iAdverts) => {
   const { user, setAdvert } = useAuth();
   const price = +car.price;
   const fipe_price = +car.fipe_price;
-
   if (price <= fipe_price - fipe_price * 0.05) discount = true;
 
   return (

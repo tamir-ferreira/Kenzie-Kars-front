@@ -5,7 +5,7 @@ import { Login } from "../pages/Login";
 import { Profile } from "../pages/Profile";
 import { Register } from "../pages/Register";
 import { ChangePassword } from "../pages/ChangePassword";
-import { ProtectedRoutes } from "./ProtectRoute";
+// import { ProtectedRoutes } from "./ProtectRoute";
 
 export const PageRoutes = () => {
   return (
