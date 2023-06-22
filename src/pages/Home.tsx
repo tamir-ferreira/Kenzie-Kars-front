@@ -34,6 +34,7 @@ export const Home = () => {
             year: searchParams.get("year") || "",
             fuel: searchParams.get("fuel") || "",
             mileage: searchParams.get("mileage") || "",
+            price: searchParams.get("price") || "",
           },
         });
         setAdverts(data);
