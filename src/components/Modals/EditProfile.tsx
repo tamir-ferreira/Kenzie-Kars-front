@@ -4,10 +4,7 @@ import { TextArea } from "../TextArea";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/userAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  EditProfileData,
-  editProfileSchema,
-} from "../../schemas/editProfileSchema";
+import { EditProfileData, editProfileSchema } from "../../schemas/editProfileSchema";
 
 export const EditProfile = () => {
   const { toggleEditProfileModal, updateUser, deleteUser, user } = useAuth();
@@ -28,7 +25,8 @@ export const EditProfile = () => {
     <form
       onSubmit={handleSubmit((data) => {
         updateUser(data, user.id);
-      })}>
+      })}
+    >
       <p className="body-2-500 mb-6">Informações pessoais</p>
       <Input
         label="Nome"
@@ -98,26 +96,35 @@ export const EditProfile = () => {
         placeholder="Digitar descrição"
         defaultValue={user.description + ""}
         register={register("description")}
-        error={errors.description?.message}></TextArea>
-      <div className="flex justify-end gap-3 mt-3">
+        error={errors.description?.message}
+      ></TextArea>
+      <div className="flex justify-center sm:justify-between flex-wrap sm:flex-nowrap gap-3 mt-3">
         <Button
           type="button"
-          btnSize="btn-medium"
+          btnSize="btn-big"
           btnColor="btn-negative"
-          handleClick={() => toggleEditProfileModal()}>
+          handleClick={() => toggleEditProfileModal()}
+          attributes="px-[5%] max-sm:w-[48%]"
+        >
           Cancelar
         </Button>
 
         <Button
           type="button"
-          btnSize="btn-medium"
+          btnSize="btn-big"
           btnColor={"btn-alert"}
           handleClick={() => deleteUser(user.id)}
-          attributes=" text-alert-1">
+          attributes="px-[5%] max-sm:w-[48%]"
+        >
           Excluir Perfil
         </Button>
 
-        <Button type="submit" btnSize="btn-medium" btnColor={"btn-brand-1"}>
+        <Button
+          type="submit"
+          btnSize="btn-big"
+          btnColor={"btn-brand-1"}
+          attributes="px-[5%] max-sm:w-[70%]"
+        >
           Salvar alterações
         </Button>
       </div>
