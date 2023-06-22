@@ -54,11 +54,7 @@ export const Home = () => {
   return (
     <>
       {isOpen && (
-        <Modal
-          title="Filtros"
-          toggleModal={() => setIsOpen(!true)}
-          attributes="modal-filter"
-        >
+        <Modal title="Filtros" toggleModal={() => setIsOpen(!true)} attributes="modal-filter">
           <FilterHome textButton="Ver anúncios" />
         </Modal>
       )}
@@ -70,10 +66,7 @@ export const Home = () => {
           <section className="flex justify-start max-w-[1032px] w-screen sm:items-start">
             <ul className="flex gap-4 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
               {adverts.map(
-                (card) =>
-                  card.is_active && (
-                    <Cards key={card.id} car={card} initialPage></Cards>
-                  )
+                (card) => card.is_active && <Cards key={card.id} car={card} initialPage></Cards>
               )}
             </ul>
           </section>
@@ -88,10 +81,10 @@ export const Home = () => {
             >
               Filtros
             </Button>
-            <span className="pt-10 font-lexend text-grey-3 text-heading-5-600">
+            <span className="pt-10 font-lexend text-grey-3 sm:text-heading-5-600">
               1 <span className="opacity-50">de 2</span>
             </span>
-            <span className="pt-4 font-lexend text-brand-2 text-heading-5-600">
+            <span className="pt-4 font-lexend text-brand-2 sm:text-heading-5-600">
               Seguinte &gt;
             </span>
           </>

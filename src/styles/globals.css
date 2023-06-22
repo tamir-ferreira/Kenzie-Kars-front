@@ -23,7 +23,7 @@
 
 @layer components {
   .btn-big {
-    @apply px-7  h-12 text-button-big;
+    @apply px-7  h-12 text-button-medium sm:text-button-big;
   }
 
   .btn-medium {

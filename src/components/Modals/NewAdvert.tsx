@@ -26,7 +26,7 @@ export const NewAdvert = () => {
   const [selectedModel, setSelectedModel] = useState<Model | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string>("");
 
-  const { newAdvertSubmit, advertIsOpen, setAdvertIsOpen } = useAuth();
+  const { newAdvertSubmit, setAdvertIsOpen } = useAuth();
 
   useEffect(() => {
     const loadCars = async () => {
@@ -70,23 +70,20 @@ export const NewAdvert = () => {
     setValue("year", findModel!.year);
     setValue(
       "fuel",
-      findModel!.fuel === 1
-        ? "flex"
-        : findModel!.fuel === 2
-        ? "híbrido"
-        : "elétrico"
+      findModel!.fuel === 1 ? "flex" : findModel!.fuel === 2 ? "híbrido" : "elétrico"
     );
     setIsLocked(false);
   };
 
   return (
-    <form onSubmit={handleSubmit(newAdvertSubmit)}>
+    <form onSubmit={handleSubmit(newAdvertSubmit)} className="">
       <h3 className="text-body-2-500 mb-6">Informações do veículo</h3>
       <Select
         label="Marca"
         handleSelect={updateSelectedBrand}
         register={register("brand")}
-        error={errors.brand?.message}>
+        error={errors.brand?.message}
+      >
         {brands.map((brand, index) => {
           return (
             <option key={index} value={brand}>
@@ -100,7 +97,8 @@ export const NewAdvert = () => {
         handleSelect={updateSelectedModel}
         disabled={!models.length}
         register={register("model")}
-        error={errors.model?.message}>
+        error={errors.model?.message}
+      >
         {models &&
           models.map((model, index) => {
             return (
@@ -204,7 +202,8 @@ export const NewAdvert = () => {
         btnColor="btn-brand-opacity"
         attributes="tex"
         handleClick={addInput}
-        type="button">
+        type="button"
+      >
         Adicionar campo para imagem da galeria
       </Button>
       <div className="flex justify-end gap-3 mt-10">
@@ -212,14 +211,16 @@ export const NewAdvert = () => {
           type="button"
           btnSize="btn-big"
           btnColor="btn-negative"
-          handleClick={() => setAdvertIsOpen(false)}>
+          handleClick={() => setAdvertIsOpen(false)}
+        >
           Cancelar
         </Button>
 
         <Button
           btnSize="btn-big"
           btnColor={isLocked ? "btn-brand-disable" : "btn-brand-1"}
-          attributes="px-10">
+          attributes="px-10"
+        >
           Criar anúncio
         </Button>
       </div>

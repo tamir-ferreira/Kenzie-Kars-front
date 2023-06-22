@@ -11,12 +11,10 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="w-full h-[15vh] sm:h-[15vh] bg-grey-0 sm:py-11 flex-column-center sm:flex-row-center space-y-[1rem]">
+    <footer className="w-full h-[20vh] sm:h-[15vh] bg-grey-0 sm:py-11 flex-column-center sm:flex-row-center space-y-[1rem]">
       <div className="flex flex-col h-full sm:flex-row sm:justify-between justify-evenly items-center container">
         <img src={logo} alt="logo" className="w-36 h-7" />
-        <small className="text-white-fixed">
-          © 2023 - Todos os direitos reservados.
-        </small>
+        <small className="text-white-fixed">© 2023 - Todos os direitos reservados.</small>
         <Button
           btnSize="w-10 sm:w-14 h-8 sm:h-12"
           btnColor="bg-grey-1"

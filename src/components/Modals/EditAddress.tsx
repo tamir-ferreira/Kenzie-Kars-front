@@ -4,10 +4,7 @@ import { Input } from "../Input";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/userAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  EditAddressData,
-  editAddressSchema,
-} from "../../schemas/editAddressSchema";
+import { EditAddressData, editAddressSchema } from "../../schemas/editAddressSchema";
 import { toast } from "react-toastify";
 import { useState } from "react";
 
@@ -62,7 +59,8 @@ export const EditAddress = () => {
     <form
       onSubmit={handleSubmit((data) => {
         updateAddress(data, user.address.id);
-      })}>
+      })}
+    >
       <p className="body-2-500 mb-6">Informações de endereço</p>
       <div className="flex relative">
         <Input
@@ -109,9 +107,7 @@ export const EditAddress = () => {
           label="Número"
           placeholder="Digitar número"
           type="text"
-          defaultValue={
-            user.address.number === null ? "" : user.address.number + ""
-          }
+          defaultValue={user.address.number === null ? "" : user.address.number + ""}
           register={register("number")}
           error={errors.number?.message}
         />
@@ -129,7 +125,9 @@ export const EditAddress = () => {
           type="button"
           btnSize="btn-big"
           btnColor="btn-negative"
-          handleClick={() => toggleEditAddressModal()}>
+          handleClick={() => toggleEditAddressModal()}
+          attributes="px-[5%] max-sm:w-[48%]"
+        >
           Cancelar
         </Button>
 
@@ -137,7 +135,8 @@ export const EditAddress = () => {
           type="submit"
           btnSize="btn-big"
           btnColor={"btn-brand-1"}
-          attributes="px-10">
+          attributes="px-[5%] max-sm:w-[48%]"
+        >
           Salvar alterações
         </Button>
       </div>
