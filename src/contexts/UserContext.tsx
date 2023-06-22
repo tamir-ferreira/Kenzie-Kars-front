@@ -50,6 +50,8 @@ interface UserProviderValue {
   reload: boolean;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
   sendEmail: (email: SendEmailData) => void;
+  setGlobalLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setAdverts: React.Dispatch<React.SetStateAction<iAdverts[]>>;
 }
 
 interface iAddress {
@@ -113,7 +115,7 @@ interface iLogin {
   userId: string;
 }
 
-interface iError {
+export interface iError {
   message: string;
 }
 
@@ -367,7 +369,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         setReload,
         sendEmail,
         setCurrentUserAdverts,
-      }}>
+        setGlobalLoading,
+        setAdverts,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
