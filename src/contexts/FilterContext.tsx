@@ -17,7 +17,7 @@ interface FilterProviderValue {
   setFuel: React.Dispatch<React.SetStateAction<string | null | undefined>>;
   km: string | null | undefined;
   setKm: React.Dispatch<React.SetStateAction<string | null | undefined>>;
-  handleClick: (prop: any) => void;
+  handleClick: () => void;
 }
 
 export const FilterContext = createContext({} as FilterProviderValue);
@@ -30,13 +30,12 @@ export const FilterProvider = ({ children }: FilterProviderProps) => {
   const [fuel, setFuel] = useState<null | string>();
   const [km, setKm] = useState<null | string>();
 
-  const handleClick = (prop: any) => {
+  const handleClick = () => {
     setBrand(null),
       setModel(null),
       setColor(null),
       setFuel(null),
       setYear(null);
-    prop(false);
     setKm(null);
   };
 

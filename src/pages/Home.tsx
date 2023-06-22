@@ -59,7 +59,7 @@ export const Home = () => {
           toggleModal={() => setIsOpen(!true)}
           attributes="modal-filter"
         >
-          <FilterHome textButton="Ver anúncios" setIsOpen={setIsOpen} />
+          <FilterHome textButton="Ver anúncios" />
         </Modal>
       )}
       <Header />

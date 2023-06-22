@@ -7,10 +7,10 @@ import { useSearchParams } from "react-router-dom";
 export interface FilterProps {
   textButton: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>> | any;
+  //setIsOpen?: React.Dispatch<React.SetStateAction<boolean>> | any;
 }
 
-export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
+export const FilterHome = ({ textButton }: FilterProps) => {
   const {
     brand,
     color,
@@ -283,7 +283,7 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
           <Button
             btnSize="btn-big"
             btnColor="btn-brand-1"
-            handleClick={() => handleClick(setIsOpen)}
+            handleClick={() => handleClick()}
           >
             {textButton}
           </Button>

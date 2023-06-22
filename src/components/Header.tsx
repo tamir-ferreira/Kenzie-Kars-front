@@ -6,6 +6,7 @@ import { useState } from "react";
 import { UserInitials } from "./UserInitials";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/userAuth";
+import { FilterAuth } from "../hooks/filterHook";
 
 export const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -20,6 +21,8 @@ export const Header = () => {
     toggleEditProfileModal,
     toggleEditAddressModal,
   } = useAuth();
+
+  const { handleClick } = FilterAuth();
 
   const navigate = useNavigate();
 
@@ -37,7 +40,7 @@ export const Header = () => {
     <header className="h-[10vh] w-screen px-4 bg-grey-9 border border-b-2 border-grey-6 flex items-center justify-center fixed z-[3] sm:h-[10vh] sm:px-15 ">
       <div className="container h-full flex items-center justify-between">
         <Link to={"/?brand=&model=&color=&year=&fuel=&mileage="}>
-          <img src={logo} alt="logotipo" />
+          <img src={logo} alt="logotipo" onClick={() => handleClick()} />
         </Link>
         <nav className="h-full flex items-center gap-11 pl-11 sm:relative sm:border-grey-6 sm:border-l-2">
           {isMobile ? (
@@ -105,12 +108,14 @@ export const Header = () => {
               <ul className="gap-4 flex flex-col">
                 <li
                   onClick={() => goToProfileUser()}
-                  className="text-grey-2 cursor-pointer">
+                  className="text-grey-2 cursor-pointer"
+                >
                   Editar Perfil
                 </li>
                 <li
                   onClick={() => goToProfileAddress()}
-                  className="text-grey-2 cursor-pointer">
+                  className="text-grey-2 cursor-pointer"
+                >
                   Editar Endereço
                 </li>
                 {user.seller && (
