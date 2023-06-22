@@ -1,47 +1,72 @@
-import { useState } from "react";
-import { mockFilter } from "../mocks/filter";
+import { useEffect } from "react";
 import { Button } from "./Button";
+import { useAuth } from "../hooks/userAuth";
+import { FilterAuth } from "../hooks/filterHook";
+import { useSearchParams } from "react-router-dom";
 
 export interface FilterProps {
   textButton: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>> | any;
+  //setIsOpen?: React.Dispatch<React.SetStateAction<boolean>> | any;
 }
 
-export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
-  const [brand, setBrand] = useState<null | string>();
-  const [model, setModel] = useState<null | string>();
-  const [color, setColor] = useState<null | string>();
-  const [year, setYear] = useState<null | string>();
-  const [fuel, setFuel] = useState<null | string>();
-  // const [km, setKm] = useState<null | string>();
+export const FilterHome = ({ textButton }: FilterProps) => {
+  const {
+    brand,
+    color,
+    fuel,
+    km,
+    model,
+    setBrand,
+    setColor,
+    setFuel,
+    setKm,
+    setModel,
+    setYear,
+    year,
+    handleClick,
+  } = FilterAuth();
 
-  const allBrands = mockFilter.map((model) => model.brand);
+  const { adverts } = useAuth();
+  const [, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    setSearchParams({
+      brand: brand || "",
+      model: model || "",
+      color: color || "",
+      year: year || "",
+      fuel: fuel || "",
+      mileage: km || "",
+    });
+  }, [brand, model, color, year, fuel, km]);
+
+  const allBrands = adverts.map((brands) => brands.brand);
   const brands = allBrands.filter(function (este, i) {
     return allBrands.indexOf(este) === i;
   });
 
-  const allModels = mockFilter.map((model) => model.model);
+  const allModels = adverts.map((model) => model.model);
   const modelsExpecific = allModels.filter(function (este, i) {
     return allModels.indexOf(este) === i;
   });
 
-  const allColors = mockFilter.map((model) => model.color);
+  const allColors = adverts.map((model) => model.color);
   const colorsExpecific = allColors.filter(function (este, i) {
     return allColors.indexOf(este) === i;
   });
 
-  const allYears = mockFilter.map((model) => model.year);
+  const allYears = adverts.map((model) => model.year);
   const yearExpecific = allYears.filter(function (este, i) {
     return allYears.indexOf(este) === i;
   });
 
-  const allFuels = mockFilter.map((model) => model.fuel);
+  const allFuels = adverts.map((model) => model.fuel);
   const fuelExpecific = allFuels.filter(function (este, i) {
     return allFuels.indexOf(este) === i;
   });
 
-  const models = mockFilter.filter((model) => model.brand === brand);
+  const models = adverts.filter((model) => model.brand === brand);
   const justModels = models.map((model) => model.model);
   const modelInc = justModels.filter(function (este, i) {
     return justModels.indexOf(este) === i;
@@ -59,28 +84,20 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
     return justYears.indexOf(este) === i;
   });
 
-  const combs = years.filter((models) => models.year === year);
+  const combs = years.filter((models) => models.year === +year!);
   const justCombs = combs.map((model) => model.fuel);
   const combInc = justCombs.filter(function (este, i) {
     return justCombs.indexOf(este) === i;
   });
-  // const kilomers = combs.filter((models) => models.fuel === fuel);
 
-  // const minKm =
-  //   km === "min" && kilomers.sort((a, b) => a.kilometers - b.kilometers);
+  const kilomers = combs.filter((models) => models.fuel === fuel);
 
-  // const maxKm =
-  //   km === "max" && kilomers.sort((a, b) => a.kilometers + b.kilometers);
+  const minKm =
+    km === "min" && kilomers.sort((a, b) => +a.mileage - +b.mileage);
 
-  const handleClick = () => {
-    setBrand(null),
-      setModel(null),
-      setColor(null),
-      setFuel(null),
-      setYear(null);
-    setIsOpen(false);
-    // setKm(null);
-  };
+  const maxKm =
+    km === "max" && kilomers.sort((a, b) => +a.mileage + +b.mileage);
+
   return (
     <aside>
       <div className="mb-10">
@@ -91,7 +108,9 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
               <li
                 key={index}
                 className="cursor-pointer text-heading-6-500 text-grey-3"
-                onClick={() => setBrand(cars)}
+                onClick={() => {
+                  setBrand(cars);
+                }}
               >
                 {cars}
               </li>
@@ -108,7 +127,9 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
                   <li
                     key={index}
                     className="cursor-pointer text-heading-6-500 text-grey-3"
-                    onClick={() => setModel(cars)}
+                    onClick={() => {
+                      setModel(cars);
+                    }}
                   >
                     {cars}
                   </li>
@@ -119,7 +140,9 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
                   <li
                     key={index}
                     className="cursor-pointer text-heading-6-500 text-grey-3"
-                    onClick={() => setModel(cars)}
+                    onClick={() => {
+                      setModel(cars);
+                    }}
                   >
                     {cars}
                   </li>
@@ -136,7 +159,9 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
                   <li
                     key={index}
                     className="cursor-pointer text-heading-6-500 text-grey-3"
-                    onClick={() => setColor(cars)}
+                    onClick={() => {
+                      setColor(cars);
+                    }}
                   >
                     {cars}
                   </li>
@@ -147,7 +172,9 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
                   <li
                     key={index}
                     className="cursor-pointer text-heading-6-500 text-grey-3"
-                    onClick={() => setColor(cars)}
+                    onClick={() => {
+                      setColor(cars);
+                    }}
                   >
                     {cars}
                   </li>
@@ -164,7 +191,9 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
                   <li
                     key={index}
                     className="cursor-pointer text-heading-6-500 text-grey-3"
-                    onClick={() => setYear(cars)}
+                    onClick={() => {
+                      setYear(String(cars));
+                    }}
                   >
                     {cars}
                   </li>
@@ -175,7 +204,9 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
                   <li
                     key={index}
                     className="cursor-pointer text-heading-6-500 text-grey-3"
-                    onClick={() => setYear(cars)}
+                    onClick={() => {
+                      setYear(String(cars));
+                    }}
                   >
                     {cars}
                   </li>
@@ -192,7 +223,9 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
                   <li
                     key={index}
                     className="cursor-pointer text-heading-6-500 text-grey-3"
-                    onClick={() => setFuel(cars)}
+                    onClick={() => {
+                      setFuel(cars);
+                    }}
                   >
                     {cars}
                   </li>
@@ -203,7 +236,9 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
                   <li
                     key={index}
                     className="cursor-pointer text-heading-6-500 text-grey-3"
-                    onClick={() => setFuel(cars)}
+                    onClick={() => {
+                      setFuel(cars);
+                    }}
                   >
                     {cars}
                   </li>
@@ -217,7 +252,7 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
           <Button
             btnSize="btn-filter"
             btnColor="btn-negative"
-            // onClick={() => setKm("min")}
+            onClick={() => setKm("DESC")}
           >
             Minimo
           </Button>
@@ -225,7 +260,7 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
           <Button
             btnSize="btn-filter ml-6"
             btnColor="btn-negative"
-            // onClick={() => setKm("max")}
+            onClick={() => setKm("ASC")}
           >
             Maximo
           </Button>
@@ -243,12 +278,12 @@ export const FilterHome = ({ textButton, setIsOpen }: FilterProps) => {
           </Button>
         </div>
       </div>
-      {brand && (
+      {(brand || model || color || year || fuel) && (
         <div className="flex justify-center items-center">
           <Button
             btnSize="btn-big"
             btnColor="btn-brand-1"
-            handleClick={handleClick}
+            handleClick={() => handleClick()}
           >
             {textButton}
           </Button>

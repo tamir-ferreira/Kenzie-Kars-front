@@ -96,7 +96,8 @@ export const Cards = ({ car, initialPage = false, isOwner }: CardProps) => {
         <Link to={`/product/${car.id}`}>
           <li
             className="flex gap-4 flex-col justify-between items-start pt-0 w-[312px] group mb-9 cursor-pointer"
-            onClick={() => newObj()}>
+            onClick={() => newObj()}
+          >
             <div className="flex justify-center items-center bg-grey-7 w-full h-[150px] relative border-2 border-transparent group-hover:border-brand-1 group-hover:border-solid ">
               <img
                 src={car.cover_image}
