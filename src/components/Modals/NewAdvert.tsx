@@ -200,7 +200,6 @@ export const NewAdvert = () => {
       <Button
         btnSize="btn-medium"
         btnColor="btn-brand-opacity"
-        attributes="tex"
         handleClick={addInput}
         type="button"
       >
@@ -212,6 +211,7 @@ export const NewAdvert = () => {
           btnSize="btn-big"
           btnColor="btn-negative"
           handleClick={() => setAdvertIsOpen(false)}
+          attributes="px-[5%] max-sm:w-[48%]"
         >
           Cancelar
         </Button>
@@ -219,7 +219,7 @@ export const NewAdvert = () => {
         <Button
           btnSize="btn-big"
           btnColor={isLocked ? "btn-brand-disable" : "btn-brand-1"}
-          attributes="px-10"
+          attributes="px-[5%] max-sm:w-[48%]"
         >
           Criar anúncio
         </Button>
