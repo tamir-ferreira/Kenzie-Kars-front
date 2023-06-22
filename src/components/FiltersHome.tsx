@@ -256,7 +256,9 @@ export const FilterHome = ({ textButton }: FilterProps) => {
             btnSize="btn-filter"
             btnColor="btn-negative"
             type="button"
-            handleClick={() => setKm("asc")}
+            handleClick={() => {
+              setKm("asc"), setPrice(null);
+            }}
           >
             Minimo
           </Button>
@@ -264,7 +266,9 @@ export const FilterHome = ({ textButton }: FilterProps) => {
           <Button
             btnSize="btn-filter ml-6"
             btnColor="btn-negative"
-            handleClick={() => setKm("desc")}
+            handleClick={() => {
+              setKm("desc"), setPrice(null);
+            }}
           >
             Maximo
           </Button>
@@ -276,7 +280,9 @@ export const FilterHome = ({ textButton }: FilterProps) => {
           <Button
             btnSize="btn-filter"
             btnColor="btn-negative"
-            handleClick={() => setPrice("asc")}
+            handleClick={() => {
+              setPrice("asc"), setKm(null);
+            }}
           >
             Minimo
           </Button>
@@ -284,7 +290,9 @@ export const FilterHome = ({ textButton }: FilterProps) => {
           <Button
             btnSize="btn-filter ml-6"
             btnColor="btn-negative"
-            handleClick={() => setPrice("desc")}
+            handleClick={() => {
+              setPrice("desc"), setKm(null);
+            }}
           >
             Maximo
           </Button>
