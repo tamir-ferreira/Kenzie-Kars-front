@@ -18,9 +18,7 @@ export const ResetPassword = () => {
 
   return (
     <form onSubmit={handleSubmit(sendEmail)}>
-      <h3 className="text-body-2-500 mb-6">
-        Insira o endereço de e-mail associado à sua conta.
-      </h3>
+      <h3 className="text-body-2-500 mb-6">Insira o endereço de e-mail associado à sua conta.</h3>
 
       <Input
         label="Email"
@@ -34,7 +32,9 @@ export const ResetPassword = () => {
           type="button"
           btnSize="btn-big"
           btnColor="btn-negative"
-          handleClick={() => toggleResetPasswordModal()}>
+          handleClick={() => toggleResetPasswordModal()}
+          attributes="px-[5%] w-[48%]"
+        >
           Cancelar
         </Button>
 
@@ -42,7 +42,8 @@ export const ResetPassword = () => {
           type="submit"
           btnSize="btn-big"
           btnColor={"btn-brand-1"}
-          attributes="px-10">
+          attributes="px-[5%] w-[48%]"
+        >
           Enviar email
         </Button>
       </div>
