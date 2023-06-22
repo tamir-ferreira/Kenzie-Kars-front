@@ -17,8 +17,12 @@ export const EditProfile = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<EditProfileData>({
+    mode: "all",
     resolver: zodResolver(editProfileSchema),
   });
+
+  const birthday = user.birthdate + "";
+  const [day, month, year] = birthday.split("/").reverse();
 
   return (
     <form
@@ -58,14 +62,35 @@ export const EditProfile = () => {
         register={register("phone")}
         error={errors.phone?.message}
       />
-      <Input
-        label="Data de nascimento"
-        placeholder="00/00/00"
-        defaultValue={user.birthdate + ""}
-        type="date"
-        register={register("birthdate")}
-        error={errors.birthdate?.message}
-      />
+      <div>
+        <p className="body-2-500 mb-6">Data de nascimento</p>
+        <div className="flex w-full gap-3">
+          <Input
+            label="Dia"
+            placeholder="00"
+            type="text"
+            defaultValue={day}
+            register={register("day")}
+            error={errors.day?.message}
+          />
+          <Input
+            label="Mês"
+            placeholder="00"
+            type="text"
+            defaultValue={month}
+            register={register("month")}
+            error={errors.month?.message}
+          />
+          <Input
+            label="Ano"
+            placeholder="0000"
+            type="text"
+            defaultValue={year}
+            register={register("year")}
+            error={errors.year?.message}
+          />
+        </div>
+      </div>
       <TextArea
         label="Descrição"
         cols={2}

@@ -207,8 +207,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const createUser = async (data: RegisterData) => {
     try {
-      const strParts = data.birthdate.split("-");
-      const fDate = strParts[2] + "/" + strParts[1] + "/" + strParts[0];
+      const fDate = data.year + "/" + data.month + "/" + data.day;
       const fPhone = data.phone.replace(/\s/g, "").replace(/\D/g, "");
       const fCpf = data.cpf.replace(/\s/g, "").replace(/\D/g, "");
       const fZipCode = data.zipCode.replace(/\s/g, "").replace(/\D/g, "");
@@ -280,17 +279,20 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         (user: iUser) => user.email === data.email
       )[0];
 
-      console.log(loggedUser);
+      const formattedUser = {
+        ...loggedUser,
+        birthdate: loggedUser.birthdate.toLocaleString().replaceAll("-", "/"),
+      };
 
-      setUser(loggedUser);
-      localStorage.setItem("@USER", JSON.stringify(loggedUser));
+      setUser(formattedUser);
+      localStorage.setItem("@USER", JSON.stringify(formattedUser));
       localStorage.setItem("@TOKEN", token);
 
       setLogged(true);
 
-      if (loggedUser.seller) {
+      if (formattedUser.seller) {
         // setIsSeller(true);
-        navigate(`/profile/${loggedUser.id}`);
+        navigate(`/profile/${formattedUser.id}`);
       } else navigate(`/`);
     } catch (error) {
       setGlobalLoading(false);
@@ -305,6 +307,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const logout = async () => {
     localStorage.removeItem("@TOKEN");
     localStorage.removeItem("@USER");
+    localStorage.removeItem("@userInfo");
+    localStorage.removeItem("@carInfo");
     // localStorage.removeItem("@user-color");
     setLogged(false);
     navigate("/");
@@ -328,49 +332,58 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const updateUser = async (data: EditProfileData, id: number) => {
     try {
-      setGlobalLoading(true);
+      const fDate = data.year + "/" + data.month + "/" + data.day;
+      const fPhone = data.phone.replace(/\s/g, "").replace(/\D/g, "");
+      const fCpf = data.cpf.replace(/\s/g, "").replace(/\D/g, "");
       await api.patch(`/users/${id}`, data);
-      const userData = { ...user, ...data };
+      const formattedData = {
+        ...data,
+        birthdate: fDate,
+        phone: fPhone,
+        cpf: fCpf,
+      };
+      const userData = { ...user, ...formattedData };
       setUser(userData);
       setCurrentUser(userData);
       localStorage.setItem("@USER", JSON.stringify(userData));
       toast.success("Usuário atualizado com sucesso");
       toggleEditProfileModal();
     } catch (error) {
-      setGlobalLoading(false);
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
       toast.error(currentError.response?.data.message);
-    } finally {
-      setGlobalLoading(false);
     }
   };
 
   const deleteUser = async (id: number) => {
     try {
-      setGlobalLoading(true);
       await api.delete(`/users/${id}`);
       toast.success("Usuário deletado com sucesso");
       toggleEditProfileModal();
       logout();
     } catch (error) {
-      setGlobalLoading(false);
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
       toast.error(currentError.response?.data.message);
-    } finally {
-      setGlobalLoading(false);
     }
   };
 
   const updateAddress = async (data: EditAddressData, id: number) => {
     try {
+      const fZipCode = data.zipCode.replace(/\s/g, "").replace(/\D/g, "");
+      let fAddressNum: null | number = null;
+
+      if (data.number === "") {
+        fAddressNum = null;
+      } else {
+        fAddressNum = Number(data.number);
+      }
       const addressObj = {
         ...data,
         id: Number(user.address.id),
-        number: Number(data.number),
+        number: fAddressNum,
+        zipcode: fZipCode,
       };
-      setGlobalLoading(true);
 
       await api.patch(`/addresses/${id}`, addressObj);
       const userData = { ...user, address: addressObj };
@@ -380,12 +393,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       toast.success("Endereço atualizado com sucesso");
       toggleEditAddressModal();
     } catch (error) {
-      setGlobalLoading(false);
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
       toast.error(currentError.response?.data.message);
-    } finally {
-      setGlobalLoading(false);
     }
   };
 
