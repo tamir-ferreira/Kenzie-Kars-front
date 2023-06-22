@@ -4,6 +4,7 @@ export const editAddressSchema = z.object({
   zipCode: z
     .string()
     .nonempty("O CEP é obrigatório")
+    .min(8, "O CEP deve conter no mínimo 8 digitos")
     .max(9, "O CEP deve conter no máximo 9 digitos"),
   state: z
     .string()

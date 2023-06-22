@@ -10,6 +10,7 @@ import { useAuth } from "../hooks/userAuth";
 import { useParams } from "react-router-dom";
 import { EditProfile } from "../components/Modals/EditProfile";
 import { EditAddress } from "../components/Modals/EditAddress";
+import { iUser } from "../contexts/UserContext";
 
 export const Profile = () => {
   const {
@@ -39,9 +40,11 @@ export const Profile = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("@TOKEN");
+    const userString = localStorage.getItem("@USER");
+    const userLocal: iUser = userString ? JSON.parse(userString) : null;
     getParamInfo(id!);
     setLogged(true);
-    if (user.id == Number(id)) {
+    if (userLocal.id === Number(id)) {
       setIsOwner(true);
     }
     if (!token) {

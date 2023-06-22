@@ -13,11 +13,26 @@ export const registerSchema = z
       .min(11, "O CPF deve conter no mínimo 11 digitos")
       .max(14, "O CPF deve conter no máximo 14 digitos"),
     phone: z.string().nonempty("O telefone é obrigatório"),
-    birthdate: z.string().nonempty("A data de nascimento é obrigatória"),
+    day: z
+      .string()
+      .nonempty("O dia é obrigatório")
+      .length(2, "O dia deve ter 2 caracteres")
+      .regex(/^([0-9])+$/, "Digite apenas números"),
+    month: z
+      .string()
+      .nonempty("O mês é obrigatório")
+      .length(2, "O mês deve ter 2 caracteres")
+      .regex(/^([0-9])+$/, "Digite apenas números"),
+    year: z
+      .string()
+      .nonempty("O ano é obrigatório")
+      .length(4, "O ano deve ter 4 caracteres")
+      .regex(/^([0-9])+$/, "Digite apenas números"),
     description: z.string().optional(),
     zipCode: z
       .string()
       .nonempty("O CEP é obrigatório")
+      .min(8, "O CEP deve conter no mínimo 8 digitos")
       .max(9, "O CEP deve conter no máximo 9 digitos"),
     state: z
       .string()
