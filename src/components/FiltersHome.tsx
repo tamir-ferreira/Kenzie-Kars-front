@@ -25,6 +25,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
     setYear,
     year,
     handleClick,
+    setPrice,
+    price,
   } = FilterAuth();
 
   const { adverts } = useAuth();
@@ -38,8 +40,9 @@ export const FilterHome = ({ textButton }: FilterProps) => {
       year: year || "",
       fuel: fuel || "",
       mileage: km || "",
+      price: price || "",
     });
-  }, [brand, model, color, year, fuel, km]);
+  }, [brand, model, color, year, fuel, km, price]);
 
   const allBrands = adverts.map((brands) => brands.brand);
   const brands = allBrands.filter(function (este, i) {
@@ -90,13 +93,13 @@ export const FilterHome = ({ textButton }: FilterProps) => {
     return justCombs.indexOf(este) === i;
   });
 
-  const kilomers = combs.filter((models) => models.fuel === fuel);
+  // const kilomers = combs.filter((models) => models.fuel === fuel);
 
-  const minKm =
-    km === "min" && kilomers.sort((a, b) => +a.mileage - +b.mileage);
+  // const minKm =
+  //   km === "min" && kilomers.sort((a, b) => +a.mileage - +b.mileage);
 
-  const maxKm =
-    km === "max" && kilomers.sort((a, b) => +a.mileage + +b.mileage);
+  // const maxKm =
+  //   km === "max" && kilomers.sort((a, b) => +a.mileage + +b.mileage);
 
   return (
     <aside>
@@ -252,7 +255,10 @@ export const FilterHome = ({ textButton }: FilterProps) => {
           <Button
             btnSize="btn-filter"
             btnColor="btn-negative"
-            onClick={() => setKm("DESC")}
+            type="button"
+            handleClick={() => {
+              setKm("asc"), setPrice(null);
+            }}
           >
             Minimo
           </Button>
@@ -260,7 +266,9 @@ export const FilterHome = ({ textButton }: FilterProps) => {
           <Button
             btnSize="btn-filter ml-6"
             btnColor="btn-negative"
-            onClick={() => setKm("ASC")}
+            handleClick={() => {
+              setKm("desc"), setPrice(null);
+            }}
           >
             Maximo
           </Button>
@@ -269,11 +277,23 @@ export const FilterHome = ({ textButton }: FilterProps) => {
       <div className="mb-14">
         <h2 className="text-heading-4-600 mb-4">Preço</h2>
         <div className="ml-2">
-          <Button btnSize="btn-filter" btnColor="btn-negative">
+          <Button
+            btnSize="btn-filter"
+            btnColor="btn-negative"
+            handleClick={() => {
+              setPrice("asc"), setKm(null);
+            }}
+          >
             Minimo
           </Button>
 
-          <Button btnSize="btn-filter ml-6" btnColor="btn-negative">
+          <Button
+            btnSize="btn-filter ml-6"
+            btnColor="btn-negative"
+            handleClick={() => {
+              setPrice("desc"), setKm(null);
+            }}
+          >
             Maximo
           </Button>
         </div>
