@@ -61,8 +61,14 @@ export interface UserObj {
 
 export const Cards = ({ car, initialPage = false, isOwner }: CardProps) => {
   let discount = false;
-  const { user, setAdvert, logged, editAdvertIsOpen, setEditAdvertIsOpen } =
-    useAuth();
+  const {
+    user,
+    setAdvert,
+    logged,
+    editAdvertIsOpen,
+    setEditAdvertIsOpen,
+    setIsCar,
+  } = useAuth();
   const price = +car.price;
   const fipe_price = +car.fipe_price;
   if (price <= fipe_price - fipe_price * 0.05) discount = true;
@@ -174,7 +180,9 @@ export const Cards = ({ car, initialPage = false, isOwner }: CardProps) => {
                   btnSize="btn-medium"
                   btnColor="btn-outline-1"
                   type="submit"
-                  handleClick={() => setEditAdvertIsOpen(!editAdvertIsOpen)}
+                  handleClick={() => {
+                    setEditAdvertIsOpen(!editAdvertIsOpen), setIsCar(car);
+                  }}
                 >
                   Editar
                 </Button>

@@ -5,9 +5,12 @@ import { TextArea } from "../TextArea";
 import { Select } from "../Select";
 import { useForm } from "react-hook-form";
 import { getBrands, getModelsByBrand } from "../../services/requests";
-import { NewAdvertData, newAdvertSchema } from "../../schemas/newAdvertSchema";
 import { useAuth } from "../../hooks/userAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  UpdateAdvertData,
+  updateAdvertSchema,
+} from "../../schemas/editAdvertSchema";
 
 interface Model {
   id: string;
@@ -22,11 +25,10 @@ export const EditAndDeleteAdvert = () => {
   const [inputs, setInputs] = useState<string[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
   const [models, setModels] = useState<Model[]>([]);
-  const [isLocked, setIsLocked] = useState(true);
   const [selectedModel, setSelectedModel] = useState<Model | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string>("");
 
-  const { newAdvertSubmit, setAdvertIsOpen, setAdvertsStatus, advertsStatus } =
+  const { setAdvertsStatus, advertsStatus, updateAdvertSubmit, deleteAdverts } =
     useAuth();
 
   useEffect(() => {
@@ -50,8 +52,8 @@ export const EditAndDeleteAdvert = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<NewAdvertData>({
-    resolver: zodResolver(newAdvertSchema),
+  } = useForm<UpdateAdvertData>({
+    resolver: zodResolver(updateAdvertSchema),
   });
 
   const addInput = (): void => {
@@ -77,11 +79,10 @@ export const EditAndDeleteAdvert = () => {
         ? "híbrido"
         : "elétrico"
     );
-    setIsLocked(false);
   };
 
   return (
-    <form onSubmit={handleSubmit(newAdvertSubmit)} className="">
+    <form onSubmit={handleSubmit(updateAdvertSubmit)} className="">
       <h3 className="text-body-2-500 mb-6">Informações do veículo</h3>
       <Select
         label="Marca"
@@ -261,7 +262,7 @@ export const EditAndDeleteAdvert = () => {
           type="button"
           btnSize="btn-big"
           btnColor="btn-negative"
-          handleClick={() => setAdvertIsOpen(false)}
+          handleClick={() => deleteAdverts()}
           attributes="w-[52%]"
         >
           Excluir anúncio
@@ -269,8 +270,8 @@ export const EditAndDeleteAdvert = () => {
 
         <Button
           btnSize="btn-big"
-          type="button"
-          btnColor={isLocked ? "btn-brand-disable" : "btn-brand-1"}
+          type="submit"
+          btnColor={"btn-brand-1"}
           attributes="w-[48%]"
         >
           Salvar Alterações
