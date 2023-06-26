@@ -1,16 +1,37 @@
 import { useState, useEffect } from "react";
 import { Button } from "./Button";
 import { CardObj } from "./Cards";
+import { api } from "../services/api";
+import { iUser } from "../contexts/UserContext";
 
 export const AdvertInfo = () => {
   const [carInfo, setCarInfo] = useState({} as CardObj);
+  const [sellerPhone, setSellerPhone] = useState("");
 
   useEffect(() => {
     const userString = localStorage.getItem("@carInfo");
     setCarInfo(userString ? JSON.parse(userString) : null);
+
+    const searchSeller = async () => {
+      const sellerData = localStorage.getItem("@userInfo");
+      const parseData = sellerData ? JSON.parse(sellerData) : null;
+
+      try {
+        const sellerUser = await api.get<iUser>(`/users/${parseData.id}`);
+
+        setSellerPhone(sellerUser.data.phone);
+
+        // console.log(sellerPhone);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    searchSeller();
   }, []);
 
   const price = +carInfo.price;
+
   return (
     <div className="width-advert-info bg-grey-10 p-7 rounded-lg sm:py-7 sm:px-11">
       <div className="flex flex-col">
@@ -33,11 +54,15 @@ export const AdvertInfo = () => {
             })}
           </p>
         </div>
-        <div className="mt-6">
+        <a
+          href={`https://web.whatsapp.com/send?phone=55${sellerPhone}`}
+          target="_blank"
+          className="mt-6"
+        >
           <Button btnSize={"btn-medium"} btnColor={"btn-brand-1"}>
             Comprar
           </Button>
-        </div>
+        </a>
       </div>
     </div>
   );

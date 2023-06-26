@@ -80,7 +80,9 @@ export const Profile = () => {
       {isCreateAdvertSuccessModalOpen && (
         <Modal title="Sucesso!" toggleModal={toggleCreateAdvertSuccessModal}>
           <div className="flex flex-col gap-5">
-            <h2 className="heading-7-500 text-grey-1">Seu anúncio foi criado com sucesso</h2>
+            <h2 className="heading-7-500 text-grey-1">
+              Seu anúncio foi criado com sucesso
+            </h2>
             <p className="body-1-400 text-grey-2">
               Agora você poderá ver seus negócios crescendo em grande escala!
             </p>
@@ -117,15 +119,17 @@ export const Profile = () => {
             bigSize
           />
           <div className="flex items-center gap-2">
-            <h2 className="text-heading-6-600">{isOwner ? user.name : currentUser.name}</h2>
+            <h2 className="text-heading-6-600">
+              {isOwner ? user.name : currentUser.name}
+            </h2>
             <span className="flex items-center justify-center bg-brand-4 rounded text-brand-1 text-body-2-500 w-23 h-8">
               Anunciante
             </span>
           </div>
           <p className="text-body-1-400 text-grey-2 mb-4">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed ipsum est praesentium
-            dolorem quidem aspernatur nemo aut eius eum delectus. Omnis nisi explicabo adipisci
-            odit.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed ipsum
+            est praesentium dolorem quidem aspernatur nemo aut eius eum
+            delectus. Omnis nisi explicabo adipisci odit.
           </p>
           {isOwner && (
             <Button
@@ -139,12 +143,20 @@ export const Profile = () => {
         </section>
         <section className="flex flex-col justify-start max-w-[1392px] mt-4 w-screen sm:items-start">
           {!user.seller && (
-            <h3 className="text-heading-5-600 mb-16 ml-5 sm:ml-0 sm:-translate-x-16 ">Anúncios</h3>
+            <h3 className="text-heading-5-600 mb-16 ml-5 sm:ml-0 sm:-translate-x-16 ">
+              Anúncios
+            </h3>
           )}
           <ul className="flex gap-6 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
-            {currentUserAdverts.map((car) => (
-              <Cards key={car.id} car={car} isOwner={isOwner} />
-            ))}
+            {currentUserAdverts.length ? (
+              currentUserAdverts.map((car) => (
+                <Cards key={car.id} car={car} isOwner={isOwner} />
+              ))
+            ) : (
+              <li className="bg-grey-7 text-grey-2 font-semibold p-2 w-[385px] sm:w-[1400px] h-20 sm:h-[200px] sm:text-heading-4-600 mb-9 rounded flex justify-center items-center">
+                Você ainda não criou um anúncio
+              </li>
+            )}
           </ul>
         </section>
         <div className="flex mb-16 items-center gap-16">
