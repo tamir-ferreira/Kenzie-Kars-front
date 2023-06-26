@@ -19,11 +19,13 @@ interface UserProviderValue {
   isMobile: boolean;
   setLogged: React.Dispatch<React.SetStateAction<boolean>>;
   setUserStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  setAdvertsStatus: React.Dispatch<React.SetStateAction<boolean>>;
   logged: boolean;
   login: (data: LoginData) => void;
   logout: () => void;
   createUser: (data: RegisterData) => void;
   userStatus: boolean;
+  advertsStatus: boolean;
   user: iUser;
   // isSeller: boolean;
   // setIsSeller: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,7 +35,9 @@ interface UserProviderValue {
   advert: iAdverts;
   newAdvertSubmit: (data: NewAdvertData) => void;
   advertIsOpen: boolean;
+  editAdvertIsOpen: boolean;
   setAdvertIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditAdvertIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setCarsProfile: React.Dispatch<React.SetStateAction<boolean>>;
   carsProfile: boolean;
   currentUser: iUser;
@@ -147,7 +151,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [adverts, setAdverts] = useState<iAdverts[]>([] as iAdverts[]);
   const [advert, setAdvert] = useState<iAdverts>({} as iAdverts);
   const [userStatus, setUserStatus] = useState(false);
+  const [advertsStatus, setAdvertsStatus] = useState(false);
   const [advertIsOpen, setAdvertIsOpen] = useState(false);
+  const [editAdvertIsOpen, setEditAdvertIsOpen] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [currentUser, setCurrentUser] = useState({} as iUser);
   const [currentUserAdverts, setCurrentUserAdverts] = useState<iAdverts[]>([]);
@@ -471,6 +477,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         toggleEditAddressModal,
         setGlobalLoading,
         setAdverts,
+        advertsStatus,
+        setAdvertsStatus,
+        editAdvertIsOpen,
+        setEditAdvertIsOpen,
       }}
     >
       {children}
