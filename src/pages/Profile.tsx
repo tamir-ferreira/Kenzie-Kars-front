@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { EditProfile } from "../components/Modals/EditProfile";
 import { EditAddress } from "../components/Modals/EditAddress";
 import { iUser } from "../contexts/UserContext";
+import { EditAndDeleteAdvert } from "../components/Modals/EditAndDeleteAdvert";
 
 export const Profile = () => {
   const {
@@ -28,6 +29,8 @@ export const Profile = () => {
     toggleEditProfileModal,
     isEditAddressModalOpen,
     toggleEditAddressModal,
+    setEditAdvertIsOpen,
+    editAdvertIsOpen,
   } = useAuth();
 
   const [isOwner, setIsOwner] = useState(false);
@@ -75,6 +78,16 @@ export const Profile = () => {
           widthFull
         >
           <NewAdvert />
+        </Modal>
+      )}
+      {editAdvertIsOpen && (
+        <Modal
+          title="Editar anúncio"
+          toggleModal={() => setEditAdvertIsOpen(!editAdvertIsOpen)}
+          attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto y-[55vh] "
+          widthFull
+        >
+          <EditAndDeleteAdvert />
         </Modal>
       )}
       {isCreateAdvertSuccessModalOpen && (
