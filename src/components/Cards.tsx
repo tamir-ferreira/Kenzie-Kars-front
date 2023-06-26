@@ -61,7 +61,14 @@ export interface UserObj {
 
 export const Cards = ({ car, initialPage = false, isOwner }: CardProps) => {
   let discount = false;
-  const { user, setAdvert, logged } = useAuth();
+  const {
+    user,
+    setAdvert,
+    logged,
+    editAdvertIsOpen,
+    setEditAdvertIsOpen,
+    setIsCar,
+  } = useAuth();
   const price = +car.price;
   const fipe_price = +car.fipe_price;
   if (price <= fipe_price - fipe_price * 0.05) discount = true;
@@ -93,87 +100,99 @@ export const Cards = ({ car, initialPage = false, isOwner }: CardProps) => {
   return (
     <>
       {(initialPage || isOwner || car.is_active) && (
-        <Link to={`/product/${car.id}`}>
+        <div>
           <li
             className="flex gap-4 flex-col justify-between items-start pt-0 w-[312px] group mb-9 cursor-pointer"
             onClick={() => newObj()}
           >
-            <div className="flex justify-center items-center bg-grey-7 w-full h-[150px] relative border-2 border-transparent group-hover:border-brand-1 group-hover:border-solid ">
-              <img
-                src={car.cover_image}
-                alt="carro"
-                className="object-cover w-full h-full"
-              />
-              {user && (
-                <>
-                  {discount && initialPage && (
-                    <span className="bg-random-7 w-4 h-7 text-white-fixed text-sm font-medium border-none flex items-center justify-center rounded-sm absolute top-0 right-0">
-                      $
-                    </span>
-                  )}
-                  {!initialPage && isOwner && (
-                    <>
-                      {car.is_active ? (
-                        <span className="flex items-center top-3 left-4 h-6 px-2 bg-brand-1 text-body-2-500 text-white-fixed absolute">
-                          Ativo
-                        </span>
-                      ) : (
-                        <span className="flex items-center top-3 left-4 h-6 px-2 bg-grey-4 text-body-2-500 text-white-fixed absolute">
-                          Inativo
-                        </span>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
-            </div>
-            <div className="h-3/6 w-full flex flex-col justify-between">
-              <div className="flex mb-4">
-                <h2 className="h-6 overflow-hidden font-lexend text-base font-semibold">{`${car.brand} - ${car.model}`}</h2>
-              </div>
-              <p className="ellipsis-limiter text-grey-2 text-body-2-400">
-                {car.description}
-              </p>
-              <div className="flex items-center my-4">
-                {(initialPage || !logged || !isOwner) && (
+            <Link to={`/product/${car.id}`}>
+              <div className="flex justify-center items-center bg-grey-7 w-full h-[150px] relative border-2 border-transparent group-hover:border-brand-1 group-hover:border-solid ">
+                <img
+                  src={car.cover_image}
+                  alt="carro"
+                  className="object-cover w-full h-full"
+                />
+                {user && (
                   <>
-                    <UserInitials name={car.user.name} color={car.user.color} />
-                    <span className="ml-2 font-medium text-sm text-grey-2">
-                      {car.user.name}
-                    </span>
+                    {discount && initialPage && (
+                      <span className="bg-random-7 w-4 h-7 text-white-fixed text-sm font-medium border-none flex items-center justify-center rounded-sm absolute top-0 right-0">
+                        $
+                      </span>
+                    )}
+                    {!initialPage && isOwner && (
+                      <>
+                        {car.is_active ? (
+                          <span className="flex items-center top-3 left-4 h-6 px-2 bg-brand-1 text-body-2-500 text-white-fixed absolute">
+                            Ativo
+                          </span>
+                        ) : (
+                          <span className="flex items-center top-3 left-4 h-6 px-2 bg-grey-4 text-body-2-500 text-white-fixed absolute">
+                            Inativo
+                          </span>
+                        )}
+                      </>
+                    )}
                   </>
                 )}
               </div>
-              <div className="flex items-center justify-between w-full">
-                <div className="flex items-center ">
-                  <span className="bg-brand-4 text-brand-1 font-medium text-sm px-2 py-1.5 rounded">
-                    {`${car.mileage} KM`}
-                  </span>
-                  <span className="bg-brand-4 text-brand-1 font-medium text-sm px-2 py-1.5 rounded ml-3">
-                    {car.year}
-                  </span>
+              <div className="h-3/6 w-full flex flex-col justify-between">
+                <div className="flex mb-4">
+                  <h2 className="h-6 overflow-hidden font-lexend text-base font-semibold">{`${car.brand} - ${car.model}`}</h2>
                 </div>
-                <span className="font-lexend text-grey-1 font-medium text-base">{`${price.toLocaleString(
-                  "pt-br",
-                  {
-                    style: "currency",
-                    currency: "BRL",
-                  }
-                )}`}</span>
+                <p className="ellipsis-limiter text-grey-2 text-body-2-400">
+                  {car.description}
+                </p>
+                <div className="flex items-center my-4">
+                  {(initialPage || !logged || !isOwner) && (
+                    <>
+                      <UserInitials
+                        name={car.user.name}
+                        color={car.user.color}
+                      />
+                      <span className="ml-2 font-medium text-sm text-grey-2">
+                        {car.user.name}
+                      </span>
+                    </>
+                  )}
+                </div>
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center ">
+                    <span className="bg-brand-4 text-brand-1 font-medium text-sm px-2 py-1.5 rounded">
+                      {`${car.mileage} KM`}
+                    </span>
+                    <span className="bg-brand-4 text-brand-1 font-medium text-sm px-2 py-1.5 rounded ml-3">
+                      {car.year}
+                    </span>
+                  </div>
+                  <span className="font-lexend text-grey-1 font-medium text-base">{`${price.toLocaleString(
+                    "pt-br",
+                    {
+                      style: "currency",
+                      currency: "BRL",
+                    }
+                  )}`}</span>
+                </div>
               </div>
-              {isOwner && !initialPage && (
-                <div className="flex gap-4 mt-4">
-                  <Button btnSize="btn-medium" btnColor="btn-outline-1">
-                    Editar
-                  </Button>
-                  <Button btnSize="btn-medium" btnColor="btn-outline-1">
-                    Ver detalhes
-                  </Button>
-                </div>
-              )}
-            </div>
+            </Link>
+            {isOwner && !initialPage && (
+              <div className="flex gap-4 mt-4">
+                <Button
+                  btnSize="btn-medium"
+                  btnColor="btn-outline-1"
+                  type="submit"
+                  handleClick={() => {
+                    setEditAdvertIsOpen(!editAdvertIsOpen), setIsCar(car);
+                  }}
+                >
+                  Editar
+                </Button>
+                <Button btnSize="btn-medium" btnColor="btn-outline-1">
+                  Ver detalhes
+                </Button>
+              </div>
+            )}
           </li>
-        </Link>
+        </div>
       )}
     </>
   );

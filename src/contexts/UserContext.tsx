@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { SendEmailData } from "../schemas/sendEmailSchema";
 import { EditProfileData } from "../schemas/editProfileSchema";
 import { EditAddressData } from "../schemas/editAddressSchema";
+import { UpdateAdvertData } from "../schemas/editAdvertSchema";
 
 interface UserProviderProps {
   children: React.ReactNode;
@@ -19,11 +20,13 @@ interface UserProviderValue {
   isMobile: boolean;
   setLogged: React.Dispatch<React.SetStateAction<boolean>>;
   setUserStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  setAdvertsStatus: React.Dispatch<React.SetStateAction<boolean>>;
   logged: boolean;
   login: (data: LoginData) => void;
   logout: () => void;
   createUser: (data: RegisterData) => void;
   userStatus: boolean;
+  advertsStatus: boolean;
   user: iUser;
   // isSeller: boolean;
   // setIsSeller: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,7 +36,9 @@ interface UserProviderValue {
   advert: iAdverts;
   newAdvertSubmit: (data: NewAdvertData) => void;
   advertIsOpen: boolean;
+  editAdvertIsOpen: boolean;
   setAdvertIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditAdvertIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setCarsProfile: React.Dispatch<React.SetStateAction<boolean>>;
   carsProfile: boolean;
   currentUser: iUser;
@@ -61,6 +66,10 @@ interface UserProviderValue {
   sendEmail: (email: SendEmailData) => void;
   setGlobalLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setAdverts: React.Dispatch<React.SetStateAction<iAdverts[]>>;
+  setIsCar: React.Dispatch<React.SetStateAction<iAdverts>>;
+  isCar: iAdverts;
+  updateAdvertSubmit: (data: UpdateAdvertData) => Promise<void>;
+  deleteAdverts: () => Promise<void>;
 }
 
 interface iAddress {
@@ -147,12 +156,15 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [adverts, setAdverts] = useState<iAdverts[]>([] as iAdverts[]);
   const [advert, setAdvert] = useState<iAdverts>({} as iAdverts);
   const [userStatus, setUserStatus] = useState(false);
+  const [advertsStatus, setAdvertsStatus] = useState(false);
   const [advertIsOpen, setAdvertIsOpen] = useState(false);
+  const [editAdvertIsOpen, setEditAdvertIsOpen] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [currentUser, setCurrentUser] = useState({} as iUser);
   const [currentUserAdverts, setCurrentUserAdverts] = useState<iAdverts[]>([]);
   const [reload, setReload] = useState(false);
   const isMobile = useMedia({ maxWidth: "640px" });
+  const [isCar, setIsCar] = useState<iAdverts>({} as iAdverts);
   const navigate = useNavigate();
   //window.scrollTo(0, 0);
 
@@ -422,6 +434,50 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       toast.error(currentError.response?.data.message);
     }
   };
+  const updateAdvertSubmit = async (data: UpdateAdvertData) => {
+    try {
+      const userString = localStorage.getItem("@USER");
+      const user: iUser = userString ? JSON.parse(userString) : null;
+
+      const advertObj = {
+        brand: data.brand ? data.brand : isCar.brand,
+        model: data.model ? data.model : isCar.model,
+        year: data.year ? Number(data.year) : Number(isCar.year),
+        fuel: data.fuel ? data.fuel : isCar.fuel,
+        mileage: data.mileage ? Number(data.mileage) : Number(isCar.mileage),
+        fipe_price: data.fipe_price ? data.fipe_price : isCar.fipe_price,
+        price: data.price ? Number(data.price) : Number(isCar.price),
+        description: data.description ? data.description : isCar.description,
+        cover_image: data.cover_image ? data.cover_image : isCar.cover_image,
+        is_active: !advertsStatus,
+      };
+      await api.patch<UpdateAdvertData>(`/adverts/${isCar.id}`, advertObj);
+      getParamInfo(String(user.id));
+      setEditAdvertIsOpen(!editAdvertIsOpen);
+      //toggleCreateAdvertSuccessModal();
+    } catch (error) {
+      console.log(error);
+
+      const currentError = error as AxiosError<iError>;
+      console.error(currentError.message);
+      toast.error(currentError.response?.data.message);
+    }
+  };
+
+  const deleteAdverts = async () => {
+    try {
+      const userString = localStorage.getItem("@USER");
+      const user: iUser = userString ? JSON.parse(userString) : null;
+      await api.delete(`/adverts/${isCar.id}`);
+      toast.success("Anúncio deletado com sucesso");
+      getParamInfo(String(user.id));
+      setEditAdvertIsOpen(!editAdvertIsOpen);
+    } catch (error) {
+      const currentError = error as AxiosError<iError>;
+      console.error(currentError.message);
+      toast.error(currentError.response?.data.message);
+    }
+  };
 
   return (
     <UserContext.Provider
@@ -471,6 +527,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         toggleEditAddressModal,
         setGlobalLoading,
         setAdverts,
+        advertsStatus,
+        setAdvertsStatus,
+        editAdvertIsOpen,
+        setEditAdvertIsOpen,
+        isCar,
+        setIsCar,
+        updateAdvertSubmit,
+        deleteAdverts,
       }}
     >
       {children}
