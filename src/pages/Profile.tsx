@@ -167,7 +167,7 @@ export const Profile = () => {
               ))
             ) : (
               <li className="bg-grey-7 text-grey-2 font-semibold p-2 w-[385px] sm:w-[1400px] h-20 sm:h-[200px] sm:text-heading-4-600 mb-9 rounded flex justify-center items-center">
-                Você ainda não criou um anúncio
+                Sem anúncios ativos
               </li>
             )}
           </ul>
