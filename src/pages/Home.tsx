@@ -55,7 +55,11 @@ export const Home = () => {
   return (
     <>
       {isOpen && (
-        <Modal title="Filtros" toggleModal={() => setIsOpen(!true)} attributes="modal-filter">
+        <Modal
+          title="Filtros"
+          toggleModal={() => setIsOpen(!true)}
+          attributes="modal-filter"
+        >
           <FilterHome textButton="Ver anúncios" />
         </Modal>
       )}
@@ -66,8 +70,17 @@ export const Home = () => {
           {!isMobile && <FilterHome textButton="Limpar filtros" />}
           <section className="flex justify-start max-w-[1032px] w-screen sm:items-start">
             <ul className="flex gap-4 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
-              {adverts.map(
-                (card) => card.is_active && <Cards key={card.id} car={card} initialPage></Cards>
+              {adverts.length ? (
+                adverts.map(
+                  (card) =>
+                    card.is_active && (
+                      <Cards key={card.id} car={card} initialPage></Cards>
+                    )
+                )
+              ) : (
+                <li className="bg-grey-7 text-grey-2 font-semibold p-2 w-[312px] sm:w-[1100px] h-20 sm:h-[200px] sm:text-heading-4-600 mb-9 rounded flex justify-center items-center">
+                  Nenhum anúncio ativo no momento
+                </li>
               )}
             </ul>
           </section>

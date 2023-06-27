@@ -161,9 +161,15 @@ export const Profile = () => {
             </h3>
           )}
           <ul className="flex gap-6 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
-            {currentUserAdverts.map((car) => (
-              <Cards key={car.id} car={car} isOwner={isOwner} />
-            ))}
+            {currentUserAdverts.length ? (
+              currentUserAdverts.map((car) => (
+                <Cards key={car.id} car={car} isOwner={isOwner} />
+              ))
+            ) : (
+              <li className="bg-grey-7 text-grey-2 font-semibold p-2 w-[385px] sm:w-[1400px] h-20 sm:h-[200px] sm:text-heading-4-600 mb-9 rounded flex justify-center items-center">
+                Sem anúncios ativos
+              </li>
+            )}
           </ul>
         </section>
         <div className="flex mb-16 items-center gap-16">
