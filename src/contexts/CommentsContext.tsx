@@ -50,6 +50,7 @@ export const CommentsProvider = ({ children }: CommentsProviderProps) => {
         title: "teste",
       };
       await api.post<CommentsData>(`comments/${getId}`, newObjComments);
+      getComments(String(getId));
       toast.success("Comentário criado com sucesso");
     } catch (error) {
       const currentError = error as AxiosError<iError>;
