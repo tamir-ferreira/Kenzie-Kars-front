@@ -6,7 +6,6 @@ import { Header } from "../components/Header";
 import { NewComment } from "../components/NewComment";
 import { UserCard } from "../components/UserCard";
 import { carImages } from "../mocks/car-images";
-//import { comments } from "../mocks/comments";
 import { CardObj, UserObj } from "../components/Cards";
 import { CommentsAuth } from "../hooks/commentsHook";
 import { useParams } from "react-router-dom";
@@ -27,7 +26,7 @@ export const Product = () => {
 
   useEffect(() => {
     getComments(id!);
-  }, [currentComments, id]);
+  }, []);
 
   return (
     <>
