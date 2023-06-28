@@ -21,7 +21,8 @@ export const Button = ({
     <button
       type={type}
       className={`${btnSize} ${btnColor} ${attributes}`}
-      onClick={handleClick}>
+      onClick={handleClick}
+    >
       {children}
     </button>
   );

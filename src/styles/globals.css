@@ -25,6 +25,9 @@
   .btn-big {
     @apply px-7  h-12 text-button-medium sm:text-button-big;
   }
+  .btn-big-1 {
+    @apply px-7  h-12 text-button-medium sm:text-button-big-1;
+  }
 
   .btn-medium {
     @apply px-5 h-10 text-button-medium;
@@ -167,5 +170,12 @@
     width: 100%;
     max-width: 64rem;
     margin: auto;
+  }
+
+  .img-transition {
+    transition: transform 0.2s;
+  }
+  .img-transition:hover {
+    transform: scale(1.4);
   }
 }

@@ -40,7 +40,7 @@ export const Product = () => {
                 <img
                   src={carInfo.cover_image}
                   alt="Imagem carro"
-                  className="w-[450px]"
+                  className="w-[450px] img-transition"
                 />
               </div>
               <AdvertInfo />

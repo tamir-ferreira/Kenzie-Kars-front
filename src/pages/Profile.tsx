@@ -31,6 +31,12 @@ export const Profile = () => {
     toggleEditAddressModal,
     setEditAdvertIsOpen,
     editAdvertIsOpen,
+    isDeleteAdvertConfirmModalOpen,
+    toggleDeleteConfirmAdvertModal,
+    deleteAdverts,
+    deleteUser,
+    isDeleteProfileConfirmModalOpen,
+    toggleDeleteConfirmProfileModal,
   } = useAuth();
 
   const [isOwner, setIsOwner] = useState(false);
@@ -54,19 +60,6 @@ export const Profile = () => {
       setLogged(false);
     }
   }, [reload]);
-
-  // useEffect(() => {
-  //   const userString = localStorage.getItem("@USER");
-  //   const userLocal: iUser = userString ? JSON.parse(userString) : null;
-  //   if (userLocal !== undefined && userLocal !== null) {
-  //     if (userLocal.id !== Number(id)) {
-  //       console.log("passando aqui");
-  //       setIsOwner(false);
-  //     } else {
-  //       isOwner = true;
-  //     }
-  //   }
-  // }, [id, setLogged, user]);
 
   return (
     <>
@@ -100,6 +93,82 @@ export const Profile = () => {
               Agora você poderá ver seus negócios crescendo em grande escala!
             </p>
           </div>
+        </Modal>
+      )}
+      {isDeleteAdvertConfirmModalOpen && (
+        <Modal
+          title="Excluir anúncio"
+          toggleModal={toggleDeleteConfirmAdvertModal}
+        >
+          <form className="flex flex-col gap-5">
+            <h2 className="heading-7-500 text-grey-1">
+              Tem certeza que deseja remover este anúncio?
+            </h2>
+            <p className="body-1-400 text-grey-2">
+              Essa ação não pode ser desfeita. Isso excluirá permanentemente sua
+              conta e removerá seus dados de nossos servidores.
+            </p>
+            <div className="flex justify-end mt-6">
+              <Button
+                type="button"
+                btnSize="btn-big"
+                btnColor="btn-negative"
+                handleClick={toggleDeleteConfirmAdvertModal}
+                attributes="px-[5%] max-sm:w-[48%]"
+              >
+                Cancelar
+              </Button>
+              <Button
+                type="button"
+                btnSize="btn-big"
+                btnColor={"btn-alert"}
+                handleClick={() => {
+                  deleteAdverts();
+                }}
+                attributes="px-[5%] max-sm:w-[48%] ml-4"
+              >
+                Sim, excluir anúncio
+              </Button>
+            </div>
+          </form>
+        </Modal>
+      )}
+      {isDeleteProfileConfirmModalOpen && (
+        <Modal
+          title="Excluir perfil"
+          toggleModal={toggleDeleteConfirmProfileModal}
+        >
+          <form className="flex flex-col gap-5">
+            <h2 className="heading-7-500 text-grey-1">
+              Tem certeza que deseja remover este perfil?
+            </h2>
+            <p className="body-1-400 text-grey-2">
+              Essa ação não pode ser desfeita. Isso excluirá permanentemente sua
+              conta e removerá seus dados de nossos servidores.
+            </p>
+            <div className="flex justify-end mt-6">
+              <Button
+                type="button"
+                btnSize="btn-big"
+                btnColor="btn-negative"
+                handleClick={toggleDeleteConfirmProfileModal}
+                attributes="px-[5%] max-sm:w-[48%]"
+              >
+                Cancelar
+              </Button>
+              <Button
+                type="button"
+                btnSize="btn-big"
+                btnColor={"btn-alert"}
+                handleClick={() => {
+                  deleteUser(user.id);
+                }}
+                attributes="px-[5%] max-sm:w-[48%] ml-4"
+              >
+                Sim, excluir perfil
+              </Button>
+            </div>
+          </form>
         </Modal>
       )}
       {isEditProfileModalOpen && (
