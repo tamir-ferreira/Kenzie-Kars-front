@@ -32,7 +32,6 @@ export const EditAndDeleteAdvert = () => {
     setAdvertsStatus,
     advertsStatus,
     updateAdvertSubmit,
-    deleteAdverts,
     toggleDeleteConfirmAdvertModal,
     setEditAdvertIsOpen,
     editAdvertIsOpen,

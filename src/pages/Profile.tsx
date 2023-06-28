@@ -53,11 +53,14 @@ export const Profile = () => {
     const userLocal: iUser = userString ? JSON.parse(userString) : null;
     getParamInfo(id!);
     setLogged(true);
-    if (userLocal.id === Number(id)) {
-      setIsOwner(true);
-    }
+
     if (!token) {
       setLogged(false);
+    }
+    if (userLocal !== null) {
+      if (userLocal.id === Number(id)) {
+        setIsOwner(true);
+      }
     }
   }, [reload]);
 
