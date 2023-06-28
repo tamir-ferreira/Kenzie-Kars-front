@@ -4,10 +4,19 @@ import { TextArea } from "../TextArea";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/userAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EditProfileData, editProfileSchema } from "../../schemas/editProfileSchema";
+import {
+  EditProfileData,
+  editProfileSchema,
+} from "../../schemas/editProfileSchema";
 
 export const EditProfile = () => {
-  const { toggleEditProfileModal, updateUser, deleteUser, user } = useAuth();
+  const {
+    toggleEditProfileModal,
+    updateUser,
+    deleteUser,
+    user,
+    toggleDeleteConfirmProfileModal,
+  } = useAuth();
 
   const {
     register,
@@ -111,9 +120,9 @@ export const EditProfile = () => {
 
         <Button
           type="button"
-          btnSize="btn-big"
+          btnSize="btn-big-1"
           btnColor={"btn-alert"}
-          handleClick={() => deleteUser(user.id)}
+          handleClick={toggleDeleteConfirmProfileModal}
           attributes="px-[5%] max-sm:w-[48%]"
         >
           Excluir Perfil
@@ -121,7 +130,7 @@ export const EditProfile = () => {
 
         <Button
           type="submit"
-          btnSize="btn-big"
+          btnSize="btn-big-1"
           btnColor={"btn-brand-1"}
           attributes="px-[5%] max-sm:w-[70%]"
         >

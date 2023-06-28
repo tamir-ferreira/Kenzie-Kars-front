@@ -28,8 +28,15 @@ export const EditAndDeleteAdvert = () => {
   const [selectedModel, setSelectedModel] = useState<Model | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string>("");
 
-  const { setAdvertsStatus, advertsStatus, updateAdvertSubmit, deleteAdverts } =
-    useAuth();
+  const {
+    setAdvertsStatus,
+    advertsStatus,
+    updateAdvertSubmit,
+    deleteAdverts,
+    toggleDeleteConfirmAdvertModal,
+    setEditAdvertIsOpen,
+    editAdvertIsOpen,
+  } = useAuth();
 
   useEffect(() => {
     const loadCars = async () => {
@@ -262,7 +269,10 @@ export const EditAndDeleteAdvert = () => {
           type="button"
           btnSize="btn-big"
           btnColor="btn-negative"
-          handleClick={() => deleteAdverts()}
+          handleClick={() => {
+            toggleDeleteConfirmAdvertModal(),
+              setEditAdvertIsOpen(!editAdvertIsOpen);
+          }}
           attributes="w-[52%]"
         >
           Excluir anúncio
