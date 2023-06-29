@@ -1,11 +1,13 @@
 import moment from "moment";
 import { UserInitials } from "./UserInitials";
+import { ReactNode } from "react";
 
 interface commentProps {
   userName: string;
   countMark: string;
   comment: string;
   color: string;
+  children?: ReactNode;
 }
 
 export const CommentCard = ({
@@ -13,6 +15,7 @@ export const CommentCard = ({
   countMark,
   comment,
   color,
+  children,
 }: commentProps) => {
   const timeElapsed = Date.now();
   const today = new Date(timeElapsed);
@@ -24,16 +27,17 @@ export const CommentCard = ({
   );
   const diffDays = String(moment.duration(diff).asDays());
 
-  //console.log(typeof diffDays);
-
   return (
     <li className="flex flex-col gap-3 h-max">
-      <div className="flex items-center gap-2 w-max">
-        <UserInitials name={userName} color={color} />
-        <p className="text-body-2-500">{userName}</p>
-        <small className="text-xs font-normal text-grey-3">
-          {diffDays === "0" ? "há algumas horas" : `há ${diffDays} dias`}
-        </small>
+      <div className="w-full flex place-content-between">
+        <div className="flex place-content-between items-center gap-2 w-max text-grey-1">
+          <UserInitials name={userName} color={color} />
+          <p className="text-body-2-500">{userName}</p>
+          <small className="text-xs font-normal text-grey-3">
+            {diffDays === "0" ? "há algumas horas" : `há ${diffDays} dias`}
+          </small>
+        </div>
+        <div>{children}</div>
       </div>
       <div className="w-full h-max">
         <p className="text-body-2-400 leading-6 text-grey-2">{comment}</p>

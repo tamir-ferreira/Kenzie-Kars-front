@@ -24,6 +24,13 @@ export const commentSchema = z.object({
 
 export const commentSchemaMultiple = z.array(commentSchema);
 
+export const editCommentSchema = z.object({
+  // title: z.string().max(200),
+  content: z.string(),
+});
+
+export type updateComment = z.infer<typeof editCommentSchema>;
+
 export type CommentsData = z.infer<typeof commentsSchema>;
 export type CommentData = z.infer<typeof commentSchema>;
 export type tCommentResponseMultiple = z.infer<typeof commentSchemaMultiple>;

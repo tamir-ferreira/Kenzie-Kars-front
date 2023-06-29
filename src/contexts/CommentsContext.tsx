@@ -8,6 +8,7 @@ import { api } from "../services/api";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { iError } from "./UserContext";
+import { updateComment } from "../schemas/commentsShema";
 
 interface CommentsProviderProps {
   children: React.ReactNode;
@@ -18,7 +19,10 @@ interface CommentsProviderValue {
   setGetId: React.Dispatch<React.SetStateAction<number | null>>;
   setButton: React.Dispatch<React.SetStateAction<boolean>>;
   button: boolean;
+  modalIsOpen: boolean;
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   getComments: (id: string) => Promise<void>;
+  updateComment: (data: { content: string }, id: number) => Promise<void>;
   currentComments: {
     content: string;
     id: number;
@@ -34,6 +38,9 @@ interface CommentsProviderValue {
       id: number;
     };
   }[];
+  userCurrentComment: CommentData;
+  setUserCurrentComment: React.Dispatch<React.SetStateAction<CommentData>>;
+  deleteComment: () => Promise<void>;
 }
 
 export const CommentsContext = createContext({} as CommentsProviderValue);
@@ -42,6 +49,10 @@ export const CommentsProvider = ({ children }: CommentsProviderProps) => {
   const [getId, setGetId] = useState<null | number>(null);
   const [button, setButton] = useState(false);
   const [currentComments, setCurrentComments] = useState<CommentData[]>([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [userCurrentComment, setUserCurrentComment] = useState(
+    {} as CommentData
+  );
 
   const newCommentsSubmit = async (data: CommentsData) => {
     try {
@@ -73,6 +84,35 @@ export const CommentsProvider = ({ children }: CommentsProviderProps) => {
     }
   };
 
+  const updateComment = async (content: updateComment, id: number) => {
+    try {
+      const { data } = await api.patch(`/comments/${id}`, content);
+
+      const updatedComments = currentComments.map((comment) => {
+        if (comment.id === id) {
+          return { ...comment, ...data };
+        }
+        return comment;
+      });
+
+      setCurrentComments(updatedComments);
+      toast.success("Comentário atualizado com sucesso");
+      setModalIsOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteComment = async () => {
+    try {
+      await api.delete(`/comments/${userCurrentComment.id}`);
+      toast.success("Comentário excluído com sucesso");
+      setModalIsOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <CommentsContext.Provider
       value={{
@@ -82,6 +122,12 @@ export const CommentsProvider = ({ children }: CommentsProviderProps) => {
         setButton,
         getComments,
         currentComments,
+        modalIsOpen,
+        setModalIsOpen,
+        updateComment,
+        userCurrentComment,
+        setUserCurrentComment,
+        deleteComment,
       }}
     >
       {children}
