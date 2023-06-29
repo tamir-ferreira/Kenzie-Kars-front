@@ -9,11 +9,20 @@ import { carImages } from "../mocks/car-images";
 import { CardObj, UserObj } from "../components/Cards";
 import { CommentsAuth } from "../hooks/commentsHook";
 import { useParams } from "react-router-dom";
+import { Button } from "../components/Button";
+import { Modal } from "../components/Modal";
+import { EditAndDeleteComment } from "../components/Modals/EditAndDeleteComment";
 
 export const Product = () => {
   const [carInfo, setCarInfo] = useState({} as CardObj);
   const [userInfo, setUserInfo] = useState({} as UserObj);
-  const { getComments, currentComments } = CommentsAuth();
+  const {
+    getComments,
+    currentComments,
+    setModalIsOpen,
+    modalIsOpen,
+    setUserCurrentComment,
+  } = CommentsAuth();
   const { id } = useParams();
 
   useEffect(() => {
@@ -28,8 +37,21 @@ export const Product = () => {
     getComments(id!);
   }, []);
 
+  const userData = localStorage.getItem("@USER");
+  const parseUserInfo = userData ? JSON.parse(userData) : null;
+
   return (
     <>
+      {modalIsOpen && (
+        <Modal
+          title="Editar Comentário"
+          toggleModal={() => setModalIsOpen(false)}
+          attributes="w-[95%] h-max sm:w-[50%]"
+          widthFull
+        >
+          <EditAndDeleteComment />
+        </Modal>
+      )}
       <Header />
       <div className="bg-brand-1 w-full h-[70vh] absolute top-0 -z[-1]"></div>
       <main className="bg-grey-8 flex justify-center w-full p-3">
@@ -78,15 +100,35 @@ export const Product = () => {
             <h3 className="mb-6 text-heading-6-600">Comentários</h3>
 
             <ul className="w-full h-[90%] flex flex-col gap-11 no-scrollbar overflow-y-auto">
-              {currentComments.map((elem) => (
-                <CommentCard
-                  key={elem.id}
-                  userName={elem.user.name}
-                  countMark={elem.createdAt}
-                  comment={elem.content}
-                  color={elem.user.color}
-                />
-              ))}
+              {currentComments.length ? (
+                currentComments.map((elem) => (
+                  <CommentCard
+                    key={elem.id}
+                    userName={elem.user.name}
+                    countMark={elem.createdAt}
+                    comment={elem.content}
+                    color={elem.user.color}
+                  >
+                    {elem.user.name === parseUserInfo.name ? (
+                      <Button
+                        key={elem.id}
+                        btnColor="bg-transparent"
+                        btnSize="w-max h-max"
+                        attributes="text-grey-1 text-button-small border-none underline"
+                        handleClick={() => {
+                          setModalIsOpen(true), setUserCurrentComment(elem);
+                        }}
+                      >
+                        Editar
+                      </Button>
+                    ) : null}
+                  </CommentCard>
+                ))
+              ) : (
+                <li className="text-center text-grey-2 font-semibold p-2 w-full flex justify-center items-center sm:w-full h-20 sm:h-[200px] sm:text-heading-4-600 mb-9 rounded">
+                  Seja o primeiro a deixar um comentário
+                </li>
+              )}
             </ul>
           </div>
           <NewComment
