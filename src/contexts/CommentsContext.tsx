@@ -97,6 +97,7 @@ export const CommentsProvider = ({ children }: CommentsProviderProps) => {
 
       setCurrentComments(updatedComments);
       toast.success("Comentário atualizado com sucesso");
+      getComments(String(getId));
       setModalIsOpen(false);
     } catch (error) {
       console.log(error);
@@ -107,6 +108,7 @@ export const CommentsProvider = ({ children }: CommentsProviderProps) => {
     try {
       await api.delete(`/comments/${userCurrentComment.id}`);
       toast.success("Comentário excluído com sucesso");
+      getComments(String(getId));
       setModalIsOpen(false);
     } catch (error) {
       console.log(error);
