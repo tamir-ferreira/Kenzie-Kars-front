@@ -70,6 +70,10 @@ interface UserProviderValue {
   isCar: iAdverts;
   updateAdvertSubmit: (data: UpdateAdvertData) => Promise<void>;
   deleteAdverts: () => Promise<void>;
+  toggleDeleteConfirmAdvertModal: () => void;
+  isDeleteAdvertConfirmModalOpen: boolean;
+  toggleDeleteConfirmProfileModal: () => void;
+  isDeleteProfileConfirmModalOpen: boolean;
 }
 
 interface iAddress {
@@ -144,6 +148,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isCreateAdvertSuccessModalOpen, setIsCreateAdvertSuccessModalOpen] =
     useState(false);
+  const [isDeleteAdvertConfirmModalOpen, setIsDeleteAdvertConfirmModalOpen] =
+    useState(false);
+  const [isDeleteProfileConfirmModalOpen, setIsDeleteProfileConfirmModalOpen] =
+    useState(false);
   const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] =
     useState(false);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
@@ -173,6 +181,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const toggleCreateAdvertSuccessModal = () =>
     setIsCreateAdvertSuccessModalOpen(!isCreateAdvertSuccessModalOpen);
+
+  const toggleDeleteConfirmAdvertModal = () =>
+    setIsDeleteAdvertConfirmModalOpen(!isDeleteAdvertConfirmModalOpen);
+
+  const toggleDeleteConfirmProfileModal = () =>
+    setIsDeleteProfileConfirmModalOpen(!isDeleteProfileConfirmModalOpen);
 
   const toggleResetPasswordModal = () =>
     setIsResetPasswordModalOpen(!isResetPasswordModalOpen);
@@ -373,7 +387,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     try {
       await api.delete(`/users/${id}`);
       toast.success("Usuário deletado com sucesso");
-      toggleEditProfileModal();
+      //toggleEditProfileModal();
+      setEditAdvertIsOpen(false);
+      toggleDeleteConfirmProfileModal();
       logout();
     } catch (error) {
       const currentError = error as AxiosError<iError>;
@@ -471,7 +487,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       await api.delete(`/adverts/${isCar.id}`);
       toast.success("Anúncio deletado com sucesso");
       getParamInfo(String(user.id));
-      setEditAdvertIsOpen(!editAdvertIsOpen);
+      setEditAdvertIsOpen(false);
+      toggleDeleteConfirmAdvertModal();
     } catch (error) {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
@@ -535,6 +552,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         setIsCar,
         updateAdvertSubmit,
         deleteAdverts,
+        isDeleteAdvertConfirmModalOpen,
+        toggleDeleteConfirmAdvertModal,
+        isDeleteProfileConfirmModalOpen,
+        toggleDeleteConfirmProfileModal,
       }}
     >
       {children}

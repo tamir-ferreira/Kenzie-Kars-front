@@ -71,6 +71,7 @@ export default {
         "body-2-400": ["14px", { fontWeight: "400" }],
         "body-2-500": ["14px", { fontWeight: "500" }],
         "button-big": ["16px", { fontWeight: "600" }],
+        "button-big-1": ["15px", { fontWeight: "600" }],
         "button-medium": ["14px", { fontWeight: "600" }],
         "button-small": ["12px", { fontWeight: "500" }],
         "input-placeholder": ["16px", { fontWeight: "400" }],

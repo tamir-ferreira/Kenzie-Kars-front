@@ -20,6 +20,15 @@ export const NewComment = ({
 
   const { newCommentsSubmit, setGetId, button, setButton } = CommentsAuth();
 
+  const {
+    register,
+    handleSubmit,
+    formState,
+    reset,
+    //formState: { errors },
+  } = useForm<CommentsData>({
+    resolver: zodResolver(commentsSchema),
+  });
   useEffect(() => {
     const token = localStorage.getItem("@TOKEN");
 
@@ -31,13 +40,12 @@ export const NewComment = ({
     setGetId(Number(id));
   }, []);
 
-  const {
-    register,
-    handleSubmit,
-    //formState: { errors },
-  } = useForm<CommentsData>({
-    resolver: zodResolver(commentsSchema),
-  });
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset();
+    }
+  }, [formState, reset]);
+
   return (
     <div className="sm:w-[59%] h-96 sm:h-[18rem] rounded bg-grey-10 mt-10 sm:mt-8 mb-8 sm:mb-16 py-9 px-6 sm:p-11 flex flex-col gap-3.5">
       <div className="flex items-center gap-2 w-max">
