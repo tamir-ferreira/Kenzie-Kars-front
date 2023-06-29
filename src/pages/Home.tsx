@@ -4,17 +4,22 @@ import { FilterHome } from "../components/FiltersHome";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { Button } from "../components/Button";
-import { useState, useContext, useEffect } from "react";
-import { UserContext, iAdverts } from "../contexts/UserContext";
+import { useState, useEffect } from "react";
 import { Modal } from "../components/Modal";
-import { api } from "../services/api";
-import { AxiosError } from "axios";
-import { iError } from "../contexts/UserContext";
 import { useSearchParams } from "react-router-dom";
+import { useAuth } from "../hooks/userAuth";
 
 export const Home = () => {
-  const { isMobile, adverts, setCarsProfile, setGlobalLoading, setAdverts } =
-    useContext(UserContext);
+  const {
+    isMobile,
+    adverts,
+    pageHome,
+    nextHomePage,
+    prevHomePage,
+    checkNextHomePage,
+    checkPrevHomePage,
+    getAllAdverts,
+  } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [searchParams] = useSearchParams();
 
@@ -23,34 +28,8 @@ export const Home = () => {
   }, []);
 
   useEffect(() => {
-    const getAdverts = async () => {
-      try {
-        setGlobalLoading(true);
-        const { data } = await api.get<iAdverts[]>("/adverts", {
-          params: {
-            brand: searchParams.get("brand") || "",
-            model: searchParams.get("model") || "",
-            color: searchParams.get("color") || "",
-            year: searchParams.get("year") || "",
-            fuel: searchParams.get("fuel") || "",
-            mileage: searchParams.get("mileage") || "",
-            price: searchParams.get("price") || "",
-          },
-        });
-        setAdverts(data);
-        return data;
-      } catch (error) {
-        setGlobalLoading(false);
-        const currentError = error as AxiosError<iError>;
-        console.error(currentError.message);
-      } finally {
-        setGlobalLoading(false);
-      }
-      // setIsSeller(false);
-      setCarsProfile(false);
-    };
-    getAdverts();
-  }, [searchParams]);
+    getAllAdverts();
+  }, [searchParams, pageHome]);
 
   return (
     <>
@@ -58,8 +37,7 @@ export const Home = () => {
         <Modal
           title="Filtros"
           toggleModal={() => setIsOpen(!true)}
-          attributes="modal-filter"
-        >
+          attributes="modal-filter">
           <FilterHome textButton="Ver anúncios" />
         </Modal>
       )}
@@ -85,23 +63,55 @@ export const Home = () => {
             </ul>
           </section>
         </div>
-        {isMobile && (
+        {isMobile ? (
           <>
             <Button
               btnColor="btn-brand-1"
               btnSize="btn-big"
               attributes="w-[80%] mt-12"
-              handleClick={() => setIsOpen(true)}
-            >
+              handleClick={() => setIsOpen(true)}>
               Filtros
             </Button>
-            <span className="pt-10 font-lexend text-grey-3 sm:text-heading-5-600">
-              1 <span className="opacity-50">de 2</span>
-            </span>
-            <span className="pt-4 font-lexend text-brand-2 sm:text-heading-5-600">
-              Seguinte &gt;
-            </span>
+            <div className="flex items-center gap-8">
+              {prevHomePage && (
+                <button
+                  onClick={() => checkPrevHomePage()}
+                  className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
+                  Anterior
+                </button>
+              )}
+              <span className="flex h-full gap-2 font-lexend text-grey-3 sm:text-heading-5-600">
+                {pageHome}
+              </span>
+              {nextHomePage && (
+                <button
+                  onClick={() => checkNextHomePage()}
+                  className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
+                  Seguinte
+                </button>
+              )}
+            </div>
           </>
+        ) : (
+          <div className="flex  items-center gap-8">
+            {prevHomePage && (
+              <button
+                onClick={() => checkPrevHomePage()}
+                className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
+                Anterior
+              </button>
+            )}
+            <span className="flex h-full gap-2 font-lexend text-grey-3 sm:text-heading-5-600">
+              {pageHome}
+            </span>
+            {nextHomePage && (
+              <button
+                onClick={() => checkNextHomePage()}
+                className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
+                Seguinte
+              </button>
+            )}
+          </div>
         )}
       </main>
       <Footer />
