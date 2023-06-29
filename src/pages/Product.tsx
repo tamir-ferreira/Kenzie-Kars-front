@@ -109,7 +109,7 @@ export const Product = () => {
                     comment={elem.content}
                     color={elem.user.color}
                   >
-                    {elem.user.name === parseUserInfo.name ? (
+                    {elem.user.name === parseUserInfo?.name ? (
                       <Button
                         key={elem.id}
                         btnColor="bg-transparent"
