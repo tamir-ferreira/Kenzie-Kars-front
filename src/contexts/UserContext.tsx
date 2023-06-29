@@ -11,6 +11,7 @@ import { SendEmailData } from "../schemas/sendEmailSchema";
 import { EditProfileData } from "../schemas/editProfileSchema";
 import { EditAddressData } from "../schemas/editAddressSchema";
 import { UpdateAdvertData } from "../schemas/editAdvertSchema";
+import { useSearchParams } from "react-router-dom";
 
 interface UserProviderProps {
   children: React.ReactNode;
@@ -74,6 +75,23 @@ interface UserProviderValue {
   isDeleteAdvertConfirmModalOpen: boolean;
   toggleDeleteConfirmProfileModal: () => void;
   isDeleteProfileConfirmModalOpen: boolean;
+  setFullAdverts: React.Dispatch<React.SetStateAction<iAdverts[]>>;
+  fullAdverts: iAdverts[];
+  setProfilePage: React.Dispatch<React.SetStateAction<number>>;
+  pageProfile: number;
+  setNextProfilePage: React.Dispatch<React.SetStateAction<string | null>>;
+  nextProfilePage: string | null;
+  setPrevProfilePage: React.Dispatch<React.SetStateAction<string | null>>;
+  prevProfilePage: string | null;
+  checkNextProfilePage: () => void;
+  checkPrevProfilePage: () => void;
+  pageHome: number;
+  setNextHomePage: React.Dispatch<React.SetStateAction<string | null>>;
+  nextHomePage: string | null;
+  setPrevHomePage: React.Dispatch<React.SetStateAction<string | null>>;
+  prevHomePage: string | null;
+  checkNextHomePage: () => void;
+  checkPrevHomePage: () => void;
 }
 
 interface iAddress {
@@ -158,6 +176,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [isEditAddressModalOpen, setIsEditAddressModalOpen] = useState(false);
   const [globalLoading, setGlobalLoading] = useState(false);
   const [carsProfile, setCarsProfile] = useState(true);
+  const [fullAdverts, setFullAdverts] = useState<iAdverts[]>([]);
   // const [isSeller, setIsSeller] = useState(false);
   const [logged, setLogged] = useState(true);
   const [user, setUser] = useState<iUser>({} as iUser);
@@ -173,7 +192,15 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [reload, setReload] = useState(false);
   const isMobile = useMedia({ maxWidth: "640px" });
   const [isCar, setIsCar] = useState<iAdverts>({} as iAdverts);
+  const [pageProfile, setProfilePage] = useState(1);
+  const [nextProfilePage, setNextProfilePage] = useState<string | null>("1");
+  const [prevProfilePage, setPrevProfilePage] = useState<string | null>(null);
+  const [pageHome, setHomePage] = useState(1);
+  const [nextHomePage, setNextHomePage] = useState<string | null>("1");
+  const [prevHomePage, setPrevHomePage] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   //window.scrollTo(0, 0);
 
   const toggleRegisterModal = () =>
@@ -217,14 +244,24 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const getParamInfo = async (id: string) => {
     try {
       const dbUsers = await api.get<iUser[]>("/users");
-      const dbAdverts = await api.get<iAdverts[]>("/adverts");
+      const dbAdverts = await api.get("/adverts", {
+        params: {
+          page: pageProfile,
+          perPage: 8,
+        },
+      });
 
       const user = dbUsers.data.filter(
         (elt: iUser) => elt.id === Number(id)
       )[0];
-      const userAdverts = dbAdverts.data.filter(
+      const userAdverts = dbAdverts.data.data.filter(
         (elt: iAdverts) => elt.user.id === Number(id)
       );
+
+      const nextPageValue = dbAdverts.data.nextPage;
+      const prevPageValue = dbAdverts.data.prevPage;
+      setPrevProfilePage(prevPageValue);
+      setNextProfilePage(nextPageValue);
 
       setCurrentUser(user);
       setCurrentUserAdverts(userAdverts);
@@ -281,9 +318,26 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const getAllAdverts = async () => {
     try {
       setGlobalLoading(true);
-      const { data } = await api.get<iAdverts[]>(`/adverts`);
-      setAdverts(data);
-      return data;
+      const { data } = await api.get("/adverts", {
+        params: {
+          page: pageHome,
+          perPage: 9,
+          brand: searchParams.get("brand") || "",
+          model: searchParams.get("model") || "",
+          color: searchParams.get("color") || "",
+          year: searchParams.get("year") || "",
+          fuel: searchParams.get("fuel") || "",
+          mileage: searchParams.get("mileage") || "",
+          price: searchParams.get("price") || "",
+        },
+      });
+      const nextPageValue = data.nextPage;
+      const prevPageValue = data.prevPage;
+      setPrevHomePage(prevPageValue);
+      setNextHomePage(nextPageValue);
+
+      setAdverts(data.data);
+      return data.data;
     } catch (error) {
       setGlobalLoading(false);
       const currentError = error as AxiosError<iError>;
@@ -291,6 +345,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     } finally {
       setGlobalLoading(false);
     }
+    setCarsProfile(false);
   };
 
   const login = async (data: LoginData) => {
@@ -450,6 +505,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       toast.error(currentError.response?.data.message);
     }
   };
+
   const updateAdvertSubmit = async (data: UpdateAdvertData) => {
     try {
       const userString = localStorage.getItem("@USER");
@@ -493,6 +549,38 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
       toast.error(currentError.response?.data.message);
+    }
+  };
+
+  const checkNextProfilePage = () => {
+    if (nextProfilePage !== null) {
+      setProfilePage(pageProfile + 1);
+    } else {
+      return;
+    }
+  };
+
+  const checkPrevProfilePage = () => {
+    if (prevProfilePage !== null) {
+      setProfilePage(pageProfile - 1);
+    } else {
+      return;
+    }
+  };
+
+  const checkNextHomePage = () => {
+    if (nextHomePage !== null) {
+      setHomePage(pageHome + 1);
+    } else {
+      return;
+    }
+  };
+
+  const checkPrevHomePage = () => {
+    if (prevHomePage !== null) {
+      setHomePage(pageHome - 1);
+    } else {
+      return;
     }
   };
 
@@ -556,8 +644,24 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         toggleDeleteConfirmAdvertModal,
         isDeleteProfileConfirmModalOpen,
         toggleDeleteConfirmProfileModal,
-      }}
-    >
+        fullAdverts,
+        setFullAdverts,
+        setProfilePage,
+        pageProfile,
+        nextProfilePage,
+        prevProfilePage,
+        setNextProfilePage,
+        setPrevProfilePage,
+        checkNextProfilePage,
+        checkPrevProfilePage,
+        checkNextHomePage,
+        checkPrevHomePage,
+        nextHomePage,
+        pageHome,
+        prevHomePage,
+        setNextHomePage,
+        setPrevHomePage,
+      }}>
       {children}
     </UserContext.Provider>
   );
