@@ -110,6 +110,7 @@ export default {
       animation: {
         menu: "menu 0.5s",
         bounce: "bounce 0.6s infinite",
+        modal: "modal 2s",
       },
 
       keyframes: {
@@ -126,6 +127,17 @@ export default {
         bounce: {
           to: {
             transform: " translateY(20px)",
+          },
+        },
+        modal: {
+          "0%": {
+            transform: " translateY(-50%)",
+            opacity: 0,
+          },
+
+          " 100%": {
+            transform: " translateY(0)",
+            opacity: 1,
           },
         },
       },
