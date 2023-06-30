@@ -6,7 +6,7 @@ import { Header } from "../components/Header";
 import { NewComment } from "../components/NewComment";
 import { UserCard } from "../components/UserCard";
 import { carImages } from "../mocks/car-images";
-import { CardObj, UserObj } from "../components/Cards";
+import { CardObj, UserObj, CarImgObj } from "../components/Cards";
 import { CommentsAuth } from "../hooks/commentsHook";
 import { useParams } from "react-router-dom";
 import { Button } from "../components/Button";
@@ -16,6 +16,7 @@ import { EditAndDeleteComment } from "../components/Modals/EditAndDeleteComment"
 export const Product = () => {
   const [carInfo, setCarInfo] = useState({} as CardObj);
   const [userInfo, setUserInfo] = useState({} as UserObj);
+  const [carImgsInfo, setCarImgsInfo] = useState([] as CarImgObj[]);
   const {
     getComments,
     currentComments,
@@ -30,6 +31,8 @@ export const Product = () => {
     setCarInfo(userString ? JSON.parse(userString) : null);
     const userCurrent = localStorage.getItem("@USER");
     setUserInfo(userCurrent ? JSON.parse(userCurrent) : null);
+    const carImgsCurrent = localStorage.getItem("@carImgs");
+    setCarImgsInfo(carImgsCurrent ? JSON.parse(carImgsCurrent) : null);
     window.scrollTo(0, 0);
   }, []);
 
@@ -39,6 +42,13 @@ export const Product = () => {
 
   const userData = localStorage.getItem("@USER");
   const parseUserInfo = userData ? JSON.parse(userData) : null;
+
+  const carImgsData = localStorage.getItem("@carImgs");
+  const parsecarImgsInfo: CarImgObj[] = carImgsData
+    ? JSON.parse(carImgsData)
+    : null;
+
+  const values = Object.values(parsecarImgsInfo);
 
   return (
     <>
@@ -76,20 +86,22 @@ export const Product = () => {
             <section className="w-[38%] max-sm:w-[100%]">
               <div className="w-full rounded bg-grey-10 py-[5%] px-[8%] max-sm:w-[100%]">
                 <h3 className="text-heading-6-600">Fotos</h3>
-                <ul className="flex flex-wrap justify-center gap-x-[5.5px] gap-y-[50px] w-full my-8 sm:gap-x-0 sm:justify-between sm:w-full">
-                  {carImages.map((elem, index) => {
-                    return (
-                      <li
-                        key={index}
-                        className="w-[85px]  h-[85px] sm:w-[103px] sm:h-[103px] bg-grey-7 rounded flex justify-center items-center"
-                      >
-                        <img
-                          src={elem.src_image}
-                          alt="Foto carro"
-                          className="object-contain"
-                        />
-                      </li>
-                    );
+                <ul className="grid grid-cols-3 gap-4 gap-x-[5.5px] w-full my-8 sm:gap-x-0 sm:w-full">
+                  {values.map((elem, index) => {
+                    if (elem !== null) {
+                      return (
+                        <li
+                          key={index}
+                          className="w-[85px]  h-[85px] sm:w-[103px] sm:h-[103px] bg-grey-7 rounded flex justify-center items-center"
+                        >
+                          <img
+                            src={String(elem)}
+                            alt="Foto carro"
+                            className="object-contain img-transition-1"
+                          />
+                        </li>
+                      );
+                    }
                   })}
                 </ul>
               </div>

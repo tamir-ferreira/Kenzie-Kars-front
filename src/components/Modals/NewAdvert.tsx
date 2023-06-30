@@ -3,7 +3,7 @@ import { Button } from "../Button";
 import { Input } from "../Input";
 import { TextArea } from "../TextArea";
 import { Select } from "../Select";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { getBrands, getModelsByBrand } from "../../services/requests";
 import { NewAdvertData, newAdvertSchema } from "../../schemas/newAdvertSchema";
 import { useAuth } from "../../hooks/userAuth";
@@ -48,13 +48,22 @@ export const NewAdvert = () => {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors },
   } = useForm<NewAdvertData>({
     resolver: zodResolver(newAdvertSchema),
   });
 
+  const { fields, append, remove } = useFieldArray({
+    name: "images",
+    control,
+  });
+
   const addInput = (): void => {
-    if (inputs.length <= 5) setInputs([...inputs, ""]);
+    append({
+      image_link_: "",
+    });
+    //if (inputs.length <= 5) setInputs([...inputs, ""]);
   };
 
   const updateSelectedBrand = async (brand: string) => {
@@ -70,7 +79,11 @@ export const NewAdvert = () => {
     setValue("year", findModel!.year);
     setValue(
       "fuel",
-      findModel!.fuel === 1 ? "flex" : findModel!.fuel === 2 ? "híbrido" : "elétrico"
+      findModel!.fuel === 1
+        ? "flex"
+        : findModel!.fuel === 2
+        ? "híbrido"
+        : "elétrico"
     );
     setIsLocked(false);
   };
@@ -83,6 +96,7 @@ export const NewAdvert = () => {
         handleSelect={updateSelectedBrand}
         register={register("brand")}
         error={errors.brand?.message}
+        defaultValues="Escolha uma opção"
       >
         {brands.map((brand, index) => {
           return (
@@ -98,6 +112,7 @@ export const NewAdvert = () => {
         disabled={!models.length}
         register={register("model")}
         error={errors.model?.message}
+        defaultValues="Escolha uma opção"
       >
         {models &&
           models.map((model, index) => {
@@ -189,11 +204,12 @@ export const NewAdvert = () => {
         register={register("cover_image")}
         error={errors.cover_image?.message}
       />
-      {inputs.map((_, index) => (
+      {fields.map((field, index) => (
         <Input
-          key={index}
+          key={field.id}
           label={`${index + 1}ª Imagem da galeria`}
           placeholder="digite o caminho para a imagem"
+          register={register(`images.${index}.image_link_`)}
           type="text"
         />
       ))}

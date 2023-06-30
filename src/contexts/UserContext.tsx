@@ -149,6 +149,14 @@ export interface iAdverts {
     createdAt: Date;
     updatedAt: Date;
   };
+  images: {
+    image_link_one: string | null;
+    image_link_two: string | null;
+    image_link_three: string | null;
+    image_link_four: string | null;
+    image_link_five: string | null;
+    image_link_six: string | null;
+  };
 }
 
 interface iLogin {
@@ -321,7 +329,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const { data } = await api.get("/adverts", {
         params: {
           page: pageHome,
-          perPage: 9,
+          perPage: 15,
           brand: searchParams.get("brand") || "",
           model: searchParams.get("model") || "",
           color: searchParams.get("color") || "",
@@ -488,15 +496,29 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     try {
       const userString = localStorage.getItem("@USER");
       const user: iUser = userString ? JSON.parse(userString) : null;
+
+      const arrayImgs = data.images?.map((img) => {
+        return img.image_link_;
+      });
+
       const advertObj = {
         ...data,
         year: Number(data.year),
         mileage: Number(data.mileage),
         price: Number(data.price),
+        images: {
+          image_link_one: arrayImgs[0] ? arrayImgs[0] : null,
+          image_link_two: arrayImgs[1] ? arrayImgs[1] : null,
+          image_link_three: arrayImgs[2] ? arrayImgs[2] : null,
+          image_link_four: arrayImgs[3] ? arrayImgs[3] : null,
+          image_link_five: arrayImgs[4] ? arrayImgs[4] : null,
+          image_link_six: arrayImgs[5] ? arrayImgs[5] : null,
+        },
       };
 
       await api.post<NewAdvertData>("/adverts", advertObj);
       getParamInfo(String(user.id));
+      toast.success("Anúncio criado com sucesso");
       setAdvertIsOpen(!advertIsOpen);
       toggleCreateAdvertSuccessModal();
     } catch (error) {
@@ -510,6 +532,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     try {
       const userString = localStorage.getItem("@USER");
       const user: iUser = userString ? JSON.parse(userString) : null;
+      const arrayImgs = data.images?.map((img) => {
+        return img.image_link_;
+      });
 
       const advertObj = {
         brand: data.brand ? data.brand : isCar.brand,
@@ -522,9 +547,21 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         description: data.description ? data.description : isCar.description,
         cover_image: data.cover_image ? data.cover_image : isCar.cover_image,
         is_active: !advertsStatus,
+        images: {
+          image_link_one: arrayImgs[0] ? arrayImgs[0] : null,
+          image_link_two: arrayImgs[1] ? arrayImgs[1] : null,
+          image_link_three: arrayImgs[2] ? arrayImgs[2] : null,
+          image_link_four: arrayImgs[3] ? arrayImgs[3] : null,
+          image_link_five: arrayImgs[4] ? arrayImgs[4] : null,
+          image_link_six: arrayImgs[5] ? arrayImgs[5] : null,
+        },
       };
+
+      console.log(advertObj);
+
       await api.patch<UpdateAdvertData>(`/adverts/${isCar.id}`, advertObj);
       getParamInfo(String(user.id));
+      toast.success("Anúncio atualizado com sucesso");
       setEditAdvertIsOpen(!editAdvertIsOpen);
       //toggleCreateAdvertSuccessModal();
     } catch (error) {
@@ -661,7 +698,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         prevHomePage,
         setNextHomePage,
         setPrevHomePage,
-      }}>
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

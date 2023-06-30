@@ -12,17 +12,19 @@ export const newAdvertSchema = z.object({
     .string()
     .max(10, "Deve possuir 10 caracteres no máximo")
     .nonempty("A quilometragem é obrigatória"),
-  color: z.string().nonempty("A cor é obrigatória").max(20, "Deve possuir 20 caracteres no máximo"),
+  color: z
+    .string()
+    .nonempty("A cor é obrigatória")
+    .max(20, "Deve possuir 20 caracteres no máximo"),
   fipe_price: z.number().or(z.string()).optional(),
   price: z.string().nonempty("O preço é obrigatório"),
   description: z.string().nonempty("A descrição é obrigatória"),
   cover_image: z.string().nonempty("A imagem de capa é obrigatória"),
-  /*  gallery_1: z.string().nullish(),
-  gallery_2: z.string().nullish(),
-  gallery_3: z.string().nullish(),
-  gallery_4: z.string().nullish(),
-  gallery_5: z.string().nullish(),
-  gallery_6: z.string().nullish(), */
+  images: z.array(
+    z.object({
+      image_link_: z.string().nullish(),
+    })
+  ),
 });
 
 export type NewAdvertData = z.infer<typeof newAdvertSchema>;
