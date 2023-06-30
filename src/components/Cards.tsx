@@ -33,9 +33,18 @@ interface iAdverts {
       createdAt: Date;
       updatedAt: Date;
     };
+    images: CarImgObj;
   };
 }
 
+export interface CarImgObj {
+  image_link_one: string | null;
+  image_link_two: string | null;
+  image_link_three: string | null;
+  image_link_four: string | null;
+  image_link_five: string | null;
+  image_link_six: string | null;
+}
 interface CardProps extends iAdverts {
   initialPage?: boolean;
   isOwner?: boolean;
@@ -92,8 +101,18 @@ export const Cards = ({ car, initialPage = false, isOwner }: CardProps) => {
       id: car.user.id,
     };
 
+    const imagesCarObj = {
+      image_link_1: car.images?.image_link_one || null,
+      image_link_2: car.images?.image_link_two || null,
+      image_link_3: car.images?.image_link_three || null,
+      image_link_4: car.images?.image_link_four || null,
+      image_link_5: car.images?.image_link_five || null,
+      image_link_6: car.images?.image_link_six || null,
+    };
+
     localStorage.setItem("@userInfo", JSON.stringify(userObj));
     localStorage.setItem("@carInfo", JSON.stringify(carObj));
+    localStorage.setItem("@carImgs", JSON.stringify(imagesCarObj));
     setAdvert(car);
   };
 

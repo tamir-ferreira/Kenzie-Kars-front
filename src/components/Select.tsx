@@ -9,6 +9,7 @@ interface iSelectProps {
   handleSelect?: (name: string) => void | Promise<void>;
   register?: UseFormRegisterReturn;
   error?: string;
+  defaultValues?: string;
 }
 
 export const Select = ({
@@ -18,6 +19,7 @@ export const Select = ({
   handleSelect,
   register,
   error,
+  defaultValues,
 }: iSelectProps) => {
   return (
     <div className="flex flex-col gap-2 input-width">
@@ -37,7 +39,7 @@ export const Select = ({
       >
         {!disabled && (
           <option value="" hidden={true}>
-            Escolha uma opção
+            {defaultValues}
           </option>
         )}
         {children}

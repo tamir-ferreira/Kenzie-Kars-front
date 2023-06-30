@@ -178,4 +178,10 @@
   .img-transition:hover {
     transform: scale(1.4);
   }
+  .img-transition-1 {
+    transition: transform 0.2s;
+  }
+  .img-transition-1:hover {
+    transform: scale(5);
+  }
 }

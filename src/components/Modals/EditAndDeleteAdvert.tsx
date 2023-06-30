@@ -3,7 +3,7 @@ import { Button } from "../Button";
 import { Input } from "../Input";
 import { TextArea } from "../TextArea";
 import { Select } from "../Select";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { getBrands, getModelsByBrand } from "../../services/requests";
 import { useAuth } from "../../hooks/userAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +11,7 @@ import {
   UpdateAdvertData,
   updateAdvertSchema,
 } from "../../schemas/editAdvertSchema";
+import { CarImgObj } from "../Cards";
 
 interface Model {
   id: string;
@@ -37,6 +38,16 @@ export const EditAndDeleteAdvert = () => {
     editAdvertIsOpen,
   } = useAuth();
 
+  const carData = localStorage.getItem("@carInfo");
+  const parseUserInfo = carData ? JSON.parse(carData) : null;
+
+  const carImgsData = localStorage.getItem("@carImgs");
+  const parsecarImgsInfo: CarImgObj[] = carImgsData
+    ? JSON.parse(carImgsData)
+    : null;
+
+  const values = Object.values(parsecarImgsInfo);
+
   useEffect(() => {
     const loadCars = async () => {
       const cars = await getBrands();
@@ -57,13 +68,31 @@ export const EditAndDeleteAdvert = () => {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors },
   } = useForm<UpdateAdvertData>({
     resolver: zodResolver(updateAdvertSchema),
   });
 
+  const { fields, append, remove } = useFieldArray({
+    name: "images",
+    control,
+  });
+
   const addInput = (): void => {
-    if (inputs.length <= 5) setInputs([...inputs, ""]);
+    values?.forEach((elem) => {
+      if (elem !== null) {
+        append({
+          image_link_: String(elem),
+        });
+      }
+    });
+
+    append({
+      image_link_: "",
+    });
+
+    //if (inputs.length <= 5) setInputs([...inputs, ""]);
   };
 
   const updateSelectedBrand = async (brand: string) => {
@@ -95,6 +124,7 @@ export const EditAndDeleteAdvert = () => {
         handleSelect={updateSelectedBrand}
         register={register("brand")}
         error={errors.brand?.message}
+        defaultValues={parseUserInfo.brand}
       >
         {brands.map((brand, index) => {
           return (
@@ -110,6 +140,7 @@ export const EditAndDeleteAdvert = () => {
         disabled={!models.length}
         register={register("model")}
         error={errors.model?.message}
+        defaultValues={"Escolha um modelo"}
       >
         {models &&
           models.map((model, index) => {
@@ -153,6 +184,7 @@ export const EditAndDeleteAdvert = () => {
           type="text"
           register={register("mileage")}
           error={errors.mileage?.message}
+          defaultValue={parseUserInfo.mileage}
         />
         <Input
           label="Cor"
@@ -184,6 +216,7 @@ export const EditAndDeleteAdvert = () => {
           type="text"
           register={register("price")}
           error={errors.price?.message}
+          defaultValue={parseUserInfo.price}
         />
       </div>
       <TextArea
@@ -193,6 +226,7 @@ export const EditAndDeleteAdvert = () => {
         rows={3}
         register={register("description")}
         error={errors.description?.message}
+        defaultValue={parseUserInfo.description}
       />
       <p className="body-2-500 mb-7">Publicado</p>
       <div className="flex w-full gap-3 mb-7">
@@ -246,12 +280,14 @@ export const EditAndDeleteAdvert = () => {
         type="text"
         register={register("cover_image")}
         error={errors.cover_image?.message}
+        defaultValue={parseUserInfo.cover_image}
       />
-      {inputs.map((_, index) => (
+      {fields.map((field, index) => (
         <Input
-          key={index}
+          key={field.id}
           label={`${index + 1}ª Imagem da galeria`}
           placeholder="digite o caminho para a imagem"
+          register={register(`images.${index}.image_link_`)}
           type="text"
         />
       ))}

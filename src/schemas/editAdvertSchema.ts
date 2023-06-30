@@ -14,12 +14,11 @@ export const updateAdvertSchema = z.object({
   price: z.string().optional(),
   description: z.string().optional(),
   cover_image: z.string().optional(),
-  /*  gallery_1: z.string().nullish(),
-  gallery_2: z.string().nullish(),
-  gallery_3: z.string().nullish(),
-  gallery_4: z.string().nullish(),
-  gallery_5: z.string().nullish(),
-  gallery_6: z.string().nullish(), */
+  images: z.array(
+    z.object({
+      image_link_: z.string().nullish(),
+    })
+  ),
 });
 
 export type UpdateAdvertData = z.infer<typeof updateAdvertSchema>;

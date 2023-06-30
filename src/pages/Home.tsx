@@ -37,7 +37,8 @@ export const Home = () => {
         <Modal
           title="Filtros"
           toggleModal={() => setIsOpen(!true)}
-          attributes="modal-filter">
+          attributes="modal-filter"
+        >
           <FilterHome textButton="Ver anúncios" />
         </Modal>
       )}
@@ -69,14 +70,16 @@ export const Home = () => {
               btnColor="btn-brand-1"
               btnSize="btn-big"
               attributes="w-[80%] mt-12"
-              handleClick={() => setIsOpen(true)}>
+              handleClick={() => setIsOpen(true)}
+            >
               Filtros
             </Button>
             <div className="flex items-center gap-8">
               {prevHomePage && (
                 <button
                   onClick={() => checkPrevHomePage()}
-                  className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
+                  className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent"
+                >
                   Anterior
                 </button>
               )}
@@ -86,7 +89,8 @@ export const Home = () => {
               {nextHomePage && (
                 <button
                   onClick={() => checkNextHomePage()}
-                  className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
+                  className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent"
+                >
                   Seguinte
                 </button>
               )}
@@ -97,7 +101,8 @@ export const Home = () => {
             {prevHomePage && (
               <button
                 onClick={() => checkPrevHomePage()}
-                className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
+                className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent"
+              >
                 Anterior
               </button>
             )}
@@ -107,7 +112,8 @@ export const Home = () => {
             {nextHomePage && (
               <button
                 onClick={() => checkNextHomePage()}
-                className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
+                className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent"
+              >
                 Seguinte
               </button>
             )}
