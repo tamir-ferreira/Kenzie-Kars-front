@@ -185,7 +185,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [globalLoading, setGlobalLoading] = useState(false);
   const [carsProfile, setCarsProfile] = useState(true);
   const [fullAdverts, setFullAdverts] = useState<iAdverts[]>([]);
-  // const [isSeller, setIsSeller] = useState(false);
   const [logged, setLogged] = useState(true);
   const [user, setUser] = useState<iUser>({} as iUser);
   const [adverts, setAdverts] = useState<iAdverts[]>([] as iAdverts[]);
@@ -208,8 +207,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [prevHomePage, setPrevHomePage] = useState<string | null>(null);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
-  //window.scrollTo(0, 0);
 
   const toggleRegisterModal = () =>
     setIsRegisterModalOpen(!isRegisterModalOpen);
@@ -255,7 +252,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const dbAdverts = await api.get("/adverts", {
         params: {
           page: pageProfile,
-          perPage: 8,
+          perPage: 9,
         },
       });
 
@@ -329,7 +326,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const { data } = await api.get("/adverts", {
         params: {
           page: pageHome,
-          perPage: 15,
+          perPage: 9,
           brand: searchParams.get("brand") || "",
           model: searchParams.get("model") || "",
           color: searchParams.get("color") || "",
@@ -382,7 +379,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       setLogged(true);
 
       if (formattedUser.seller) {
-        // setIsSeller(true);
         navigate(`/profile/${formattedUser.id}`);
       } else navigate(`/`);
     } catch (error) {
@@ -400,7 +396,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     localStorage.removeItem("@USER");
     localStorage.removeItem("@userInfo");
     localStorage.removeItem("@carInfo");
-    // localStorage.removeItem("@user-color");
     setLogged(false);
     navigate("/");
   };
@@ -450,7 +445,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     try {
       await api.delete(`/users/${id}`);
       toast.success("Usuário deletado com sucesso");
-      //toggleEditProfileModal();
       setEditAdvertIsOpen(false);
       toggleDeleteConfirmProfileModal();
       logout();
@@ -557,16 +551,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         },
       };
 
-      console.log(advertObj);
-
       await api.patch<UpdateAdvertData>(`/adverts/${isCar.id}`, advertObj);
       getParamInfo(String(user.id));
       toast.success("Anúncio atualizado com sucesso");
       setEditAdvertIsOpen(!editAdvertIsOpen);
-      //toggleCreateAdvertSuccessModal();
     } catch (error) {
-      console.log(error);
-
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
       toast.error(currentError.response?.data.message);
@@ -633,8 +622,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         createUser,
         setUserStatus,
         userStatus,
-        // isSeller,
-        // setIsSeller,
         getAllAdverts,
         adverts,
         setAdvert,
@@ -698,8 +685,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         prevHomePage,
         setNextHomePage,
         setPrevHomePage,
-      }}
-    >
+      }}>
       {children}
     </UserContext.Provider>
   );

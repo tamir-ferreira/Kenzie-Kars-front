@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "./Button";
 import { UserInitials } from "./UserInitials";
 import { useAuth } from "../hooks/userAuth";
+import { useNavigate } from "react-router-dom";
 
 interface iAdverts {
   car: {
@@ -69,6 +70,7 @@ export interface UserObj {
 }
 
 export const Cards = ({ car, initialPage = false, isOwner }: CardProps) => {
+  const navigate = useNavigate();
   let discount = false;
   const {
     user,
@@ -82,7 +84,7 @@ export const Cards = ({ car, initialPage = false, isOwner }: CardProps) => {
   const fipe_price = +car.fipe_price;
   if (price <= fipe_price - fipe_price * 0.05) discount = true;
 
-  const newObj = () => {
+  const formatObjectsAndSetCar = () => {
     const carObj = {
       id: car.id,
       model: car.model,
@@ -116,20 +118,24 @@ export const Cards = ({ car, initialPage = false, isOwner }: CardProps) => {
     setAdvert(car);
   };
 
+  const setCarAndNavigate = () => {
+    formatObjectsAndSetCar();
+    navigate(`/product/${car.id}`);
+  };
+
   return (
     <>
       {(initialPage || isOwner || car.is_active) && (
         <div>
           <li
             className="flex gap-4 flex-col justify-between items-start pt-0 w-[312px] group mb-9 cursor-pointer"
-            onClick={() => newObj()}
-          >
+            onClick={() => formatObjectsAndSetCar()}>
             <Link to={`/product/${car.id}`}>
               <div className="flex justify-center items-center bg-grey-7 w-full h-[150px] relative border-2 border-transparent group-hover:border-brand-1 group-hover:border-solid ">
                 <img
                   src={car.cover_image}
                   alt="carro"
-                  className="object-cover w-full h-full"
+                  className="object-cover w-full h-full min-w-[308px]"
                 />
                 {user && (
                   <>
@@ -201,11 +207,15 @@ export const Cards = ({ car, initialPage = false, isOwner }: CardProps) => {
                   type="submit"
                   handleClick={() => {
                     setEditAdvertIsOpen(!editAdvertIsOpen), setIsCar(car);
-                  }}
-                >
+                  }}>
                   Editar
                 </Button>
-                <Button btnSize="btn-medium" btnColor="btn-outline-1">
+                <Button
+                  handleClick={() => {
+                    setCarAndNavigate();
+                  }}
+                  btnSize="btn-medium"
+                  btnColor="btn-outline-1">
                   Ver detalhes
                 </Button>
               </div>

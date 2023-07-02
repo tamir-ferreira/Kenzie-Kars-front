@@ -76,8 +76,7 @@ export const Profile = () => {
           title="Criar Anuncio"
           toggleModal={() => setAdvertIsOpen(!advertIsOpen)}
           attributes="animate-modal max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto y-[55vh] "
-          widthFull
-        >
+          widthFull>
           <NewAdvert />
         </Modal>
       )}
@@ -86,8 +85,7 @@ export const Profile = () => {
           title="Editar anúncio"
           toggleModal={() => setEditAdvertIsOpen(!editAdvertIsOpen)}
           attributes="animate-modal max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto y-[55vh] "
-          widthFull
-        >
+          widthFull>
           <EditAndDeleteAdvert />
         </Modal>
       )}
@@ -106,8 +104,7 @@ export const Profile = () => {
       {isDeleteAdvertConfirmModalOpen && (
         <Modal
           title="Excluir anúncio"
-          toggleModal={toggleDeleteConfirmAdvertModal}
-        >
+          toggleModal={toggleDeleteConfirmAdvertModal}>
           <form className="flex flex-col gap-5">
             <h2 className="heading-7-500 text-grey-1">
               Tem certeza que deseja remover este anúncio?
@@ -122,8 +119,7 @@ export const Profile = () => {
                 btnSize="btn-big"
                 btnColor="btn-negative"
                 handleClick={toggleDeleteConfirmAdvertModal}
-                attributes="px-[5%] max-sm:w-[48%]"
-              >
+                attributes="px-[5%] max-sm:w-[48%]">
                 Cancelar
               </Button>
               <Button
@@ -133,8 +129,7 @@ export const Profile = () => {
                 handleClick={() => {
                   deleteAdverts();
                 }}
-                attributes="px-[5%] max-sm:w-[48%] ml-4"
-              >
+                attributes="px-[5%] max-sm:w-[48%] ml-4">
                 Sim, excluir anúncio
               </Button>
             </div>
@@ -144,8 +139,7 @@ export const Profile = () => {
       {isDeleteProfileConfirmModalOpen && (
         <Modal
           title="Excluir perfil"
-          toggleModal={toggleDeleteConfirmProfileModal}
-        >
+          toggleModal={toggleDeleteConfirmProfileModal}>
           <form className="flex flex-col gap-5">
             <h2 className="heading-7-500 text-grey-1">
               Tem certeza que deseja remover este perfil?
@@ -160,8 +154,7 @@ export const Profile = () => {
                 btnSize="btn-big"
                 btnColor="btn-negative"
                 handleClick={toggleDeleteConfirmProfileModal}
-                attributes="px-[5%] max-sm:w-[48%]"
-              >
+                attributes="px-[5%] max-sm:w-[48%]">
                 Cancelar
               </Button>
               <Button
@@ -171,8 +164,7 @@ export const Profile = () => {
                 handleClick={() => {
                   deleteUser(user.id);
                 }}
-                attributes="px-[5%] max-sm:w-[48%] ml-4"
-              >
+                attributes="px-[5%] max-sm:w-[48%] ml-4">
                 Sim, excluir perfil
               </Button>
             </div>
@@ -184,8 +176,7 @@ export const Profile = () => {
           title="Editar Perfil"
           toggleModal={() => toggleEditProfileModal()}
           attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
-          widthFull
-        >
+          widthFull>
           <EditProfile />
         </Modal>
       )}
@@ -194,8 +185,7 @@ export const Profile = () => {
           title="Editar Endereço"
           toggleModal={() => toggleEditAddressModal()}
           attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
-          widthFull
-        >
+          widthFull>
           <EditAddress />
         </Modal>
       )}
@@ -217,16 +207,13 @@ export const Profile = () => {
             </span>
           </div>
           <p className="text-body-1-400 text-grey-2 mb-4">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed ipsum
-            est praesentium dolorem quidem aspernatur nemo aut eius eum
-            delectus. Omnis nisi explicabo adipisci odit.
+            {isOwner ? user.description : currentUser.description}
           </p>
           {isOwner && (
             <Button
               btnSize="btn-big"
               btnColor="btn-outline-brand-1"
-              handleClick={() => setAdvertIsOpen(!advertIsOpen)}
-            >
+              handleClick={() => setAdvertIsOpen(!advertIsOpen)}>
               Criar anuncio
             </Button>
           )}
@@ -253,8 +240,7 @@ export const Profile = () => {
           {prevProfilePage && (
             <button
               onClick={() => checkPrevProfilePage()}
-              className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent"
-            >
+              className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
               Anterior
             </button>
           )}
@@ -264,8 +250,7 @@ export const Profile = () => {
           {nextProfilePage && (
             <button
               onClick={() => checkNextProfilePage()}
-              className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent"
-            >
+              className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
               Seguinte
             </button>
           )}

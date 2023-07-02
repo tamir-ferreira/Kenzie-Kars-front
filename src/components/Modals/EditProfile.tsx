@@ -13,7 +13,6 @@ export const EditProfile = () => {
   const {
     toggleEditProfileModal,
     updateUser,
-    deleteUser,
     user,
     toggleDeleteConfirmProfileModal,
   } = useAuth();
@@ -34,8 +33,7 @@ export const EditProfile = () => {
     <form
       onSubmit={handleSubmit((data) => {
         updateUser(data, user.id);
-      })}
-    >
+      })}>
       <p className="body-2-500 mb-6">Informações pessoais</p>
       <Input
         label="Nome"
@@ -105,16 +103,14 @@ export const EditProfile = () => {
         placeholder="Digitar descrição"
         defaultValue={user.description + ""}
         register={register("description")}
-        error={errors.description?.message}
-      ></TextArea>
+        error={errors.description?.message}></TextArea>
       <div className="flex justify-center sm:justify-between flex-wrap sm:flex-nowrap gap-3 mt-3">
         <Button
           type="button"
           btnSize="btn-big"
           btnColor="btn-negative"
           handleClick={() => toggleEditProfileModal()}
-          attributes="px-[5%] max-sm:w-[48%]"
-        >
+          attributes="px-[5%] max-sm:w-[48%]">
           Cancelar
         </Button>
 
@@ -123,8 +119,7 @@ export const EditProfile = () => {
           btnSize="btn-big-1"
           btnColor={"btn-alert"}
           handleClick={toggleDeleteConfirmProfileModal}
-          attributes="px-[5%] max-sm:w-[48%]"
-        >
+          attributes="px-[5%] max-sm:w-[48%]">
           Excluir Perfil
         </Button>
 
@@ -132,8 +127,7 @@ export const EditProfile = () => {
           type="submit"
           btnSize="btn-big-1"
           btnColor={"btn-brand-1"}
-          attributes="px-[5%] max-sm:w-[70%]"
-        >
+          attributes="px-[5%] max-sm:w-[70%]">
           Salvar alterações
         </Button>
       </div>
