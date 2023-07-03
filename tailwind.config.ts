@@ -135,7 +135,7 @@ export default {
             opacity: 0,
           },
 
-          " 100%": {
+          "25%": {
             transform: " translateY(0)",
             opacity: 1,
           },
