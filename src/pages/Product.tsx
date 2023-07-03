@@ -61,7 +61,6 @@ export const Product = () => {
     : null;
 
   const values = Object.values(parsecarImgsInfo);
-
   return (
     <>
       {isDeleteProfileConfirmModalOpen && (
@@ -151,21 +150,27 @@ export const Product = () => {
               <div className="w-full rounded bg-grey-10 py-[5%] px-[8%] max-sm:w-[100%]">
                 <h3 className="text-heading-6-600">Fotos</h3>
                 <ul className="grid grid-cols-3 gap-4 gap-x-[5.5px] w-full my-8 sm:gap-x-0 sm:w-full">
-                  {values.map((elem, index) => {
-                    if (elem !== null) {
-                      return (
-                        <li
-                          key={index}
-                          className="w-[85px]  h-[85px] sm:w-[103px] sm:h-[103px] bg-grey-7 rounded flex justify-center items-center">
-                          <img
-                            src={String(elem)}
-                            alt="Foto carro"
-                            className="object-contain img-transition-1"
-                          />
-                        </li>
-                      );
-                    }
-                  })}
+                  {values.find((elt) => elt !== null) ? (
+                    values.map((elem, index) => {
+                      if (elem !== null) {
+                        return (
+                          <li
+                            key={index}
+                            className="w-[85px]  h-[85px] sm:w-[103px] sm:h-[103px] bg-grey-7 rounded flex justify-center items-center">
+                            <img
+                              src={String(elem)}
+                              alt="Foto carro"
+                              className="object-contain img-transition-1"
+                            />
+                          </li>
+                        );
+                      }
+                    })
+                  ) : (
+                    <li className="relative left-[100%] text-center text-grey-2 font-semibold">
+                      Galeria vazia :(
+                    </li>
+                  )}
                 </ul>
               </div>
               <UserCard />
