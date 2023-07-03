@@ -137,8 +137,15 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                 key={index}
                 className="cursor-pointer text-heading-6-500 text-grey-3"
                 onClick={() => {
-                  setBrand(cars);
-                }}>
+                  setBrand(cars),
+                    setModel(null),
+                    setColor(null),
+                    setFuel(null),
+                    setYear(null),
+                    setKm(null),
+                    setPrice(null);
+                }}
+              >
                 {cars}
               </li>
             );
@@ -156,7 +163,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setModel(cars);
-                    }}>
+                    }}
+                  >
                     {cars}
                   </li>
                 );
@@ -168,7 +176,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setModel(cars);
-                    }}>
+                    }}
+                  >
                     {cars}
                   </li>
                 );
@@ -186,7 +195,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setColor(cars);
-                    }}>
+                    }}
+                  >
                     {cars}
                   </li>
                 );
@@ -198,7 +208,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setColor(cars);
-                    }}>
+                    }}
+                  >
                     {cars}
                   </li>
                 );
@@ -216,7 +227,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setYear(String(cars));
-                    }}>
+                    }}
+                  >
                     {cars}
                   </li>
                 );
@@ -228,7 +240,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setYear(String(cars));
-                    }}>
+                    }}
+                  >
                     {cars}
                   </li>
                 );
@@ -246,7 +259,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setFuel(cars);
-                    }}>
+                    }}
+                  >
                     {cars}
                   </li>
                 );
@@ -258,7 +272,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setFuel(cars);
-                    }}>
+                    }}
+                  >
                     {cars}
                   </li>
                 );
@@ -274,7 +289,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
             type="button"
             handleClick={() => {
               setKm("asc"), setPrice(null);
-            }}>
+            }}
+          >
             Minimo
           </Button>
 
@@ -283,7 +299,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
             btnColor="btn-negative"
             handleClick={() => {
               setKm("desc"), setPrice(null);
-            }}>
+            }}
+          >
             Maximo
           </Button>
         </div>
@@ -296,7 +313,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
             btnColor="btn-negative"
             handleClick={() => {
               setPrice("asc"), setKm(null);
-            }}>
+            }}
+          >
             Minimo
           </Button>
 
@@ -305,7 +323,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
             btnColor="btn-negative"
             handleClick={() => {
               setPrice("desc"), setKm(null);
-            }}>
+            }}
+          >
             Maximo
           </Button>
         </div>
@@ -315,7 +334,8 @@ export const FilterHome = ({ textButton }: FilterProps) => {
           <Button
             btnSize="btn-big"
             btnColor="btn-brand-1"
-            handleClick={() => handleClick()}>
+            handleClick={() => handleClick()}
+          >
             {textButton}
           </Button>
         </div>

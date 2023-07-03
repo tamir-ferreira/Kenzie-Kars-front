@@ -685,7 +685,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         prevHomePage,
         setNextHomePage,
         setPrevHomePage,
-      }}>
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
