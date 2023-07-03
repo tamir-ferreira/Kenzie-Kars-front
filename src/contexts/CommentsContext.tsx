@@ -130,8 +130,7 @@ export const CommentsProvider = ({ children }: CommentsProviderProps) => {
         userCurrentComment,
         setUserCurrentComment,
         deleteComment,
-      }}
-    >
+      }}>
       {children}
     </CommentsContext.Provider>
   );

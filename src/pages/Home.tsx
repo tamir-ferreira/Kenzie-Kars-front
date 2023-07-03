@@ -8,6 +8,8 @@ import { useState, useEffect } from "react";
 import { Modal } from "../components/Modal";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../hooks/userAuth";
+import { EditProfile } from "../components/Modals/EditProfile";
+import { EditAddress } from "../components/Modals/EditAddress";
 
 export const Home = () => {
   const {
@@ -19,6 +21,14 @@ export const Home = () => {
     checkNextHomePage,
     checkPrevHomePage,
     getAllAdverts,
+    isDeleteProfileConfirmModalOpen,
+    isEditProfileModalOpen,
+    isEditAddressModalOpen,
+    toggleEditProfileModal,
+    toggleEditAddressModal,
+    toggleDeleteConfirmProfileModal,
+    user,
+    deleteUser,
   } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [searchParams] = useSearchParams();
@@ -33,12 +43,64 @@ export const Home = () => {
 
   return (
     <>
+      {isDeleteProfileConfirmModalOpen && (
+        <Modal
+          title="Excluir perfil"
+          toggleModal={toggleDeleteConfirmProfileModal}>
+          <form className="flex flex-col gap-5">
+            <h2 className="heading-7-500 text-grey-1">
+              Tem certeza que deseja remover este perfil?
+            </h2>
+            <p className="body-1-400 text-grey-2">
+              Essa ação não pode ser desfeita. Isso excluirá permanentemente sua
+              conta e removerá seus dados de nossos servidores.
+            </p>
+            <div className="flex justify-end mt-6">
+              <Button
+                type="button"
+                btnSize="btn-big"
+                btnColor="btn-negative"
+                handleClick={toggleDeleteConfirmProfileModal}
+                attributes="px-[5%] max-sm:w-[48%]">
+                Cancelar
+              </Button>
+              <Button
+                type="button"
+                btnSize="btn-big"
+                btnColor={"btn-alert"}
+                handleClick={() => {
+                  deleteUser(user.id);
+                }}
+                attributes="px-[5%] max-sm:w-[48%] ml-4">
+                Sim, excluir perfil
+              </Button>
+            </div>
+          </form>
+        </Modal>
+      )}
+      {isEditProfileModalOpen && (
+        <Modal
+          title="Editar Perfil"
+          toggleModal={() => toggleEditProfileModal()}
+          attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
+          widthFull>
+          <EditProfile />
+        </Modal>
+      )}
+      {isEditAddressModalOpen && (
+        <Modal
+          title="Editar Endereço"
+          toggleModal={() => toggleEditAddressModal()}
+          attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
+          widthFull>
+          <EditAddress />
+        </Modal>
+      )}
       {isOpen && (
         <Modal
           title="Filtros"
           toggleModal={() => setIsOpen(!true)}
-          attributes="modal-filter"
-        >
+          attributes="modal-filter">
           <FilterHome textButton="Ver anúncios" />
         </Modal>
       )}
@@ -70,16 +132,14 @@ export const Home = () => {
               btnColor="btn-brand-1"
               btnSize="btn-big"
               attributes="w-[80%] mt-12"
-              handleClick={() => setIsOpen(true)}
-            >
+              handleClick={() => setIsOpen(true)}>
               Filtros
             </Button>
             <div className="flex items-center gap-8">
               {prevHomePage && (
                 <button
                   onClick={() => checkPrevHomePage()}
-                  className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent"
-                >
+                  className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
                   Anterior
                 </button>
               )}
@@ -89,8 +149,7 @@ export const Home = () => {
               {nextHomePage && (
                 <button
                   onClick={() => checkNextHomePage()}
-                  className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent"
-                >
+                  className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
                   Seguinte
                 </button>
               )}
@@ -101,8 +160,7 @@ export const Home = () => {
             {prevHomePage && (
               <button
                 onClick={() => checkPrevHomePage()}
-                className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent"
-              >
+                className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
                 Anterior
               </button>
             )}
@@ -112,8 +170,7 @@ export const Home = () => {
             {nextHomePage && (
               <button
                 onClick={() => checkNextHomePage()}
-                className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent"
-              >
+                className="flex items-center justify-center font-lexend text-brand-2 sm:text-heading-5-600 border-none bg-transparent">
                 Seguinte
               </button>
             )}

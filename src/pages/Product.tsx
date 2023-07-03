@@ -5,13 +5,15 @@ import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { NewComment } from "../components/NewComment";
 import { UserCard } from "../components/UserCard";
-import { carImages } from "../mocks/car-images";
 import { CardObj, UserObj, CarImgObj } from "../components/Cards";
 import { CommentsAuth } from "../hooks/commentsHook";
 import { useParams } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Modal } from "../components/Modal";
 import { EditAndDeleteComment } from "../components/Modals/EditAndDeleteComment";
+import { useAuth } from "../hooks/userAuth";
+import { EditAddress } from "../components/Modals/EditAddress";
+import { EditProfile } from "../components/Modals/EditProfile";
 
 export const Product = () => {
   const [carInfo, setCarInfo] = useState({} as CardObj);
@@ -24,6 +26,16 @@ export const Product = () => {
     modalIsOpen,
     setUserCurrentComment,
   } = CommentsAuth();
+  const {
+    isDeleteProfileConfirmModalOpen,
+    isEditProfileModalOpen,
+    isEditAddressModalOpen,
+    toggleEditProfileModal,
+    toggleEditAddressModal,
+    toggleDeleteConfirmProfileModal,
+    user,
+    deleteUser,
+  } = useAuth();
   const { id } = useParams();
 
   useEffect(() => {
@@ -52,13 +64,65 @@ export const Product = () => {
 
   return (
     <>
+      {isDeleteProfileConfirmModalOpen && (
+        <Modal
+          title="Excluir perfil"
+          toggleModal={toggleDeleteConfirmProfileModal}>
+          <form className="flex flex-col gap-5">
+            <h2 className="heading-7-500 text-grey-1">
+              Tem certeza que deseja remover este perfil?
+            </h2>
+            <p className="body-1-400 text-grey-2">
+              Essa ação não pode ser desfeita. Isso excluirá permanentemente sua
+              conta e removerá seus dados de nossos servidores.
+            </p>
+            <div className="flex justify-end mt-6">
+              <Button
+                type="button"
+                btnSize="btn-big"
+                btnColor="btn-negative"
+                handleClick={toggleDeleteConfirmProfileModal}
+                attributes="px-[5%] max-sm:w-[48%]">
+                Cancelar
+              </Button>
+              <Button
+                type="button"
+                btnSize="btn-big"
+                btnColor={"btn-alert"}
+                handleClick={() => {
+                  deleteUser(user.id);
+                }}
+                attributes="px-[5%] max-sm:w-[48%] ml-4">
+                Sim, excluir perfil
+              </Button>
+            </div>
+          </form>
+        </Modal>
+      )}
+      {isEditProfileModalOpen && (
+        <Modal
+          title="Editar Perfil"
+          toggleModal={() => toggleEditProfileModal()}
+          attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
+          widthFull>
+          <EditProfile />
+        </Modal>
+      )}
+      {isEditAddressModalOpen && (
+        <Modal
+          title="Editar Endereço"
+          toggleModal={() => toggleEditAddressModal()}
+          attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
+          widthFull>
+          <EditAddress />
+        </Modal>
+      )}
       {modalIsOpen && (
         <Modal
           title="Editar Comentário"
           toggleModal={() => setModalIsOpen(false)}
           attributes="w-[95%] h-max sm:w-[50%]"
-          widthFull
-        >
+          widthFull>
           <EditAndDeleteComment />
         </Modal>
       )}
@@ -92,8 +156,7 @@ export const Product = () => {
                       return (
                         <li
                           key={index}
-                          className="w-[85px]  h-[85px] sm:w-[103px] sm:h-[103px] bg-grey-7 rounded flex justify-center items-center"
-                        >
+                          className="w-[85px]  h-[85px] sm:w-[103px] sm:h-[103px] bg-grey-7 rounded flex justify-center items-center">
                           <img
                             src={String(elem)}
                             alt="Foto carro"
@@ -119,8 +182,7 @@ export const Product = () => {
                     userName={elem.user.name}
                     countMark={elem.createdAt}
                     comment={elem.content}
-                    color={elem.user.color}
-                  >
+                    color={elem.user.color}>
                     {elem.user.name === parseUserInfo?.name ? (
                       <Button
                         key={elem.id}
@@ -129,8 +191,7 @@ export const Product = () => {
                         attributes="text-grey-1 text-button-small border-none underline"
                         handleClick={() => {
                           setModalIsOpen(true), setUserCurrentComment(elem);
-                        }}
-                      >
+                        }}>
                         Editar
                       </Button>
                     ) : null}
