@@ -92,6 +92,8 @@ interface UserProviderValue {
   prevHomePage: string | null;
   checkNextHomePage: () => void;
   checkPrevHomePage: () => void;
+  getAdvertsUserInfo: (id: string) => Promise<void>;
+  currentUserAdvertsActually: iAdverts[];
 }
 
 interface iAddress {
@@ -196,6 +198,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [showPass, setShowPass] = useState(false);
   const [currentUser, setCurrentUser] = useState({} as iUser);
   const [currentUserAdverts, setCurrentUserAdverts] = useState<iAdverts[]>([]);
+  const [currentUserAdvertsActually, setCurrentUserAdvertsActually] = useState<
+    iAdverts[]
+  >([]);
   const [reload, setReload] = useState(false);
   const isMobile = useMedia({ maxWidth: "640px" });
   const [isCar, setIsCar] = useState<iAdverts>({} as iAdverts);
@@ -246,6 +251,26 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     setLogged(true);
   }, []);
 
+  const getAdvertsUserInfo = async (id: string) => {
+    try {
+      const { data } = await api.get(`/adverts/user/${id}`, {
+        params: {
+          page: pageProfile,
+          perPage: 8,
+        },
+      });
+
+      const nextPageValue = data.nextPage;
+      const prevPageValue = data.prevPage;
+
+      setPrevProfilePage(prevPageValue);
+      setNextProfilePage(nextPageValue);
+
+      setCurrentUserAdvertsActually(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const getParamInfo = async (id: string) => {
     try {
       const dbUsers = await api.get<iUser[]>("/users");
@@ -263,10 +288,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         (elt: iAdverts) => elt.user.id === Number(id)
       );
 
-      const nextPageValue = dbAdverts.data.nextPage;
-      const prevPageValue = dbAdverts.data.prevPage;
-      setPrevProfilePage(prevPageValue);
-      setNextProfilePage(nextPageValue);
+      // const nextPageValue = dbAdverts.data.nextPage;
+      // const prevPageValue = dbAdverts.data.prevPage;
+      // setPrevProfilePage(prevPageValue);
+      // setNextProfilePage(nextPageValue);
 
       setCurrentUser(user);
       setCurrentUserAdverts(userAdverts);
@@ -511,6 +536,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       };
 
       await api.post<NewAdvertData>("/adverts", advertObj);
+      getAdvertsUserInfo(String(user.id));
       getParamInfo(String(user.id));
       toast.success("Anúncio criado com sucesso");
       setAdvertIsOpen(!advertIsOpen);
@@ -552,6 +578,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       };
 
       await api.patch<UpdateAdvertData>(`/adverts/${isCar.id}`, advertObj);
+      getAdvertsUserInfo(String(user.id));
       getParamInfo(String(user.id));
       toast.success("Anúncio atualizado com sucesso");
       setEditAdvertIsOpen(!editAdvertIsOpen);
@@ -568,6 +595,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const user: iUser = userString ? JSON.parse(userString) : null;
       await api.delete(`/adverts/${isCar.id}`);
       toast.success("Anúncio deletado com sucesso");
+      getAdvertsUserInfo(String(user.id));
       getParamInfo(String(user.id));
       setEditAdvertIsOpen(false);
       toggleDeleteConfirmAdvertModal();
@@ -579,6 +607,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const checkNextProfilePage = () => {
+    console.log(nextProfilePage);
+
     if (nextProfilePage !== null) {
       setProfilePage(pageProfile + 1);
     } else {
@@ -685,7 +715,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         prevHomePage,
         setNextHomePage,
         setPrevHomePage,
-      }}>
+        getAdvertsUserInfo,
+        currentUserAdvertsActually,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
