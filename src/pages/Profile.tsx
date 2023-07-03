@@ -42,6 +42,8 @@ export const Profile = () => {
     prevProfilePage,
     checkNextProfilePage,
     checkPrevProfilePage,
+    getAdvertsUserInfo,
+    currentUserAdvertsActually,
   } = useAuth();
 
   const [isOwner, setIsOwner] = useState(false);
@@ -57,6 +59,7 @@ export const Profile = () => {
     const userString = localStorage.getItem("@USER");
     const userLocal: iUser = userString ? JSON.parse(userString) : null;
     getParamInfo(id!);
+
     setLogged(true);
 
     if (!token) {
@@ -68,6 +71,10 @@ export const Profile = () => {
       }
     }
   }, [reload, pageProfile]);
+
+  useEffect(() => {
+    getAdvertsUserInfo(id!);
+  }, [pageProfile]);
 
   return (
     <>
@@ -236,8 +243,8 @@ export const Profile = () => {
             </h3>
           )}
           <ul className="flex gap-6 overflow-auto px-6 sm:px-0 sm:flex-wrap sm:gap-12">
-            {currentUserAdverts.length ? (
-              currentUserAdverts.map((car) => (
+            {currentUserAdvertsActually.length ? (
+              currentUserAdvertsActually.map((car) => (
                 <Cards key={car.id} car={car} isOwner={isOwner} />
               ))
             ) : (

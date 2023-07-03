@@ -32,7 +32,7 @@ export const FilterHome = ({ textButton }: FilterProps) => {
     price,
   } = FilterAuth();
 
-  const { adverts, fullAdverts, setFullAdverts, setGlobalLoading } = useAuth();
+  const { fullAdverts, setFullAdverts, setGlobalLoading } = useAuth();
   const [, setSearchParams] = useSearchParams();
 
   useEffect(() => {
