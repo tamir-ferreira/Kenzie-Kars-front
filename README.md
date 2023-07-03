@@ -1,9 +1,3 @@
-<style>
-    .div {
-        display: flex;
-    }
-</style>
-
 # Projeto Full Stack Motors Shop
 
 ![Motors Shop](./src/assets/images/logo.svg)
