@@ -536,6 +536,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       };
 
       await api.post<NewAdvertData>("/adverts", advertObj);
+      getAdvertsUserInfo(String(user.id));
       getParamInfo(String(user.id));
       toast.success("Anúncio criado com sucesso");
       setAdvertIsOpen(!advertIsOpen);
@@ -577,6 +578,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       };
 
       await api.patch<UpdateAdvertData>(`/adverts/${isCar.id}`, advertObj);
+      getAdvertsUserInfo(String(user.id));
       getParamInfo(String(user.id));
       toast.success("Anúncio atualizado com sucesso");
       setEditAdvertIsOpen(!editAdvertIsOpen);
@@ -593,6 +595,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const user: iUser = userString ? JSON.parse(userString) : null;
       await api.delete(`/adverts/${isCar.id}`);
       toast.success("Anúncio deletado com sucesso");
+      getAdvertsUserInfo(String(user.id));
       getParamInfo(String(user.id));
       setEditAdvertIsOpen(false);
       toggleDeleteConfirmAdvertModal();
