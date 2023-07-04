@@ -20,13 +20,7 @@ export const NewComment = ({
 
   const { newCommentsSubmit, setGetId, button, setButton } = CommentsAuth();
 
-  const {
-    register,
-    handleSubmit,
-    formState,
-    reset,
-    //formState: { errors },
-  } = useForm<CommentsData>({
+  const { register, handleSubmit, formState, reset } = useForm<CommentsData>({
     resolver: zodResolver(commentsSchema),
   });
   useEffect(() => {

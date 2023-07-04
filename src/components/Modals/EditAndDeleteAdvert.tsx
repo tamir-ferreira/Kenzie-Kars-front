@@ -74,7 +74,7 @@ export const EditAndDeleteAdvert = () => {
     resolver: zodResolver(updateAdvertSchema),
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append } = useFieldArray({
     name: "images",
     control,
   });
@@ -91,8 +91,6 @@ export const EditAndDeleteAdvert = () => {
     append({
       image_link_: "",
     });
-
-    //if (inputs.length <= 5) setInputs([...inputs, ""]);
   };
 
   const updateSelectedBrand = async (brand: string) => {
@@ -104,13 +102,13 @@ export const EditAndDeleteAdvert = () => {
   const updateSelectedModel = async (model: string) => {
     const findModel = models.find((car) => car.name == model);
     setSelectedModel(findModel || null);
-    setValue("fipe_price", findModel!.value);
-    setValue("year", findModel!.year);
+    setValue("fipe_price", findModel?.value);
+    setValue("year", findModel?.year);
     setValue(
       "fuel",
-      findModel!.fuel === 1
+      findModel?.fuel === 1
         ? "flex"
-        : findModel!.fuel === 2
+        : findModel?.fuel === 2
         ? "híbrido"
         : "elétrico"
     );
@@ -124,8 +122,7 @@ export const EditAndDeleteAdvert = () => {
         handleSelect={updateSelectedBrand}
         register={register("brand")}
         error={errors.brand?.message}
-        defaultValues={parseUserInfo.brand}
-      >
+        defaultValues={parseUserInfo.brand}>
         {brands.map((brand, index) => {
           return (
             <option key={index} value={brand}>
@@ -140,8 +137,7 @@ export const EditAndDeleteAdvert = () => {
         disabled={!models.length}
         register={register("model")}
         error={errors.model?.message}
-        defaultValues={"Escolha um modelo"}
-      >
+        defaultValues={"Escolha um modelo"}>
         {models &&
           models.map((model, index) => {
             return (
@@ -237,8 +233,7 @@ export const EditAndDeleteAdvert = () => {
               type="button"
               btnColor="btn-outline-2"
               btnSize="btn-medium sm:btn-big"
-              attributes="w-[50%] focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1"
-            >
+              attributes="w-[50%] focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1">
               Sim
             </Button>
             <Button
@@ -246,8 +241,7 @@ export const EditAndDeleteAdvert = () => {
               type="button"
               btnColor="btn-brand-1"
               btnSize="btn-medium sm:btn-big focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1"
-              attributes="w-[50%]"
-            >
+              attributes="w-[50%]">
               Não
             </Button>
           </>
@@ -258,8 +252,7 @@ export const EditAndDeleteAdvert = () => {
               type="button"
               btnColor="btn-brand-1"
               btnSize="btn-medium sm:btn-big"
-              attributes="w-[50%] focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1"
-            >
+              attributes="w-[50%] focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1">
               Sim
             </Button>
             <Button
@@ -267,8 +260,7 @@ export const EditAndDeleteAdvert = () => {
               type="button"
               btnColor="btn-outline-2"
               btnSize="btn-medium sm:btn-big focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1"
-              attributes="w-[50%]"
-            >
+              attributes="w-[50%]">
               Não
             </Button>
           </>
@@ -295,8 +287,7 @@ export const EditAndDeleteAdvert = () => {
         btnSize="btn-medium"
         btnColor="btn-brand-opacity"
         handleClick={addInput}
-        type="button"
-      >
+        type="button">
         Adicionar campo para imagem da galeria
       </Button>
       <div className="flex justify-between gap-3 mt-10">
@@ -308,8 +299,7 @@ export const EditAndDeleteAdvert = () => {
             toggleDeleteConfirmAdvertModal(),
               setEditAdvertIsOpen(!editAdvertIsOpen);
           }}
-          attributes="w-[52%]"
-        >
+          attributes="w-[52%]">
           Excluir anúncio
         </Button>
 
@@ -317,8 +307,7 @@ export const EditAndDeleteAdvert = () => {
           btnSize="btn-big"
           type="submit"
           btnColor={"btn-brand-1"}
-          attributes="w-[48%]"
-        >
+          attributes="w-[48%]">
           Salvar Alterações
         </Button>
       </div>

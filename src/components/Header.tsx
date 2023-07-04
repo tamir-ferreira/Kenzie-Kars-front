@@ -2,14 +2,42 @@ import logo from "../assets/images/logo.svg";
 import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { Button } from "./Button";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { UserInitials } from "./UserInitials";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/userAuth";
 import { FilterAuth } from "../hooks/filterHook";
 
-export const Header = () => {
+interface menuProps {
+  blockClosing?: boolean;
+}
+
+export const Header = ({ blockClosing }: menuProps) => {
   const [openMenu, setOpenMenu] = useState(false);
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMenu = (event: MouseEvent) => {
+      if (!ref.current) {
+        return;
+      }
+
+      if (!event.target) {
+        return;
+      }
+
+      if (!ref.current.contains(event.target as HTMLElement)) {
+        setOpenMenu(false);
+      }
+    };
+
+    window.addEventListener("mousedown", handleMenu);
+
+    return () => {
+      window.removeEventListener("mousedown", handleMenu);
+    };
+  }, [openMenu]);
 
   const {
     logged,
@@ -88,7 +116,9 @@ export const Header = () => {
             </>
           )}
           {openMenu && logged && (
-            <div className="p-5 gap-4 flex bg-grey-9 rounded flex-col shadow-menu-profile absolute top-16 animate-menu -left-[1px] sm:left-6 w-screen sm:w-50">
+            <div
+              ref={blockClosing ? null : ref}
+              className="p-5 gap-4 flex bg-grey-9 rounded flex-col shadow-menu-profile absolute top-16 animate-menu -left-[1px] sm:left-6 w-screen sm:w-50">
               <ul className="gap-4 flex flex-col">
                 <li
                   onClick={() => toggleEditProfileModal()}
