@@ -54,7 +54,7 @@ export const NewAdvert = () => {
     resolver: zodResolver(newAdvertSchema),
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append } = useFieldArray({
     name: "images",
     control,
   });
@@ -77,13 +77,13 @@ export const NewAdvert = () => {
   const updateSelectedModel = async (model: string) => {
     const findModel = models.find((car) => car.name == model);
     setSelectedModel(findModel || null);
-    setValue("fipe_price", findModel!.value);
-    setValue("year", findModel!.year);
+    setValue("fipe_price", findModel?.value);
+    setValue("year", findModel?.year);
     setValue(
       "fuel",
-      findModel!.fuel === 1
+      findModel?.fuel === 1
         ? "flex"
-        : findModel!.fuel === 2
+        : findModel?.fuel === 2
         ? "híbrido"
         : "elétrico"
     );

@@ -9,8 +9,6 @@ import { api } from "../services/api";
 
 export interface FilterProps {
   textButton: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //setIsOpen?: React.Dispatch<React.SetStateAction<boolean>> | any;
 }
 
 export const FilterHome = ({ textButton }: FilterProps) => {
@@ -118,17 +116,9 @@ export const FilterHome = ({ textButton }: FilterProps) => {
     return justCombs.indexOf(este) === i;
   });
 
-  // const kilomers = combs.filter((models) => models.fuel === fuel);
-
-  // const minKm =
-  //   km === "min" && kilomers.sort((a, b) => +a.mileage - +b.mileage);
-
-  // const maxKm =
-  //   km === "max" && kilomers.sort((a, b) => +a.mileage + +b.mileage);
-
   return (
-    <aside>
-      <div className="mb-10">
+    <aside className="max-h-[1000px] overflow-y-auto filter-scroll">
+      <div className="mb-10 invert-direction pl-3">
         <h2 className="text-heading-4-600 mb-4">Marca</h2>
         <ul className="ml-2">
           {brands.map((cars, index) => {
@@ -144,15 +134,14 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     setYear(null),
                     setKm(null),
                     setPrice(null);
-                }}
-              >
+                }}>
                 {cars}
               </li>
             );
           })}
         </ul>
       </div>
-      <div className="mb-10">
+      <div className="mb-10 invert-direction pl-3">
         <h2 className="text-heading-4-600 mb-4">Modelo</h2>
         <ul className="ml-2">
           {models.length
@@ -163,8 +152,7 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setModel(cars);
-                    }}
-                  >
+                    }}>
                     {cars}
                   </li>
                 );
@@ -176,15 +164,14 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setModel(cars);
-                    }}
-                  >
+                    }}>
                     {cars}
                   </li>
                 );
               })}
         </ul>
       </div>
-      <div className="mb-10">
+      <div className="mb-10 invert-direction pl-3">
         <h2 className="text-heading-4-600 mb-4">Cor</h2>
         <ul className="ml-2">
           {colorInc.length
@@ -195,8 +182,7 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setColor(cars);
-                    }}
-                  >
+                    }}>
                     {cars}
                   </li>
                 );
@@ -208,15 +194,14 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setColor(cars);
-                    }}
-                  >
+                    }}>
                     {cars}
                   </li>
                 );
               })}
         </ul>
       </div>
-      <div className="mb-10">
+      <div className="mb-10 invert-direction pl-3">
         <h2 className="text-heading-4-600 mb-4">Ano</h2>
         <ul className="ml-2">
           {yearInc.length
@@ -227,8 +212,7 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setYear(String(cars));
-                    }}
-                  >
+                    }}>
                     {cars}
                   </li>
                 );
@@ -240,15 +224,14 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setYear(String(cars));
-                    }}
-                  >
+                    }}>
                     {cars}
                   </li>
                 );
               })}
         </ul>
       </div>
-      <div className="mb-10">
+      <div className="mb-10 invert-direction pl-3">
         <h2 className="text-heading-4-600 mb-4">Combustível</h2>
         <ul className="ml-2">
           {combInc.length
@@ -259,8 +242,7 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setFuel(cars);
-                    }}
-                  >
+                    }}>
                     {cars}
                   </li>
                 );
@@ -272,15 +254,14 @@ export const FilterHome = ({ textButton }: FilterProps) => {
                     className="cursor-pointer text-heading-6-500 text-grey-3"
                     onClick={() => {
                       setFuel(cars);
-                    }}
-                  >
+                    }}>
                     {cars}
                   </li>
                 );
               })}
         </ul>
       </div>
-      <div className="mb-10">
+      <div className="mb-10 invert-direction pl-3">
         <h2 className="text-heading-4-600 mb-4">KM</h2>
         <div className="ml-2">
           <Button
@@ -289,8 +270,7 @@ export const FilterHome = ({ textButton }: FilterProps) => {
             type="button"
             handleClick={() => {
               setKm("asc"), setPrice(null);
-            }}
-          >
+            }}>
             Minimo
           </Button>
 
@@ -299,13 +279,12 @@ export const FilterHome = ({ textButton }: FilterProps) => {
             btnColor="btn-negative"
             handleClick={() => {
               setKm("desc"), setPrice(null);
-            }}
-          >
+            }}>
             Maximo
           </Button>
         </div>
       </div>
-      <div className="mb-14">
+      <div className="mb-14 invert-direction pl-3">
         <h2 className="text-heading-4-600 mb-4">Preço</h2>
         <div className="ml-2">
           <Button
@@ -313,8 +292,7 @@ export const FilterHome = ({ textButton }: FilterProps) => {
             btnColor="btn-negative"
             handleClick={() => {
               setPrice("asc"), setKm(null);
-            }}
-          >
+            }}>
             Minimo
           </Button>
 
@@ -323,8 +301,7 @@ export const FilterHome = ({ textButton }: FilterProps) => {
             btnColor="btn-negative"
             handleClick={() => {
               setPrice("desc"), setKm(null);
-            }}
-          >
+            }}>
             Maximo
           </Button>
         </div>
@@ -334,8 +311,7 @@ export const FilterHome = ({ textButton }: FilterProps) => {
           <Button
             btnSize="btn-big"
             btnColor="btn-brand-1"
-            handleClick={() => handleClick()}
-          >
+            handleClick={() => handleClick()}>
             {textButton}
           </Button>
         </div>

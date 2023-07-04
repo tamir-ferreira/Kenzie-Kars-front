@@ -21,7 +21,6 @@ export const Profile = () => {
     setLogged,
     getParamInfo,
     currentUser,
-    currentUserAdverts,
     isCreateAdvertSuccessModalOpen,
     toggleCreateAdvertSuccessModal,
     reload,

@@ -29,8 +29,6 @@ interface UserProviderValue {
   userStatus: boolean;
   advertsStatus: boolean;
   user: iUser;
-  // isSeller: boolean;
-  // setIsSeller: React.Dispatch<React.SetStateAction<boolean>>;
   getAllAdverts: () => Promise<iAdverts[] | undefined>;
   adverts: iAdverts[];
   setAdvert: React.Dispatch<React.SetStateAction<iAdverts>>;
@@ -288,11 +286,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         (elt: iAdverts) => elt.user.id === Number(id)
       );
 
-      // const nextPageValue = dbAdverts.data.nextPage;
-      // const prevPageValue = dbAdverts.data.prevPage;
-      // setPrevProfilePage(prevPageValue);
-      // setNextProfilePage(nextPageValue);
-
       setCurrentUser(user);
       setCurrentUserAdverts(userAdverts);
     } catch (error) {
@@ -435,7 +428,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       setGlobalLoading(false);
       const currentError = error as AxiosError<iError>;
       console.error(currentError.message);
-      toast.error("Email não encontrado");
+      toast.error(currentError.response?.data.message);
     } finally {
       setGlobalLoading(false);
     }
@@ -717,8 +710,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         setPrevHomePage,
         getAdvertsUserInfo,
         currentUserAdvertsActually,
-      }}
-    >
+      }}>
       {children}
     </UserContext.Provider>
   );
