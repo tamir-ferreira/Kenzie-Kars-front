@@ -52,14 +52,12 @@ export const Modal = ({
       >
         <div className="flex-col flex gap-8 ">
           <div className="flex justify-between items-center">
-            <h2 className="font-lexend font-medium text-base text-grey-1">
-              {title}
-            </h2>
+            <h2 className="font-lexend font-medium text-base text-grey-1">{title}</h2>
             <button onClick={toggleModal} className="btn-close-modal">
               X
             </button>
           </div>
-          <div>{children}</div>
+          <div className="flex justify-center">{children}</div>
         </div>
       </div>
     </div>,
