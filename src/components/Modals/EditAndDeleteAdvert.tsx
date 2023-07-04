@@ -87,10 +87,14 @@ export const EditAndDeleteAdvert = () => {
         });
       }
     });
+    if (inputs.length <= 5) {
+      append({
+        image_link_: "",
+      });
+      setInputs([...inputs, ""]);
+    }
 
-    append({
-      image_link_: "",
-    });
+    //if (inputs.length <= 5) setInputs([...inputs, ""]);
   };
 
   const updateSelectedBrand = async (brand: string) => {
@@ -122,7 +126,8 @@ export const EditAndDeleteAdvert = () => {
         handleSelect={updateSelectedBrand}
         register={register("brand")}
         error={errors.brand?.message}
-        defaultValues={parseUserInfo.brand}>
+        defaultValues={parseUserInfo.brand}
+      >
         {brands.map((brand, index) => {
           return (
             <option key={index} value={brand}>
@@ -137,7 +142,8 @@ export const EditAndDeleteAdvert = () => {
         disabled={!models.length}
         register={register("model")}
         error={errors.model?.message}
-        defaultValues={"Escolha um modelo"}>
+        defaultValues={"Escolha um modelo"}
+      >
         {models &&
           models.map((model, index) => {
             return (
@@ -233,7 +239,8 @@ export const EditAndDeleteAdvert = () => {
               type="button"
               btnColor="btn-outline-2"
               btnSize="btn-medium sm:btn-big"
-              attributes="w-[50%] focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1">
+              attributes="w-[50%] focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1"
+            >
               Sim
             </Button>
             <Button
@@ -241,7 +248,8 @@ export const EditAndDeleteAdvert = () => {
               type="button"
               btnColor="btn-brand-1"
               btnSize="btn-medium sm:btn-big focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1"
-              attributes="w-[50%]">
+              attributes="w-[50%]"
+            >
               Não
             </Button>
           </>
@@ -252,7 +260,8 @@ export const EditAndDeleteAdvert = () => {
               type="button"
               btnColor="btn-brand-1"
               btnSize="btn-medium sm:btn-big"
-              attributes="w-[50%] focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1">
+              attributes="w-[50%] focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1"
+            >
               Sim
             </Button>
             <Button
@@ -260,7 +269,8 @@ export const EditAndDeleteAdvert = () => {
               type="button"
               btnColor="btn-outline-2"
               btnSize="btn-medium sm:btn-big focus:btn-brand-1 hover:bg-brand-1 hover:border-brand-1"
-              attributes="w-[50%]">
+              attributes="w-[50%]"
+            >
               Não
             </Button>
           </>
@@ -283,13 +293,16 @@ export const EditAndDeleteAdvert = () => {
           type="text"
         />
       ))}
-      <Button
-        btnSize="btn-medium"
-        btnColor="btn-brand-opacity"
-        handleClick={addInput}
-        type="button">
-        Adicionar campo para imagem da galeria
-      </Button>
+      {inputs.length <= 5 && (
+        <Button
+          btnSize="btn-medium"
+          btnColor="btn-brand-opacity"
+          handleClick={addInput}
+          type="button"
+        >
+          Adicionar campo para imagem da galeria
+        </Button>
+      )}
       <div className="flex justify-between gap-3 mt-10">
         <Button
           type="button"
@@ -299,7 +312,8 @@ export const EditAndDeleteAdvert = () => {
             toggleDeleteConfirmAdvertModal(),
               setEditAdvertIsOpen(!editAdvertIsOpen);
           }}
-          attributes="w-[52%]">
+          attributes="w-[52%]"
+        >
           Excluir anúncio
         </Button>
 
@@ -307,7 +321,8 @@ export const EditAndDeleteAdvert = () => {
           btnSize="btn-big"
           type="submit"
           btnColor={"btn-brand-1"}
-          attributes="w-[48%]">
+          attributes="w-[48%]"
+        >
           Salvar Alterações
         </Button>
       </div>

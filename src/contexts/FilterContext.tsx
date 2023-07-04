@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { useAuth } from "../hooks/userAuth";
 
 interface FilterProviderProps {
   children: React.ReactNode;
@@ -33,6 +34,8 @@ export const FilterProvider = ({ children }: FilterProviderProps) => {
   const [km, setKm] = useState<null | string>();
   const [price, setPrice] = useState<null | string>();
 
+  const { setHomePage } = useAuth();
+
   const handleClick = () => {
     setBrand(null),
       setModel(null),
@@ -41,6 +44,7 @@ export const FilterProvider = ({ children }: FilterProviderProps) => {
       setYear(null);
     setKm(null);
     setPrice(null);
+    setHomePage(1);
   };
 
   return (
