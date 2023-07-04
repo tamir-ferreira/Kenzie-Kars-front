@@ -18,14 +18,13 @@ import { EditProfile } from "../components/Modals/EditProfile";
 export const Product = () => {
   const [carInfo, setCarInfo] = useState({} as CardObj);
   const [userInfo, setUserInfo] = useState({} as UserObj);
-  const [carImgsInfo, setCarImgsInfo] = useState([] as CarImgObj[]);
-  const {
-    getComments,
-    currentComments,
-    setModalIsOpen,
-    modalIsOpen,
-    setUserCurrentComment,
-  } = CommentsAuth();
+  const [carImgsInfo, setCarImgsInfo] = useState({} as CarImgObj);
+  const [imgModal, setImgModal] = useState(false);
+  const [imgLink, setImgLink] = useState("");
+
+  const { getComments, currentComments, setModalIsOpen, modalIsOpen, setUserCurrentComment } =
+    CommentsAuth();
+
   const {
     isDeleteProfileConfirmModalOpen,
     isEditProfileModalOpen,
@@ -56,24 +55,26 @@ export const Product = () => {
   const parseUserInfo = userData ? JSON.parse(userData) : null;
 
   const carImgsData = localStorage.getItem("@carImgs");
-  const parsecarImgsInfo: CarImgObj[] = carImgsData
-    ? JSON.parse(carImgsData)
-    : null;
+  const parsecarImgsInfo: CarImgObj | null = carImgsData ? JSON.parse(carImgsData) : null;
 
-  const values = Object.values(parsecarImgsInfo);
+  const values: Array<string> = Object.values(parsecarImgsInfo!);
+
+  const handleImg = (link: string) => {
+    setImgLink(link);
+    setImgModal(!imgModal);
+  };
+
   return (
     <>
       {isDeleteProfileConfirmModalOpen && (
-        <Modal
-          title="Excluir perfil"
-          toggleModal={toggleDeleteConfirmProfileModal}>
+        <Modal title="Excluir perfil" toggleModal={toggleDeleteConfirmProfileModal}>
           <form className="flex flex-col gap-5">
             <h2 className="heading-7-500 text-grey-1">
               Tem certeza que deseja remover este perfil?
             </h2>
             <p className="body-1-400 text-grey-2">
-              Essa ação não pode ser desfeita. Isso excluirá permanentemente sua
-              conta e removerá seus dados de nossos servidores.
+              Essa ação não pode ser desfeita. Isso excluirá permanentemente sua conta e removerá
+              seus dados de nossos servidores.
             </p>
             <div className="flex justify-end mt-6">
               <Button
@@ -81,7 +82,8 @@ export const Product = () => {
                 btnSize="btn-big"
                 btnColor="btn-negative"
                 handleClick={toggleDeleteConfirmProfileModal}
-                attributes="px-[5%] max-sm:w-[48%]">
+                attributes="px-[5%] max-sm:w-[48%]"
+              >
                 Cancelar
               </Button>
               <Button
@@ -91,7 +93,8 @@ export const Product = () => {
                 handleClick={() => {
                   deleteUser(user.id);
                 }}
-                attributes="px-[5%] max-sm:w-[48%] ml-4">
+                attributes="px-[5%] max-sm:w-[48%] ml-4"
+              >
                 Sim, excluir perfil
               </Button>
             </div>
@@ -103,7 +106,8 @@ export const Product = () => {
           title="Editar Perfil"
           toggleModal={() => toggleEditProfileModal()}
           attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
-          widthFull>
+          widthFull
+        >
           <EditProfile />
         </Modal>
       )}
@@ -112,7 +116,8 @@ export const Product = () => {
           title="Editar Endereço"
           toggleModal={() => toggleEditAddressModal()}
           attributes="max-h-screen max-w-[520px] no-scrollbar overflow-y-auto w-auto"
-          widthFull>
+          widthFull
+        >
           <EditAddress />
         </Modal>
       )}
@@ -121,7 +126,8 @@ export const Product = () => {
           title="Editar Comentário"
           toggleModal={() => setModalIsOpen(false)}
           attributes="w-[95%] h-max sm:w-[50%]"
-          widthFull>
+          widthFull
+        >
           <EditAndDeleteComment />
         </Modal>
       )}
@@ -131,7 +137,7 @@ export const Product = () => {
         <div className="flex flex-col justify-center container sm:px-32">
           <div className=" flex mt-[7rem] justify-between max-sm:flex-col max-sm:w-[100%] z-0">
             <section className="flex flex-col w-[59%] max-sm:w-[100%]">
-              <div className="flex justify-center items-center rounded bg-grey-10 py-7 px-7 xm:p-11  mb-4 max-sm:w-[100%] min-h-[300px]">
+              <div className="flex justify-center items-center rounded bg-grey-10 py-7 px-7 xm:p-11  mb-4 max-sm:w-[100%] min-h-[300px] overflow-hidden">
                 <img
                   src={carInfo.cover_image}
                   alt="Imagem carro"
@@ -141,9 +147,7 @@ export const Product = () => {
               <AdvertInfo />
               <div className="rounded bg-grey-10  py-7 px-7 sm:p-11 mt-5 mb-4 max-sm:w-[100%] min-h-[206px]">
                 <h3 className="mb-6 text-heading-6-600">Descrição</h3>
-                <p className="text-body-1-400 leading-7 text-grey-2">
-                  {carInfo.description}
-                </p>
+                <p className="text-body-1-400 leading-7 text-grey-2">{carInfo.description}</p>
               </div>
             </section>
             <section className="w-[38%] max-sm:w-[100%]">
@@ -156,12 +160,19 @@ export const Product = () => {
                         return (
                           <li
                             key={index}
-                            className="w-[85px]  h-[85px] sm:w-[103px] sm:h-[103px] bg-grey-7 rounded flex justify-center items-center">
-                            <img
-                              src={String(elem)}
-                              alt="Foto carro"
-                              className="object-contain img-transition-1"
-                            />
+                            className="w-[85px]  h-[85px] sm:w-[103px] sm:h-[103px] bg-grey-7 rounded flex justify-center items-center cursor-pointer"
+                            onClick={() => handleImg(elem)}
+                          >
+                            <img src={elem} alt="Foto carro" className="object-contain" />
+                            {imgModal && (
+                              <Modal
+                                toggleModal={() => setImgModal(!imgModal)}
+                                title="Foto"
+                                attributes="text-center "
+                              >
+                                <img src={imgLink} alt="Foto carro" className="object-contain" />
+                              </Modal>
+                            )}
                           </li>
                         );
                       }
@@ -187,7 +198,8 @@ export const Product = () => {
                     userName={elem.user.name}
                     countMark={elem.createdAt}
                     comment={elem.content}
-                    color={elem.user.color}>
+                    color={elem.user.color}
+                  >
                     {elem.user.name === parseUserInfo?.name ? (
                       <Button
                         key={elem.id}
@@ -196,7 +208,8 @@ export const Product = () => {
                         attributes="text-grey-1 text-button-small border-none underline"
                         handleClick={() => {
                           setModalIsOpen(true), setUserCurrentComment(elem);
-                        }}>
+                        }}
+                      >
                         Editar
                       </Button>
                     ) : null}
@@ -210,11 +223,7 @@ export const Product = () => {
             </ul>
           </div>
           <NewComment
-            name={
-              userInfo
-                ? userInfo.name
-                : "Ops! Para fazer comentários você precisa estar logado! :("
-            }
+            name={userInfo ? userInfo.name : ""}
             color={userInfo ? userInfo.color : "#4a9d9d"}
           />
         </div>

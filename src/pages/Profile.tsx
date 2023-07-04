@@ -100,9 +100,7 @@ export const Profile = () => {
       {isCreateAdvertSuccessModalOpen && (
         <Modal title="Sucesso!" toggleModal={toggleCreateAdvertSuccessModal}>
           <div className="flex flex-col gap-5">
-            <h2 className="heading-7-500 text-grey-1">
-              Seu anúncio foi criado com sucesso
-            </h2>
+            <h2 className="heading-7-500 text-grey-1">Seu anúncio foi criado com sucesso</h2>
             <p className="body-1-400 text-grey-2">
               Agora você poderá ver seus negócios crescendo em grande escala!
             </p>
@@ -110,17 +108,14 @@ export const Profile = () => {
         </Modal>
       )}
       {isDeleteAdvertConfirmModalOpen && (
-        <Modal
-          title="Excluir anúncio"
-          toggleModal={toggleDeleteConfirmAdvertModal}
-        >
+        <Modal title="Excluir anúncio" toggleModal={toggleDeleteConfirmAdvertModal}>
           <form className="flex flex-col gap-5">
             <h2 className="heading-7-500 text-grey-1">
               Tem certeza que deseja remover este anúncio?
             </h2>
             <p className="body-1-400 text-grey-2">
-              Essa ação não pode ser desfeita. Isso excluirá permanentemente sua
-              conta e removerá seus dados de nossos servidores.
+              Essa ação não pode ser desfeita. Isso excluirá permanentemente sua conta e removerá
+              seus dados de nossos servidores.
             </p>
             <div className="flex justify-end mt-6">
               <Button
@@ -148,17 +143,14 @@ export const Profile = () => {
         </Modal>
       )}
       {isDeleteProfileConfirmModalOpen && (
-        <Modal
-          title="Excluir perfil"
-          toggleModal={toggleDeleteConfirmProfileModal}
-        >
+        <Modal title="Excluir perfil" toggleModal={toggleDeleteConfirmProfileModal}>
           <form className="flex flex-col gap-5">
             <h2 className="heading-7-500 text-grey-1">
               Tem certeza que deseja remover este perfil?
             </h2>
             <p className="body-1-400 text-grey-2">
-              Essa ação não pode ser desfeita. Isso excluirá permanentemente sua
-              conta e removerá seus dados de nossos servidores.
+              Essa ação não pode ser desfeita. Isso excluirá permanentemente sua conta e removerá
+              seus dados de nossos servidores.
             </p>
             <div className="flex justify-end mt-6">
               <Button
@@ -215,9 +207,7 @@ export const Profile = () => {
             bigSize
           />
           <div className="flex items-center gap-2">
-            <h2 className="text-heading-6-600">
-              {isOwner ? user.name : currentUser.name}
-            </h2>
+            <h2 className="text-heading-6-600">{isOwner ? user.name : currentUser.name}</h2>
             <span className="flex items-center justify-center bg-brand-4 rounded text-brand-1 text-body-2-500 w-23 h-8">
               Anunciante
             </span>
@@ -237,11 +227,9 @@ export const Profile = () => {
         </section>
         <section className="flex flex-col justify-start max-w-[1392px] mt-4 w-screen sm:items-start">
           {!user.seller && (
-            <h3 className="text-heading-5-600 mb-16 ml-5 sm:ml-0 sm:-translate-x-16 ">
-              Anúncios
-            </h3>
+            <h3 className="text-heading-5-600 mb-16 ml-5 sm:ml-0 sm:-translate-x-16 ">Anúncios</h3>
           )}
-          <ul className="sm:grid sm:grid-cols-4 flex gap-4 overflow-auto px-6 sm:px-0 sm:gap-12">
+          <ul className="sm:grid sm:grid-cols-4 flex gap-4 overflow-auto sm:overflow-hidden px-6 sm:px-0 sm:gap-12 w-full">
             {currentUserAdvertsActually.length ? (
               currentUserAdvertsActually.map((car) => (
                 <Cards key={car.id} car={car} isOwner={isOwner} />
