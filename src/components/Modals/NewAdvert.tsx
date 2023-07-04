@@ -60,10 +60,12 @@ export const NewAdvert = () => {
   });
 
   const addInput = (): void => {
-    append({
-      image_link_: "",
-    });
-    //if (inputs.length <= 5) setInputs([...inputs, ""]);
+    if (inputs.length <= 5) {
+      append({
+        image_link_: "",
+      });
+      setInputs([...inputs, ""]);
+    }
   };
 
   const updateSelectedBrand = async (brand: string) => {
@@ -96,8 +98,7 @@ export const NewAdvert = () => {
         handleSelect={updateSelectedBrand}
         register={register("brand")}
         error={errors.brand?.message}
-        defaultValues="Escolha uma opção"
-      >
+        defaultValues="Escolha uma opção">
         {brands.map((brand, index) => {
           return (
             <option key={index} value={brand}>
@@ -112,8 +113,7 @@ export const NewAdvert = () => {
         disabled={!models.length}
         register={register("model")}
         error={errors.model?.message}
-        defaultValues="Escolha uma opção"
-      >
+        defaultValues="Escolha uma opção">
         {models &&
           models.map((model, index) => {
             return (
@@ -213,30 +213,29 @@ export const NewAdvert = () => {
           type="text"
         />
       ))}
-      <Button
-        btnSize="btn-medium"
-        btnColor="btn-brand-opacity"
-        handleClick={addInput}
-        type="button"
-      >
-        Adicionar campo para imagem da galeria
-      </Button>
+      {inputs.length <= 5 && (
+        <Button
+          btnSize="btn-medium"
+          btnColor="btn-brand-opacity"
+          handleClick={addInput}
+          type="button">
+          Adicionar campo para imagem da galeria
+        </Button>
+      )}
       <div className="flex justify-end gap-3 mt-10">
         <Button
           type="button"
           btnSize="btn-big"
           btnColor="btn-negative"
           handleClick={() => setAdvertIsOpen(false)}
-          attributes="px-[5%] max-sm:w-[48%]"
-        >
+          attributes="px-[5%] max-sm:w-[48%]">
           Cancelar
         </Button>
 
         <Button
           btnSize="btn-big"
           btnColor={isLocked ? "btn-brand-disable" : "btn-brand-1"}
-          attributes="px-[5%] max-sm:w-[48%]"
-        >
+          attributes="px-[5%] max-sm:w-[48%]">
           Criar anúncio
         </Button>
       </div>
