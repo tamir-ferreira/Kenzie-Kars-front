@@ -1,11 +1,18 @@
-import './App.css'
+import { PageRoutes } from "./routes";
+import { UserProvider } from "./contexts/UserContext";
+import { FilterProvider } from "./contexts/FilterContext";
+import { CommentsProvider } from "./contexts/CommentsContext";
 
-function App() {
+export const App = () => {
   return (
     <>
-      
+      <UserProvider>
+        <CommentsProvider>
+          <FilterProvider>
+            <PageRoutes />
+          </FilterProvider>
+        </CommentsProvider>
+      </UserProvider>
     </>
-  )
-}
-
-export default App
+  );
+};
