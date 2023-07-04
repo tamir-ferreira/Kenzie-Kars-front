@@ -92,6 +92,7 @@ interface UserProviderValue {
   checkPrevHomePage: () => void;
   getAdvertsUserInfo: (id: string) => Promise<void>;
   currentUserAdvertsActually: iAdverts[];
+  setHomePage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 interface iAddress {
@@ -600,8 +601,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const checkNextProfilePage = () => {
-    console.log(nextProfilePage);
-
     if (nextProfilePage !== null) {
       setProfilePage(pageProfile + 1);
     } else {
@@ -710,7 +709,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         setPrevHomePage,
         getAdvertsUserInfo,
         currentUserAdvertsActually,
-      }}>
+        setHomePage,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
