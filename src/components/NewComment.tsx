@@ -12,10 +12,7 @@ interface NewCommentsProps {
   color: string | undefined;
 }
 
-export const NewComment = ({
-  name = "placeholher",
-  color = "teste",
-}: NewCommentsProps) => {
+export const NewComment = ({ name = "placeholher", color = "teste" }: NewCommentsProps) => {
   const { id } = useParams();
 
   const { newCommentsSubmit, setGetId, button, setButton } = CommentsAuth();
@@ -42,24 +39,28 @@ export const NewComment = ({
 
   return (
     <div className="sm:w-[59%] h-96 sm:h-[18rem] rounded bg-grey-10 mt-10 sm:mt-8 mb-8 sm:mb-16 py-9 px-6 sm:p-11 flex flex-col gap-3.5">
-      <div className="flex items-center gap-2 w-max">
-        <UserInitials name={name} color={color} />
+      <div className="flex items-center gap-2 w-maxbreak-words">
+        {name != "" ? (
+          <UserInitials name={name} color={color} />
+        ) : (
+          <p className="text-sm w-full ">Ops! Para fazer comentários você precisa estar logado!</p>
+        )}
         <p className="text-body-2-500">{name}</p>
       </div>
       <div className="flex flex-col gap-[70px] sm:gap-3.5 w-full h-max sm:h-full">
-        <form
-          className="sm:relative w-full h-32 gap-8"
-          onSubmit={handleSubmit(newCommentsSubmit)}>
+        <form className="sm:relative w-full h-32 gap-8" onSubmit={handleSubmit(newCommentsSubmit)}>
           <textarea
             placeholder="Deixe um comentário..."
             cols={75}
             rows={5}
             className="resize-none rounded border-grey-7 border-2 focus:outline-0 w-full h-full p-2.5 sm:pr-[8rem] text-grey-2 no-scrollbar"
-            {...register("content")}></textarea>
+            {...register("content")}
+          ></textarea>
           <Button
             btnSize="btn-medium"
             btnColor={button ? "btn-brand-disable" : "btn-brand-1"}
-            attributes="mt-[10px] sm:absolute sm:bottom-3 sm:right-3">
+            attributes="mt-[10px] sm:absolute sm:bottom-3 sm:right-3"
+          >
             Comentar
           </Button>
         </form>
